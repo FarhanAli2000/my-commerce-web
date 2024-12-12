@@ -50,9 +50,25 @@ import SignUp from "./components/signUp";
 import Login from "./components/login";
 import ForgotPassword from "./components/forgotPassword";
 import config from 'config';
+import  Dynamic_Routes   from "./components/dyanmic_routes/index"
+
 
 export const App = () => {
   return (
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
     <BrowserRouter basename={`${config.publicPath}`}>
     <Routes>
       {/* Home Routes */}
@@ -97,6 +113,9 @@ export const App = () => {
       <Route path="/signup" element={<SignUp/>} />
       <Route path="/login" element={<Login/>} />
       <Route path="/forgot-password" element={<ForgotPassword/>} />
+      {/* features  dynamic   routes */}
+      <Route  path="/routes/:id" element ={<Dynamic_Routes/>}  />
+
     </Routes>
     </BrowserRouter>
   );

@@ -23,13 +23,13 @@ const Sidebar=()=>{
                 Filter
               </h4>
               <form>
-                <div className="filter-content looking-input form-group">
+                {/* <div className="filter-content looking-input form-group">
                   <input
                     type="text"
                     className="form-control"
                     placeholder="What are you looking for?"
                   />
-                </div>
+                </div> */}
                 <div className="filter-content form-group">
                   <select className="form-control select category-select">
                     <option value="">Choose Category</option>
@@ -97,7 +97,7 @@ const Sidebar=()=>{
                     </li>
                   </ul>
                 </div>
-                <div className="filter-content form-group amenities radius">
+                {/* <div className="filter-content form-group amenities radius">
                   <div className="slidecontainer">
                     <div className="slider-info">
                       <h4> Radius</h4>
@@ -115,7 +115,7 @@ const Sidebar=()=>{
                 />
                     </div>
                   </div>
-                </div>
+                </div> */}
                 <div className="filter-content amenities mb-0">
                   <h4> Price Range</h4>
                   <div className="form-group mb-0">

@@ -70,14 +70,7 @@ const Header = ({ parms }) => {
               </Link>
             </div>
             <ul className="main-nav">
-              {/* <HomeMenu activeMenu={"Classified"} />
-              <ListingMenu activeMenu={parms}/>
-              <PagesMenu activeMenus={parms}/>
-              <UserPagesMenu />
-              <BlogMenu activesMenus={parms}/> */}
-              {/* <li>
-                <Link to="/contact">Contact</Link>
-              </li> */}
+
               <li>
                 <div className="search_container">
                   <input

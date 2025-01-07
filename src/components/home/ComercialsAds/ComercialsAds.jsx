@@ -15,21 +15,27 @@ import {
 import Slider from "react-slick";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import img1 from "./img1.png";
+import img2 from "./image 39 (2).png";
+import img3 from "./img3.png";
+import img4 from "./image 41 (1).png";
 
 export default function Carousel() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 767);
-  const [slidesToShow, setSlidesToShow] = useState(5);
+  const [slidesToShow, setSlidesToShow] = useState(4);
 
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth;
 
       if (width <= 767) {
-        setSlidesToShow(1); 
+        setSlidesToShow(1);
       } else if (width >= 768 && width <= 1024) {
         setSlidesToShow(3);
       } else {
-        setSlidesToShow(5);
+        setSlidesToShow(4);
       }
     };
 
@@ -43,7 +49,7 @@ export default function Carousel() {
 
   const settings = {
     dots: false,
-    arrows: false,
+    arrows: true,
     infinite: true,
     lazyLoad: true,
     speed: 1000,
@@ -52,78 +58,47 @@ export default function Carousel() {
   };
   const slider = useRef();
   return (
-    <section className="featured-section bg-white">
+    <section className="featured-section bg-white commercials_card_section ">
       <div className="container">
         <div className="row align-items-center">
-         <div className="featuresection_infodev">
-            <h4 className="featuresection_header">Health Care</h4>
-            <button className="featuresection_btn">View All</button>
+          <div className=" featuresection_infodev1  featuresection_infodev mb-5 ">
+            <h4 className="featuresection_header  ">Commercials Ads</h4>
+            <button className="featuresection_btn   featuresection_btn1 ">
+              View All Ads
+            </button>
           </div>
 
-              <button
-                type="button"
-                role="presentation"
-                className="owl-prev   owl-prev2"
-                onClick={() => {console.log(slider?.current); slider?.current?.slickPrev()}}
-                
-              >
-                <i className="fa-solid fa-angle-left"></i>
-              </button>
-              <button
-                type="button"
-                role="presentation"
-                className="owl-next  owl-next-2 "
-                onClick={() => slider?.current?.slickNext()}
-              >
-                <i className="fa-solid fa-angle-right"></i>
-              </button>
+          {/*  */}
 
 
+          {/*  */}
         </div>
         <div className="row">
           <div className="col-md-12">
-            <div >
-              <Slider ref={slider} {...settings} className=" featured-slider grid-view">
+            <div>
+              <Slider
+                ref={slider}
+                {...settings}
+                className=" featured-slider grid-view"
+              >
                 <div className="card aos" data-aos="fade-up">
                   <div className="blog-widget">
                     <div className="blog-img">
-                      <Link to="/service-details">
-                        <img
-                          src={Feature9}
-                          className="img-fluid"
-                          alt="blog-img"
-                        />
+                      <Link to="/index">
+                        <img src={img1} className="img-fluid" alt="blog-img" />
                       </Link>
-                      <div className="fav-item">
-                        <span className="Featured-text">Featured</span>
-
-                      </div>
+  
                     </div>
-                    <div className="bloglist-content">
-                      <div className="card-body">
-                        <div className="blogfeaturelink">
-                        </div>
-                        <h6>
-                          <Link to="/service-details">
-                            2017 Gulfsteam Ameri-lite
-                          </Link>
-                        </h6>
-                        <div className="blog-location-details">
-                          <div className="location-info">
-                             Los Angeles
-                          </div>
 
-                        </div>
-                        <div className="amount-details">
-                          <div className="amount">
-                            <span className="validrate">$350</span>
+                  </div>
+                </div>
 
-                          </div>
-                          <div className="ratings">
-                             1  DAY AGO
-                          </div>
-                        </div>
-                      </div>
+                <div className="card aos" data-aos="fade-up">
+                  <div className="blog-widget">
+                    <div className="blog-img">
+                      <Link to="/index">
+                        <img src={img2} className="img-fluid" alt="blog-img" />
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -131,184 +106,74 @@ export default function Carousel() {
                 <div className="card aos" data-aos="fade-up">
                   <div className="blog-widget">
                     <div className="blog-img">
-                      <Link to="/service-details">
-                        <img
-                          src={Feature9}
-                          className="img-fluid"
-                          alt="blog-img"
-                        />
+                      <Link to="/index">
+                        <img src={img1} className="img-fluid" alt="blog-img" />
                       </Link>
-                      <div className="fav-item">
-                        <span className="Featured-text">Featured</span>
-
-                      </div>
-                    </div>
-                    <div className="bloglist-content">
-                      <div className="card-body">
-                        <div className="blogfeaturelink">
-                        </div>
-                        <h6>
-                          <Link to="/service-details">
-                            2017 Gulfsteam Ameri-lite
-                          </Link>
-                        </h6>
-                        <div className="blog-location-details">
-                          <div className="location-info">
-                             Los Angeles
-                          </div>
-
-                        </div>
-                        <div className="amount-details">
-                          <div className="amount">
-                            <span className="validrate">$350</span>
-
-                          </div>
-                          <div className="ratings">
-                             1  DAY AGO
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="card aos" data-aos="fade-up">
-                  <div className="blog-widget">
-                    <div className="blog-img">
-                      <Link to="/service-details">
-                        <img
-                          src={Feature9}
-                          className="img-fluid"
-                          alt="blog-img"
-                        />
-                      </Link>
-                      <div className="fav-item">
-                        <span className="Featured-text">Featured</span>
-
-                      </div>
-                    </div>
-                    <div className="bloglist-content">
-                      <div className="card-body">
-                        <div className="blogfeaturelink">
-                        </div>
-                        <h6>
-                          <Link to="/service-details">
-                            2017 Gulfsteam Ameri-lite
-                          </Link>
-                        </h6>
-                        <div className="blog-location-details">
-                          <div className="location-info">
-                             Los Angeles
-                          </div>
-
-                        </div>
-                        <div className="amount-details">
-                          <div className="amount">
-                            <span className="validrate">$350</span>
-
-                          </div>
-                          <div className="ratings">
-                             1  DAY AGO
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-
-                <div className="card aos" data-aos="fade-up">
-                  <div className="blog-widget">
-                    <div className="blog-img">
-                      <Link to="/service-details">
-                        <img
-                          src={Feature9}
-                          className="img-fluid"
-                          alt="blog-img"
-                        />
-                      </Link>
-                      <div className="fav-item">
-                        <span className="Featured-text">Featured</span>
-
-                      </div>
-                    </div>
-                    <div className="bloglist-content">
-                      <div className="card-body">
-                        <div className="blogfeaturelink">
-                        </div>
-                        <h6>
-                          <Link to="/service-details">
-                            2017 Gulfsteam Ameri-lite
-                          </Link>
-                        </h6>
-                        <div className="blog-location-details">
-                          <div className="location-info">
-                             Los Angeles
-                          </div>
-
-                        </div>
-                        <div className="amount-details">
-                          <div className="amount">
-                            <span className="validrate">$350</span>
-
-                          </div>
-                          <div className="ratings">
-                             1  DAY AGO
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-
-
-
-                <div className="card aos" data-aos="fade-up">
-                  <div className="blog-widget">
-                    <div className="blog-img">
-                      <Link to="/service-details">
-                        <img
-                          src={Feature9}
-                          className="img-fluid"
-                          alt="blog-img"
-                        />
-                      </Link>
-                      <div className="fav-item">
-                        <span className="Featured-text">Featured</span>
-
-                      </div>
-                    </div>
-                    <div className="bloglist-content">
-                      <div className="card-body">
-                        <div className="blogfeaturelink">
-                        </div>
-                        <h6>
-                          <Link to="/service-details">
-                            2017 Gulfsteam Ameri-lite
-                          </Link>
-                        </h6>
-                        <div className="blog-location-details">
-                          <div className="location-info">
-                             Los Angeles
-                          </div>
-
-                        </div>
-                        <div className="amount-details">
-                          <div className="amount">
-                            <span className="validrate">$350</span>
-
-                          </div>
-                          <div className="ratings">
-                             1  DAY AGO
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
  
+                    </div>
+    
+                  </div>
+                </div>
+
+                <div className="card aos" data-aos="fade-up">
+                  <div className="blog-widget">
+                    <div className="blog-img">
+                      <Link to="/index">
+                        <img src={img1} className="img-fluid" alt="blog-img" />
+                      </Link>
+ 
+                    </div>
+    
+                  </div>
+                </div>
+
+                <div className="card aos" data-aos="fade-up">
+                  <div className="blog-widget">
+                    <div className="blog-img">
+                      <Link to="/index">
+                        <img src={img1} className="img-fluid" alt="blog-img" />
+                      </Link>
+ 
+                    </div>
+    
+                  </div>
+                </div>
+
+                <div className="card aos" data-aos="fade-up">
+                  <div className="blog-widget">
+                    <div className="blog-img">
+                      <Link to="/index">
+                        <img src={img1} className="img-fluid" alt="blog-img" />
+                      </Link>
+ 
+                    </div>
+    
+                  </div>
+                </div>
+
+                <div className="card aos" data-aos="fade-up">
+                  <div className="blog-widget">
+                    <div className="blog-img">
+                      <Link to="/index">
+                        <img src={img2} className="img-fluid" alt="blog-img" />
+                      </Link>
+
+                    </div>
+ 
+                  </div>
+                </div>
+
+                <div className="card aos" data-aos="fade-up">
+                  <div className="blog-widget">
+                    <div className="blog-img">
+                      <Link to="/index">
+                        <img src={img2} className="img-fluid" alt="blog-img" />
+                      </Link>
+ 
+                    </div>
+ 
+                  </div>
+                </div>
               </Slider>
             </div>
           </div>

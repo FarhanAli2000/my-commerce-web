@@ -1,128 +1,164 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
-// import BlogMenu from "../../common/BlogMenu";
-// import HomeMenu from "../../common/HomeMenu";
-// import ListingMenu from "../../common/ListingMenu";
-// import PagesMenu from "../../common/PagesMenu";
-// import UserPagesMenu from "../../common/UserPagesMenu";
-import {
-  // Home01,
-  // Home02,
-  // Home03,
-  // Home04,
-  // Home05,
-  // Home06,
-  // Home07,
-  // Home08,
-  // Home09,
-  LogoSvg,
-} from "../../imagepath";
-import UpperHeader from "../upperHeader/Upper_Header";
 import { FaSearch } from "react-icons/fa";
+import UpperHeader from "../upperHeader/Upper_Header";
 import HeaderLower from "../HeaderlowerNav/HeaderLower";
+import { LogoSvg } from "../../imagepath";
+import { useNavigate } from "react-router-dom";
 
 const Header = ({ parms }) => {
-  const onHandleMobileMenu = () => {
+  const [menu, setMenu] = useState(false);
+  const menuRef = useRef(null);
+  const navigate = useNavigate();
+
+  const onHandleMobileMenu = (e) => {
+    // Prevent click event from propagating when clicking the button itself
+    e.stopPropagation();
     var root = document.getElementsByTagName("html")[0];
     root.classList.add("menu-opened");
+    setMenu(true); // Open the menu when the button is clicked
   };
 
-  const onhandleCloseMenu = () => {
+  const onhandleCloseMenu = (e) => {
+    // Prevent click event from propagating when clicking the close button itself
+    e.stopPropagation();
     var root = document.getElementsByTagName("html")[0];
     root.classList.remove("menu-opened");
+    setMenu(false); // Close the menu when the close button is clicked
   };
-  const [menu, setMenu] = useState(false);
-  const toggleMobileMenu = () => {
-    setMenu(!menu);
+
+  const toggleMobileMenu = (e) => {
+    // Prevent click event from propagating when clicking inside the menu
+    e.stopPropagation();
+    setMenu(!menu); // Toggle menu visibility
   };
+
+  // Close the menu when clicking outside of it
+  const handleClickOutside = (event) => {
+    if (menuRef.current && !menuRef.current.contains(event.target)) {
+      setMenu(false);
+    }
+  };
+
+  // Add event listener for click outside on component mount, and clean up on unmount
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
-    <header className="header" onClick={(value) => toggleMobileMenu()}>
+    <header className="header">
       <UpperHeader />
-      
-        <div className="containerWrapper">
+
+      <div className="containerWrapper">
         <div className="container">
-        <nav className="navbar navbar-expand-lg header-nav">
-          <div className="navbar-header">
-            <Link id="mobile_btn" to="#" onClick={() => onHandleMobileMenu()}>
-              <span className="bar-icon">
-                <span></span>
-                <span></span>
-                <span></span>
-              </span>
-            </Link>
-            <Link to="/index" className="navbar-brand logo">
-              <img src={LogoSvg} className="img-fluid" alt="Logo" />
-            </Link>
-          </div>
-          <div className="main-menu-wrapper">
-            <div className="menu-header">
-              <Link to="/index" className="menu-logo">
+          <nav className="navbar navbar-expand-lg header-nav">
+            <div className="navbar-header">
+              <Link
+                id="mobile_btn"
+                to="#"
+                onClick={onHandleMobileMenu} // Open menu on button click
+              >
+                <span className="bar-icon">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </span>
+              </Link>
+              <Link to="/index" className="navbar-brand logo">
                 <img src={LogoSvg} className="img-fluid" alt="Logo" />
               </Link>
-              <Link
-                id="menu_close"
-                className="menu-close"
-                to="#"
-                onClick={() => onhandleCloseMenu()}
-              >
-                {" "}
-                <i className="fas fa-times"></i>
-              </Link>
             </div>
-            <ul className="main-nav">
-              {/* <HomeMenu activeMenu={"Classified"} />
-              <ListingMenu activeMenu={parms}/>
-              <PagesMenu activeMenus={parms}/>
-              <UserPagesMenu />
-              <BlogMenu activesMenus={parms}/> */}
-              {/* <li>
-                <Link to="/contact">Contact</Link>
-              </li> */}
-              <li>
-                <div className="search_container">
-                  <input
-                    type="text"
-                    placeholder="What are you looking for"
-                    className="search_nav"
-                  />
-                  <div className="searchlogo_container">
-                    <FaSearch className="searchlogo_nav" />
+            <div
+              className={`main-menu-wrapper ${menu ? "opened" : ""}`}
+              ref={menuRef} // Attach the reference here
+            >
+              <div className="menu-header">
+                <Link to="/index" className="menu-logo">
+                  <img src={LogoSvg} className="img-fluid" alt="Logo" />
+                </Link>
+                <Link
+                  id="menu_close"
+                  className="menu-close"
+                  to="#"
+                  onClick={onhandleCloseMenu} // Close menu on button click
+                >
+                  <i className="fas fa-times"></i>
+                </Link>
+              </div>
+              <ul className="main-nav">
+                <li>
+                  <div className="search_container">
+                    <input
+                      type="text"
+                      placeholder="What are you looking for"
+                      className="search_nav"
+                    />
+                    <div className="searchlogo_container">
+                      <FaSearch className="searchlogo_nav" />
+                    </div>
                   </div>
-                </div>
+                </li>
+                <li className="login-link">
+                  <Link to="/signup">Sign Up</Link>
+                </li>
+                <li className="login-link">
+                  <Link to="/login">Sign In</Link>
+                </li>
+
+                {/* side bar  */}
+                <li>
+                  <Link to={() => navigate(-1)}>Automative</Link>
+                </li>
+                <li>
+                  <Link to={() => navigate(-1)}>Electronic</Link>
+                </li>
+                <li>
+                  <Link to={() => navigate(-1)}>Fashion Style</Link>
+                </li>
+                <li>
+                  <Link to={() => navigate(-1)}>Health Care</Link>
+                </li>
+                <li>
+                  <Link to={() => navigate(-1)}>Job Board</Link>
+                </li>
+                <li>
+                  <Link to={() => navigate(-1)}>Real Esate</Link>
+                </li>
+                <li>
+                  <Link to={() => navigate(-1)}>Travel</Link>
+                </li>
+                <li>
+                  <Link to={() => navigate(-1)}>Sport & Games</Link>
+                </li>
+              </ul>
+            </div>
+            <ul className="nav header-navbar-rht">
+              <li className="nav-item">
+                <Link className="nav-link header-reg" to="/signup">
+                  Sign Up
+                </Link>
               </li>
-              <li className="login-link">
-                <Link to="/signup">Sign Up</Link>
+              <li className="nav-item">
+                <Link className="nav-link header-login" to="/login">
+                  Sign In
+                </Link>
               </li>
-              <li className="login-link">
-                <Link to="/login">Sign In</Link>
+              <li className="nav-item">
+                <Link
+                  className="nav-link header-login add-listing"
+                  to="/add-listing"
+                >
+                  <i className="fa-solid fa-plus"></i> Add Listing
+                </Link>
               </li>
             </ul>
-          </div>
-          <ul className="nav header-navbar-rht">
-            <li className="nav-item">
-              <Link className="nav-link header-reg" to="/signup">
-                Sign Up
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link header-login" to="/login">
-                {" "}
-                Sign In
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link
-                className="nav-link header-login add-listing"
-                to="/add-listing"
-              >
-                <i className="fa-solid fa-plus"></i> Add Listing
-              </Link>
-            </li>
-          </ul>
-        </nav>
-      </div>
+          </nav>
         </div>
-       <HeaderLower/>
+      </div>
+      <HeaderLower />
     </header>
   );
 };

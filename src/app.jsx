@@ -9,6 +9,7 @@ import "./assets/css/feather.css";
 import "./assets/css/owl.theme.default.min.css";
 import "./assets/css/slick.css";
 import "./assets/css/style.css";
+import "./assets/css/quaries.css";
 import Home2 from "./components/home2";
 import Home3 from "./components/home3";
 import Home4 from "./components/home4";
@@ -49,74 +50,57 @@ import Contract from "./components/contract";
 import SignUp from "./components/signUp";
 import Login from "./components/login";
 import ForgotPassword from "./components/forgotPassword";
-import config from 'config';
-import  Dynamic_Routes   from "./components/dyanmic_routes/index"
-
-
+import config from "config";
+import Dynamic_Routes from "./components/dyanmic_routes/index";
 export const App = () => {
   return (
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
     <BrowserRouter basename={`${config.publicPath}`}>
-    <Routes>
-      {/* Home Routes */}
-      <Route path="/index" element={<Home />} />
-      <Route path="/index-2" element={<Home2 />} />
-      <Route path="/index-3" element={<Home3 />} />
-      <Route path="/index-4" element={<Home4 />} />
-      <Route path="/index-5" element={<Home5 />} />
-      <Route path="/index-6" element={<Home6 />} />
-      <Route path="/index-7" element={<Home7 />} />
-      <Route path="/index-8" element={<Home8 />} />
-      <Route path="/index-9" element={<Home9 />} /> 
-      <Route path="/listing-grid" element={<Listing_Grid />} /> 
-      <Route path="/service-details" element={<ServiceDetails />} /> 
-      <Route path="/listingmap-list" element={<ListingMap />} /> 
-      <Route path="/listing-grid-sidebar" element={<GridSidebar />} /> 
-      <Route path="/listing-list-sidebar" element={<ListSidebar />} /> 
-      <Route path="/listingmap-grid" element={<GridMap />} />
-      <Route path="/about" element={<About />} />
-      <Route path="/pricing" element={<Pricing />} />
-      <Route path="/faq" element={<Faq />} />
-      <Route path="/gallery" element={<Gallary />} />
-      <Route path="/categories" element={<Category />} />
-      <Route path="/howitworks" element={<HowItWork/>} />
-      <Route path="/terms-condition" element={<TermsCondition/>} />
-      <Route path="/privacy-policy" element={<PrivacyPolicy/>} />
-      <Route path="/error-404" element={<Error404/>} />
-      <Route path="/error-500" element={<Error504/>} />
-      <Route path="/dashboard" element={<Dashboard/>} />
-      <Route path="/profile" element={<Profile/>} />
-      <Route path="/bookmarks" element={<Bookmarks/>} />
-      <Route path="/my-listing" element={<MyListe/>} />
-      <Route path="/messages" element={<Message/>} />
-      <Route path="/reviews" element={<Review/>} />
-      <Route path="/add-listing" element={<AddLisiting/>} />
-      <Route path="/blog-list" element={<BlogList/>} />
-      <Route path="/blog-details" element={<BlogDetailsh/>} />
-      <Route path="/blog-grid" element={<BlogGrid/>} />
-      <Route path="/blog-list-sidebar" element={<BlogListSideBar/>} />
-      <Route path="/blog-grid-sidebar" element={<BlogGridSidebar/>} />
-      <Route path="/contact" element={<Contract/>} />
-      <Route path="/signup" element={<SignUp/>} />
-      <Route path="/login" element={<Login/>} />
-      <Route path="/forgot-password" element={<ForgotPassword/>} />
-      {/* features  dynamic   routes */}
-      <Route  path="/routes/:id" element ={<Dynamic_Routes/>}  />
-
-    </Routes>
+      <Routes>
+        {/* Home Routes */}
+        <Route path="/index" element={<Home />} />
+        <Route path="/index-2" element={<Home2 />} />
+        <Route path="/index-3" element={<Home3 />} />
+        <Route path="/index-4" element={<Home4 />} />
+        <Route path="/index-5" element={<Home5 />} />
+        <Route path="/index-6" element={<Home6 />} />
+        <Route path="/index-7" element={<Home7 />} />
+        <Route path="/index-8" element={<Home8 />} />
+        <Route path="/index-9" element={<Home9 />} />
+        <Route path="/listing-grid" element={<Listing_Grid />} />
+        <Route path="/service-details" element={<ServiceDetails />} />
+        <Route path="/listingmap-list" element={<ListingMap />} />
+        <Route path="/listing-grid-sidebar" element={<GridSidebar />} />
+        <Route path="/listing-list-sidebar" element={<ListSidebar />} />
+        <Route path="/listingmap-grid" element={<GridMap />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/pricing" element={<Pricing />} />
+        <Route path="/faq" element={<Faq />} />
+        <Route path="/gallery" element={<Gallary />} />
+        <Route path="/categories" element={<Category />} />
+        <Route path="/howitworks" element={<HowItWork />} />
+        <Route path="/terms-condition" element={<TermsCondition />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/error-404" element={<Error404 />} />
+        <Route path="/error-500" element={<Error504 />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/bookmarks" element={<Bookmarks />} />
+        <Route path="/my-listing" element={<MyListe />} />
+        <Route path="/messages" element={<Message />} />
+        <Route path="/reviews" element={<Review />} />
+        <Route path="/add-listing" element={<AddLisiting />} />
+        <Route path="/blog-list" element={<BlogList />} />
+        <Route path="/blog-details" element={<BlogDetailsh />} />
+        <Route path="/blog-grid" element={<BlogGrid />} />
+        <Route path="/blog-list-sidebar" element={<BlogListSideBar />} />
+        <Route path="/blog-grid-sidebar" element={<BlogGridSidebar />} />
+        <Route path="/contact" element={<Contract />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        {/* features  dynamic   routes */}
+        <Route path="/routes/:id" element={<Dynamic_Routes />} />
+      </Routes>
     </BrowserRouter>
   );
 };

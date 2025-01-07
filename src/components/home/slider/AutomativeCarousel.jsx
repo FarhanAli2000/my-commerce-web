@@ -15,6 +15,9 @@ import {
 import Slider from "react-slick";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import img from "./automotive.png";
 
 export default function AutomativeCarousel() {
   const [slidesToShow, setSlidesToShow] = useState(5);
@@ -24,7 +27,7 @@ export default function AutomativeCarousel() {
       const width = window.innerWidth;
 
       if (width <= 767) {
-        setSlidesToShow(1); 
+        setSlidesToShow(1);
       } else if (width >= 768 && width <= 1024) {
         setSlidesToShow(3);
       } else {
@@ -42,7 +45,7 @@ export default function AutomativeCarousel() {
 
   const settings = {
     dots: false,
-    arrows: false,
+    arrows: true,
     infinite: true,
     lazyLoad: true,
     speed: 1000,
@@ -50,10 +53,9 @@ export default function AutomativeCarousel() {
     slidesToScroll: 1,
   };
 
-
   const slider = useRef();
   return (
-    <section className="featured-section-color">
+    <section className="featured-section-color automotive_card_section ">
       <div className="container">
         <div className="row align-items-center">
           <div className="featuresection_infodev">
@@ -75,26 +77,7 @@ export default function AutomativeCarousel() {
             <div className="highlighter"></div>
           </div>
 
-          <button
-            type="button"
-            role="presentation"
-            className="owl-prev"
-            onClick={() => {
-              console.log(slider?.current);
-              slider?.current?.slickPrev();
-            }}
-          >
-            <i className="fa-solid fa-angle-left"></i>
-          </button>
 
-          <button
-            type="button"
-            role="presentation"
-            className="owl-next"
-            onClick={() => slider?.current?.slickNext()}
-          >
-            <i className="fa-solid fa-angle-right"></i>
-          </button>
         </div>
         <div className="row">
           <div className="col-md-12">
@@ -107,14 +90,61 @@ export default function AutomativeCarousel() {
                 <div className="card aos" data-aos="fade-up">
                   <div className="blog-widget">
                     <div className="blog-img">
-                      <Link to="/service-details">
-                        <img
-                          src={Feature9}
-                          className="img-fluid"
-                          alt="blog-img"
-                        />
+                      <Link to="/index">
+                        <img src={img} className="img-fluid" alt="blog-img" />
                       </Link>
-  
+                    </div>
+                    <div className="bloglist-content">
+                      <div className="card-body">
+                        <h6>
+                          <Link to="/automative">Mercedez Benz</Link>
+                        </h6>
+                        <div className="location-info">
+                          <p style={{ fontSize: "0.7rem" }}>
+                            Education | Education | Education
+                          </p>
+                        </div>
+                        <div className="blog-location-details">
+                          <div
+                            className="location-info"
+                            style={{ marginTop: "1rem" }}
+                          >
+                            {/* <i className="feather-map-pin"></i> */}
+                            Los Angeles
+                          </div>
+                          {/* <div className="location-info">
+                            <i className="fa-regular fa-calendar-days"></i> 06
+                            Oct, 2022
+                          </div> */}
+                        </div>
+                        <div className="amount-details">
+                          <div className="amount">
+                            <span
+                              className="validrate"
+                              style={{ fontFamily: "Inter" }}
+                            >
+                              $350
+                            </span>
+                            {/* <span>$450</span> */}
+                          </div>
+                          <div
+                            className="ratings"
+                            style={{ fontFamily: "Inter" }}
+                          >
+                            {/* <span>4.7</span>  */}1 DAYS AGO
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="card aos" data-aos="fade-up">
+                  <div className="blog-widget">
+                    <div className="blog-img">
+                      <Link to="/automative">
+                        <img src={img} className="img-fluid" alt="blog-img" />
+                      </Link>
                     </div>
                     <div className="bloglist-content">
                       <div className="card-body">
@@ -139,15 +169,18 @@ export default function AutomativeCarousel() {
                         {/* </div> */}
                         {/* </div> */}
                         <h6>
-                          <Link to="/service-details">
-                            2017 Gulfsteam Ameri-lite
-                          </Link>
+                          <Link to="/index">Mercedez Benz</Link>
                         </h6>
                         <div className="location-info">
-                          Education | Education
+                          <p style={{ fontSize: "0.7rem" }}>
+                            Education | Education | Education
+                          </p>
                         </div>
                         <div className="blog-location-details">
-                          <div className="location-info">
+                          <div
+                            className="location-info"
+                            style={{ marginTop: "1rem" }}
+                          >
                             {/* <i className="feather-map-pin"></i> */}
                             Los Angeles
                           </div>
@@ -158,10 +191,18 @@ export default function AutomativeCarousel() {
                         </div>
                         <div className="amount-details">
                           <div className="amount">
-                            <span className="validrate">$350</span>
+                            <span
+                              className="validrate"
+                              style={{ fontFamily: "Inter" }}
+                            >
+                              $350
+                            </span>
                             {/* <span>$450</span> */}
                           </div>
-                          <div className="ratings">
+                          <div
+                            className="ratings"
+                            style={{ fontFamily: "Inter" }}
+                          >
                             {/* <span>4.7</span>  */}1 DAYS AGO
                           </div>
                         </div>
@@ -170,51 +211,366 @@ export default function AutomativeCarousel() {
                   </div>
                 </div>
 
+                <div className="card aos" data-aos="fade-up">
+                  <div className="blog-widget">
+                    <div className="blog-img">
+                      <Link to="/index">
+                        <img src={img} className="img-fluid" alt="blog-img" />
+                      </Link>
+                    </div>
+                    <div className="bloglist-content">
+                      <div className="card-body">
+                        <h6>
+                          <Link to="/index">Mercedez Benz</Link>
+                        </h6>
+                        <div className="location-info">
+                          <p style={{ fontSize: "0.7rem" }}>
+                            Education | Education | Education
+                          </p>
+                        </div>
+                        <div className="blog-location-details">
+                          <div
+                            className="location-info"
+                            style={{ marginTop: "1rem" }}
+                          >
+                            {/* <i className="feather-map-pin"></i> */}
+                            Los Angeles
+                          </div>
+                          {/* <div className="location-info">
+                            <i className="fa-regular fa-calendar-days"></i> 06
+                            Oct, 2022
+                          </div> */}
+                        </div>
+                        <div className="amount-details">
+                          <div className="amount">
+                            <span
+                              className="validrate"
+                              style={{ fontFamily: "Inter" }}
+                            >
+                              $350
+                            </span>
+                            {/* <span>$450</span> */}
+                          </div>
+                          <div
+                            className="ratings"
+                            style={{ fontFamily: "Inter" }}
+                          >
+                            {/* <span>4.7</span>  */}1 DAYS AGO
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="card aos" data-aos="fade-up">
+                  <div className="blog-widget">
+                    <div className="blog-img">
+                      <Link to="/index">
+                        <img src={img} className="img-fluid" alt="blog-img" />
+                      </Link>
+                    </div>
+                    <div className="bloglist-content">
+                      <div className="card-body">
+                        {/* <div className="blogfeaturelink"> */}
+                        {/* <div className="grid-author">
+                            <img src={ProfileAvatar02} alt="author" />
+                          </div> */}
+                        {/* <div className="blog-features"> */}
+                        {/* <Link to="#"> */}
+                        {/* <span>
+                                {" "}
+                                <i className="fa-regular fa-circle-stop"></i>{" "}
+                                Education
+                              </span> */}
+                        {/* </Link> */}
+                        {/* </div>
+                          <div className="blog-author text-end">
+                            <span>
+                              {" "}
+                              <i className="feather-eye"></i>4000{" "}
+                            </span> */}
+                        {/* </div> */}
+                        {/* </div> */}
+                        <h6>
+                          <Link to="/service-details">Mercedez Benz</Link>
+                        </h6>
+                        <div className="location-info">
+                          <p style={{ fontSize: "0.7rem" }}>
+                            Education | Education | Education
+                          </p>
+                        </div>
+                        <div className="blog-location-details">
+                          <div
+                            className="location-info"
+                            style={{ marginTop: "1rem" }}
+                          >
+                            {/* <i className="feather-map-pin"></i> */}
+                            Los Angeles
+                          </div>
+                          {/* <div className="location-info">
+                            <i className="fa-regular fa-calendar-days"></i> 06
+                            Oct, 2022
+                          </div> */}
+                        </div>
+                        <div className="amount-details">
+                          <div className="amount">
+                            <span
+                              className="validrate"
+                              style={{ fontFamily: "Inter" }}
+                            >
+                              $350
+                            </span>
+                            {/* <span>$450</span> */}
+                          </div>
+                          <div
+                            className="ratings"
+                            style={{ fontFamily: "Inter" }}
+                          >
+                            {/* <span>4.7</span>  */}1 DAYS AGO
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="card aos" data-aos="fade-up">
+                  <div className="blog-widget">
+                    <div className="blog-img">
+                      <Link to="/index">
+                        <img src={img} className="img-fluid" alt="blog-img" />
+                      </Link>
+                    </div>
+                    <div className="bloglist-content">
+                      <div className="card-body">
+                        {/* <div className="blogfeaturelink"> */}
+                        {/* <div className="grid-author">
+                            <img src={ProfileAvatar02} alt="author" />
+                          </div> */}
+                        {/* <div className="blog-features"> */}
+                        {/* <Link to="#"> */}
+                        {/* <span>
+                                {" "}
+                                <i className="fa-regular fa-circle-stop"></i>{" "}
+                                Education
+                              </span> */}
+                        {/* </Link> */}
+                        {/* </div>
+                          <div className="blog-author text-end">
+                            <span>
+                              {" "}
+                              <i className="feather-eye"></i>4000{" "}
+                            </span> */}
+                        {/* </div> */}
+                        {/* </div> */}
+                        <h6>
+                          <Link to="/service-details">Mercedez Benz</Link>
+                        </h6>
+                        <div className="location-info">
+                          <p style={{ fontSize: "0.7rem" }}>
+                            Education | Education | Education
+                          </p>
+                        </div>
+                        <div className="blog-location-details">
+                          <div
+                            className="location-info"
+                            style={{ marginTop: "1rem" }}
+                          >
+                            {/* <i className="feather-map-pin"></i> */}
+                            Los Angeles
+                          </div>
+                          {/* <div className="location-info">
+                            <i className="fa-regular fa-calendar-days"></i> 06
+                            Oct, 2022
+                          </div> */}
+                        </div>
+                        <div className="amount-details">
+                          <div className="amount">
+                            <span
+                              className="validrate"
+                              style={{ fontFamily: "Inter" }}
+                            >
+                              $350
+                            </span>
+                            {/* <span>$450</span> */}
+                          </div>
+                          <div
+                            className="ratings"
+                            style={{ fontFamily: "Inter" }}
+                          >
+                            {/* <span>4.7</span>  */}1 DAYS AGO
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="card aos" data-aos="fade-up">
+                  <div className="blog-widget">
+                    <div className="blog-img">
+                      <Link to="/index">
+                        <img src={img} className="img-fluid" alt="blog-img" />
+                      </Link>
+                    </div>
+                    <div className="bloglist-content">
+                      <div className="card-body">
+                        {/* <div className="blogfeaturelink"> */}
+                        {/* <div className="grid-author">
+                            <img src={ProfileAvatar02} alt="author" />
+                          </div> */}
+                        {/* <div className="blog-features"> */}
+                        {/* <Link to="#"> */}
+                        {/* <span>
+                                {" "}
+                                <i className="fa-regular fa-circle-stop"></i>{" "}
+                                Education
+                              </span> */}
+                        {/* </Link> */}
+                        {/* </div>
+                          <div className="blog-author text-end">
+                            <span>
+                              {" "}
+                              <i className="feather-eye"></i>4000{" "}
+                            </span> */}
+                        {/* </div> */}
+                        {/* </div> */}
+                        <h6>
+                          <Link to="/service-details">Mercedez Benz</Link>
+                        </h6>
+                        <div className="location-info">
+                          <p style={{ fontSize: "0.7rem" }}>
+                            Education | Education | Education
+                          </p>
+                        </div>
+                        <div className="blog-location-details">
+                          <div
+                            className="location-info"
+                            style={{ marginTop: "1rem" }}
+                          >
+                            {/* <i className="feather-map-pin"></i> */}
+                            Los Angeles
+                          </div>
+                          {/* <div className="location-info">
+                            <i className="fa-regular fa-calendar-days"></i> 06
+                            Oct, 2022
+                          </div> */}
+                        </div>
+                        <div className="amount-details">
+                          <div className="amount">
+                            <span
+                              className="validrate"
+                              style={{ fontFamily: "Inter" }}
+                            >
+                              $350
+                            </span>
+                            {/* <span>$450</span> */}
+                          </div>
+                          <div
+                            className="ratings"
+                            style={{ fontFamily: "Inter" }}
+                          >
+                            {/* <span>4.7</span>  */}1 DAYS AGO
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="card aos" data-aos="fade-up">
+                  <div className="blog-widget">
+                    <div className="blog-img">
+                      <Link to="/index">
+                        <img src={img} className="img-fluid" alt="blog-img" />
+                      </Link>
+                    </div>
+                    <div className="bloglist-content">
+                      <div className="card-body">
+                        {/* <div className="blogfeaturelink"> */}
+                        {/* <div className="grid-author">
+                            <img src={ProfileAvatar02} alt="author" />
+                          </div> */}
+                        {/* <div className="blog-features"> */}
+                        {/* <Link to="#"> */}
+                        {/* <span>
+                                {" "}
+                                <i className="fa-regular fa-circle-stop"></i>{" "}
+                                Education
+                              </span> */}
+                        {/* </Link> */}
+                        {/* </div>
+                          <div className="blog-author text-end">
+                            <span>
+                              {" "}
+                              <i className="feather-eye"></i>4000{" "}
+                            </span> */}
+                        {/* </div> */}
+                        {/* </div> */}
+                        <h6>
+                          <Link to="/service-details">Mercedez Benz</Link>
+                        </h6>
+                        <div className="location-info">
+                          <p style={{ fontSize: "0.7rem" }}>
+                            Education | Education | Education
+                          </p>
+                        </div>
+                        <div className="blog-location-details">
+                          <div
+                            className="location-info"
+                            style={{ marginTop: "1rem" }}
+                          >
+                            {/* <i className="feather-map-pin"></i> */}
+                            Los Angeles
+                          </div>
+                          {/* <div className="location-info">
+                            <i className="fa-regular fa-calendar-days"></i> 06
+                            Oct, 2022
+                          </div> */}
+                        </div>
+                        <div className="amount-details">
+                          <div className="amount">
+                            <span
+                              className="validrate"
+                              style={{ fontFamily: "Inter" }}
+                            >
+                              $350
+                            </span>
+                            {/* <span>$450</span> */}
+                          </div>
+                          <div
+                            className="ratings"
+                            style={{ fontFamily: "Inter" }}
+                          >
+                            {/* <span>4.7</span>  */}1 DAYS AGO
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
                 <div className="card aos" data-aos="fade-up">
                   <div className="blog-widget">
                     <div className="blog-img">
                       <Link to="/service-details">
-                        <img
-                          src={Feature9}
-                          className="img-fluid"
-                          alt="blog-img"
-                        />
+                        <img src={img} className="img-fluid" alt="blog-img" />
                       </Link>
-  
                     </div>
                     <div className="bloglist-content">
                       <div className="card-body">
-                        {/* <div className="blogfeaturelink"> */}
-                        {/* <div className="grid-author">
-                            <img src={ProfileAvatar02} alt="author" />
-                          </div> */}
-                        {/* <div className="blog-features"> */}
-                        {/* <Link to="#"> */}
-                        {/* <span>
-                                {" "}
-                                <i className="fa-regular fa-circle-stop"></i>{" "}
-                                Education
-                              </span> */}
-                        {/* </Link> */}
-                        {/* </div>
-                          <div className="blog-author text-end">
-                            <span>
-                              {" "}
-                              <i className="feather-eye"></i>4000{" "}
-                            </span> */}
-                        {/* </div> */}
-                        {/* </div> */}
                         <h6>
                           <Link to="/service-details">
-                            2017 Gulfsteam Ameri-lite
+                            Gulfsteam Ameri-lite
                           </Link>
                         </h6>
                         <div className="location-info">
                           Education | Education
                         </div>
                         <div className="blog-location-details">
-                          <div className="location-info">
+                          <div
+                            className="location-info"
+                            style={{ marginTop: "1rem" }}
+                          >
                             {/* <i className="feather-map-pin"></i> */}
                             Los Angeles
                           </div>
@@ -225,10 +581,18 @@ export default function AutomativeCarousel() {
                         </div>
                         <div className="amount-details">
                           <div className="amount">
-                            <span className="validrate">$350</span>
+                            <span
+                              className="validrate"
+                              style={{ fontFamily: "Inter" }}
+                            >
+                              $350
+                            </span>
                             {/* <span>$450</span> */}
                           </div>
-                          <div className="ratings">
+                          <div
+                            className="ratings"
+                            style={{ fontFamily: "Inter" }}
+                          >
                             {/* <span>4.7</span>  */}1 DAYS AGO
                           </div>
                         </div>
@@ -236,631 +600,6 @@ export default function AutomativeCarousel() {
                     </div>
                   </div>
                 </div>
-
-
-
-
-
-                <div className="card aos" data-aos="fade-up">
-                  <div className="blog-widget">
-                    <div className="blog-img">
-                      <Link to="/service-details">
-                        <img
-                          src={Feature9}
-                          className="img-fluid"
-                          alt="blog-img"
-                        />
-                      </Link>
-  
-                    </div>
-                    <div className="bloglist-content">
-                      <div className="card-body">
-                        {/* <div className="blogfeaturelink"> */}
-                        {/* <div className="grid-author">
-                            <img src={ProfileAvatar02} alt="author" />
-                          </div> */}
-                        {/* <div className="blog-features"> */}
-                        {/* <Link to="#"> */}
-                        {/* <span>
-                                {" "}
-                                <i className="fa-regular fa-circle-stop"></i>{" "}
-                                Education
-                              </span> */}
-                        {/* </Link> */}
-                        {/* </div>
-                          <div className="blog-author text-end">
-                            <span>
-                              {" "}
-                              <i className="feather-eye"></i>4000{" "}
-                            </span> */}
-                        {/* </div> */}
-                        {/* </div> */}
-                        <h6>
-                          <Link to="/service-details">
-                            2017 Gulfsteam Ameri-lite
-                          </Link>
-                        </h6>
-                        <div className="location-info">
-                          Education | Education
-                        </div>
-                        <div className="blog-location-details">
-                          <div className="location-info">
-                            {/* <i className="feather-map-pin"></i> */}
-                            Los Angeles
-                          </div>
-                          {/* <div className="location-info">
-                            <i className="fa-regular fa-calendar-days"></i> 06
-                            Oct, 2022
-                          </div> */}
-                        </div>
-                        <div className="amount-details">
-                          <div className="amount">
-                            <span className="validrate">$350</span>
-                            {/* <span>$450</span> */}
-                          </div>
-                          <div className="ratings">
-                            {/* <span>4.7</span>  */}1 DAYS AGO
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-
-
-
-                <div className="card aos" data-aos="fade-up">
-                  <div className="blog-widget">
-                    <div className="blog-img">
-                      <Link to="/service-details">
-                        <img
-                          src={Feature9}
-                          className="img-fluid"
-                          alt="blog-img"
-                        />
-                      </Link>
-  
-                    </div>
-                    <div className="bloglist-content">
-                      <div className="card-body">
-                        {/* <div className="blogfeaturelink"> */}
-                        {/* <div className="grid-author">
-                            <img src={ProfileAvatar02} alt="author" />
-                          </div> */}
-                        {/* <div className="blog-features"> */}
-                        {/* <Link to="#"> */}
-                        {/* <span>
-                                {" "}
-                                <i className="fa-regular fa-circle-stop"></i>{" "}
-                                Education
-                              </span> */}
-                        {/* </Link> */}
-                        {/* </div>
-                          <div className="blog-author text-end">
-                            <span>
-                              {" "}
-                              <i className="feather-eye"></i>4000{" "}
-                            </span> */}
-                        {/* </div> */}
-                        {/* </div> */}
-                        <h6>
-                          <Link to="/service-details">
-                            2017 Gulfsteam Ameri-lite
-                          </Link>
-                        </h6>
-                        <div className="location-info">
-                          Education | Education
-                        </div>
-                        <div className="blog-location-details">
-                          <div className="location-info">
-                            {/* <i className="feather-map-pin"></i> */}
-                            Los Angeles
-                          </div>
-                          {/* <div className="location-info">
-                            <i className="fa-regular fa-calendar-days"></i> 06
-                            Oct, 2022
-                          </div> */}
-                        </div>
-                        <div className="amount-details">
-                          <div className="amount">
-                            <span className="validrate">$350</span>
-                            {/* <span>$450</span> */}
-                          </div>
-                          <div className="ratings">
-                            {/* <span>4.7</span>  */}1 DAYS AGO
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-
-
-
-                <div className="card aos" data-aos="fade-up">
-                  <div className="blog-widget">
-                    <div className="blog-img">
-                      <Link to="/service-details">
-                        <img
-                          src={Feature9}
-                          className="img-fluid"
-                          alt="blog-img"
-                        />
-                      </Link>
-  
-                    </div>
-                    <div className="bloglist-content">
-                      <div className="card-body">
-                        {/* <div className="blogfeaturelink"> */}
-                        {/* <div className="grid-author">
-                            <img src={ProfileAvatar02} alt="author" />
-                          </div> */}
-                        {/* <div className="blog-features"> */}
-                        {/* <Link to="#"> */}
-                        {/* <span>
-                                {" "}
-                                <i className="fa-regular fa-circle-stop"></i>{" "}
-                                Education
-                              </span> */}
-                        {/* </Link> */}
-                        {/* </div>
-                          <div className="blog-author text-end">
-                            <span>
-                              {" "}
-                              <i className="feather-eye"></i>4000{" "}
-                            </span> */}
-                        {/* </div> */}
-                        {/* </div> */}
-                        <h6>
-                          <Link to="/service-details">
-                            2017 Gulfsteam Ameri-lite
-                          </Link>
-                        </h6>
-                        <div className="location-info">
-                          Education | Education
-                        </div>
-                        <div className="blog-location-details">
-                          <div className="location-info">
-                            {/* <i className="feather-map-pin"></i> */}
-                            Los Angeles
-                          </div>
-                          {/* <div className="location-info">
-                            <i className="fa-regular fa-calendar-days"></i> 06
-                            Oct, 2022
-                          </div> */}
-                        </div>
-                        <div className="amount-details">
-                          <div className="amount">
-                            <span className="validrate">$350</span>
-                            {/* <span>$450</span> */}
-                          </div>
-                          <div className="ratings">
-                            {/* <span>4.7</span>  */}1 DAYS AGO
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-
-
-
-                <div className="card aos" data-aos="fade-up">
-                  <div className="blog-widget">
-                    <div className="blog-img">
-                      <Link to="/service-details">
-                        <img
-                          src={Feature9}
-                          className="img-fluid"
-                          alt="blog-img"
-                        />
-                      </Link>
-  
-                    </div>
-                    <div className="bloglist-content">
-                      <div className="card-body">
-                        {/* <div className="blogfeaturelink"> */}
-                        {/* <div className="grid-author">
-                            <img src={ProfileAvatar02} alt="author" />
-                          </div> */}
-                        {/* <div className="blog-features"> */}
-                        {/* <Link to="#"> */}
-                        {/* <span>
-                                {" "}
-                                <i className="fa-regular fa-circle-stop"></i>{" "}
-                                Education
-                              </span> */}
-                        {/* </Link> */}
-                        {/* </div>
-                          <div className="blog-author text-end">
-                            <span>
-                              {" "}
-                              <i className="feather-eye"></i>4000{" "}
-                            </span> */}
-                        {/* </div> */}
-                        {/* </div> */}
-                        <h6>
-                          <Link to="/service-details">
-                            2017 Gulfsteam Ameri-lite
-                          </Link>
-                        </h6>
-                        <div className="location-info">
-                          Education | Education
-                        </div>
-                        <div className="blog-location-details">
-                          <div className="location-info">
-                            {/* <i className="feather-map-pin"></i> */}
-                            Los Angeles
-                          </div>
-                          {/* <div className="location-info">
-                            <i className="fa-regular fa-calendar-days"></i> 06
-                            Oct, 2022
-                          </div> */}
-                        </div>
-                        <div className="amount-details">
-                          <div className="amount">
-                            <span className="validrate">$350</span>
-                            {/* <span>$450</span> */}
-                          </div>
-                          <div className="ratings">
-                            {/* <span>4.7</span>  */}1 DAYS AGO
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-
-
-
-                <div className="card aos" data-aos="fade-up">
-                  <div className="blog-widget">
-                    <div className="blog-img">
-                      <Link to="/service-details">
-                        <img
-                          src={Feature9}
-                          className="img-fluid"
-                          alt="blog-img"
-                        />
-                      </Link>
-  
-                    </div>
-                    <div className="bloglist-content">
-                      <div className="card-body">
-                        {/* <div className="blogfeaturelink"> */}
-                        {/* <div className="grid-author">
-                            <img src={ProfileAvatar02} alt="author" />
-                          </div> */}
-                        {/* <div className="blog-features"> */}
-                        {/* <Link to="#"> */}
-                        {/* <span>
-                                {" "}
-                                <i className="fa-regular fa-circle-stop"></i>{" "}
-                                Education
-                              </span> */}
-                        {/* </Link> */}
-                        {/* </div>
-                          <div className="blog-author text-end">
-                            <span>
-                              {" "}
-                              <i className="feather-eye"></i>4000{" "}
-                            </span> */}
-                        {/* </div> */}
-                        {/* </div> */}
-                        <h6>
-                          <Link to="/service-details">
-                            2017 Gulfsteam Ameri-lite
-                          </Link>
-                        </h6>
-                        <div className="location-info">
-                          Education | Education
-                        </div>
-                        <div className="blog-location-details">
-                          <div className="location-info">
-                            {/* <i className="feather-map-pin"></i> */}
-                            Los Angeles
-                          </div>
-                          {/* <div className="location-info">
-                            <i className="fa-regular fa-calendar-days"></i> 06
-                            Oct, 2022
-                          </div> */}
-                        </div>
-                        <div className="amount-details">
-                          <div className="amount">
-                            <span className="validrate">$350</span>
-                            {/* <span>$450</span> */}
-                          </div>
-                          <div className="ratings">
-                            {/* <span>4.7</span>  */}1 DAYS AGO
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-
-
-
-                <div className="card aos" data-aos="fade-up">
-                  <div className="blog-widget">
-                    <div className="blog-img">
-                      <Link to="/service-details">
-                        <img
-                          src={Feature9}
-                          className="img-fluid"
-                          alt="blog-img"
-                        />
-                      </Link>
-  
-                    </div>
-                    <div className="bloglist-content">
-                      <div className="card-body">
-                        {/* <div className="blogfeaturelink"> */}
-                        {/* <div className="grid-author">
-                            <img src={ProfileAvatar02} alt="author" />
-                          </div> */}
-                        {/* <div className="blog-features"> */}
-                        {/* <Link to="#"> */}
-                        {/* <span>
-                                {" "}
-                                <i className="fa-regular fa-circle-stop"></i>{" "}
-                                Education
-                              </span> */}
-                        {/* </Link> */}
-                        {/* </div>
-                          <div className="blog-author text-end">
-                            <span>
-                              {" "}
-                              <i className="feather-eye"></i>4000{" "}
-                            </span> */}
-                        {/* </div> */}
-                        {/* </div> */}
-                        <h6>
-                          <Link to="/service-details">
-                            2017 Gulfsteam Ameri-lite
-                          </Link>
-                        </h6>
-                        <div className="location-info">
-                          Education | Education
-                        </div>
-                        <div className="blog-location-details">
-                          <div className="location-info">
-                            {/* <i className="feather-map-pin"></i> */}
-                            Los Angeles
-                          </div>
-                          {/* <div className="location-info">
-                            <i className="fa-regular fa-calendar-days"></i> 06
-                            Oct, 2022
-                          </div> */}
-                        </div>
-                        <div className="amount-details">
-                          <div className="amount">
-                            <span className="validrate">$350</span>
-                            {/* <span>$450</span> */}
-                          </div>
-                          <div className="ratings">
-                            {/* <span>4.7</span>  */}1 DAYS AGO
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-
-
-
-
-                <div className="card aos" data-aos="fade-up">
-                  <div className="blog-widget">
-                    <div className="blog-img">
-                      <Link to="/service-details">
-                        <img
-                          src={Feature9}
-                          className="img-fluid"
-                          alt="blog-img"
-                        />
-                      </Link>
-  
-                    </div>
-                    <div className="bloglist-content">
-                      <div className="card-body">
-                        {/* <div className="blogfeaturelink"> */}
-                        {/* <div className="grid-author">
-                            <img src={ProfileAvatar02} alt="author" />
-                          </div> */}
-                        {/* <div className="blog-features"> */}
-                        {/* <Link to="#"> */}
-                        {/* <span>
-                                {" "}
-                                <i className="fa-regular fa-circle-stop"></i>{" "}
-                                Education
-                              </span> */}
-                        {/* </Link> */}
-                        {/* </div>
-                          <div className="blog-author text-end">
-                            <span>
-                              {" "}
-                              <i className="feather-eye"></i>4000{" "}
-                            </span> */}
-                        {/* </div> */}
-                        {/* </div> */}
-                        <h6>
-                          <Link to="/service-details">
-                            2017 Gulfsteam Ameri-lite
-                          </Link>
-                        </h6>
-                        <div className="location-info">
-                          Education | Education
-                        </div>
-                        <div className="blog-location-details">
-                          <div className="location-info">
-                            {/* <i className="feather-map-pin"></i> */}
-                            Los Angeles
-                          </div>
-                          {/* <div className="location-info">
-                            <i className="fa-regular fa-calendar-days"></i> 06
-                            Oct, 2022
-                          </div> */}
-                        </div>
-                        <div className="amount-details">
-                          <div className="amount">
-                            <span className="validrate">$350</span>
-                            {/* <span>$450</span> */}
-                          </div>
-                          <div className="ratings">
-                            {/* <span>4.7</span>  */}1 DAYS AGO
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-
-
-
-                <div className="card aos" data-aos="fade-up">
-                  <div className="blog-widget">
-                    <div className="blog-img">
-                      <Link to="/service-details">
-                        <img
-                          src={Feature9}
-                          className="img-fluid"
-                          alt="blog-img"
-                        />
-                      </Link>
-  
-                    </div>
-                    <div className="bloglist-content">
-                      <div className="card-body">
-                        {/* <div className="blogfeaturelink"> */}
-                        {/* <div className="grid-author">
-                            <img src={ProfileAvatar02} alt="author" />
-                          </div> */}
-                        {/* <div className="blog-features"> */}
-                        {/* <Link to="#"> */}
-                        {/* <span>
-                                {" "}
-                                <i className="fa-regular fa-circle-stop"></i>{" "}
-                                Education
-                              </span> */}
-                        {/* </Link> */}
-                        {/* </div>
-                          <div className="blog-author text-end">
-                            <span>
-                              {" "}
-                              <i className="feather-eye"></i>4000{" "}
-                            </span> */}
-                        {/* </div> */}
-                        {/* </div> */}
-                        <h6>
-                          <Link to="/service-details">
-                            2017 Gulfsteam Ameri-lite
-                          </Link>
-                        </h6>
-                        <div className="location-info">
-                          Education | Education
-                        </div>
-                        <div className="blog-location-details">
-                          <div className="location-info">
-                            {/* <i className="feather-map-pin"></i> */}
-                            Los Angeles
-                          </div>
-                          {/* <div className="location-info">
-                            <i className="fa-regular fa-calendar-days"></i> 06
-                            Oct, 2022
-                          </div> */}
-                        </div>
-                        <div className="amount-details">
-                          <div className="amount">
-                            <span className="validrate">$350</span>
-                            {/* <span>$450</span> */}
-                          </div>
-                          <div className="ratings">
-                            {/* <span>4.7</span>  */}1 DAYS AGO
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-
-
-
-                <div className="card aos" data-aos="fade-up">
-                  <div className="blog-widget">
-                    <div className="blog-img">
-                      <Link to="/service-details">
-                        <img
-                          src={Feature9}
-                          className="img-fluid"
-                          alt="blog-img"
-                        />
-                      </Link>
-  
-                    </div>
-                    <div className="bloglist-content">
-                      <div className="card-body">
-                        {/* <div className="blogfeaturelink"> */}
-                        {/* <div className="grid-author">
-                            <img src={ProfileAvatar02} alt="author" />
-                          </div> */}
-                        {/* <div className="blog-features"> */}
-                        {/* <Link to="#"> */}
-                        {/* <span>
-                                {" "}
-                                <i className="fa-regular fa-circle-stop"></i>{" "}
-                                Education
-                              </span> */}
-                        {/* </Link> */}
-                        {/* </div>
-                          <div className="blog-author text-end">
-                            <span>
-                              {" "}
-                              <i className="feather-eye"></i>4000{" "}
-                            </span> */}
-                        {/* </div> */}
-                        {/* </div> */}
-                        <h6>
-                          <Link to="/service-details">
-                            2017 Gulfsteam Ameri-lite
-                          </Link>
-                        </h6>
-                        <div className="location-info">
-                          Education | Education
-                        </div>
-                        <div className="blog-location-details">
-                          <div className="location-info">
-                            {/* <i className="feather-map-pin"></i> */}
-                            Los Angeles
-                          </div>
-                          {/* <div className="location-info">
-                            <i className="fa-regular fa-calendar-days"></i> 06
-                            Oct, 2022
-                          </div> */}
-                        </div>
-                        <div className="amount-details">
-                          <div className="amount">
-                            <span className="validrate">$350</span>
-                            {/* <span>$450</span> */}
-                          </div>
-                          <div className="ratings">
-                            {/* <span>4.7</span>  */}1 DAYS AGO
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-
               </Slider>
             </div>
           </div>

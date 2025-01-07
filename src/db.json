@@ -1,45 +1,44 @@
 {
-    "books": [
-      {
-        "id": 1,
-        "book_title": "Introduction to Machine Learning",
-        "image_url": "https://via.placeholder.com/150?text=ML+Book",
-        "location": "New York, USA",
-        "price": "$39.99",
-        "time_ago": "1 DAYS AGO"
-      },
-      {
-        "id": 2,
-        "book_title": "Advanced Physics: Concepts & Theories",
-        "image_url": "https://via.placeholder.com/150?text=Physics+Book",
-        "location": "London, UK",
-        "price": "$49.99",
-        "time_ago": "2 DAYS AGO"
-      },
-      {
-        "id": 3,
-        "book_title": "Mathematical Methods for Engineers",
-        "image_url": "https://via.placeholder.com/150?text=Maths+Book",
-        "location": "Berlin, Germany",
-        "price": "$59.99",
-        "time_ago": "5 DAYS AGO"
-      },
-      {
-        "id": 4,
-        "book_title": "Modern History: A Global Perspective",
-        "image_url": "https://via.placeholder.com/150?text=History+Book",
-        "location": "Tokyo, Japan",
-        "price": "$29.99",
-        "time_ago": "3 DAYS AGO"
-      },
-      {
-        "id": 5,
-        "book_title": "Fundamentals of Programming",
-        "image_url": "https://via.placeholder.com/150?text=Programming+Book",
-        "location": "Sydney, Australia",
-        "price": "$24.99",
-        "time_ago": "7 DAYS AGO"
-      }
-    ]
-  }
-  
+  "books": [
+    {
+      "id": 1,
+      "book_title": "2017 Gulfstream Ameri-lite",
+      "image_url": "https://via.placeholder.com/150?text=ML+Book",
+      "location": "New York, USA",
+      "price": "$39.99",
+      "time_ago": "1 DAY AGO"
+    },
+    {
+      "id": 2,
+      "book_title": "2017 Gulfstream Ameri-lite",
+      "image_url": "https://via.placeholder.com/150?text=Physics+Book",
+      "location": "London, UK",
+      "price": "$49.99",
+      "time_ago": "1 DAY AGO"
+    },
+    {
+      "id": 3,
+      "book_title": "2017 Gulfstream Ameri-lite",
+      "image_url": "https://via.placeholder.com/150?text=Maths+Book",
+      "location": "Berlin, Germany",
+      "price": "$59.99",
+      "time_ago": "1 DAY AGO"
+    },
+    {
+      "id": 4,
+      "book_title": "2017 Gulfstream Ameri-lite",
+      "image_url": "https://via.placeholder.com/150?text=History+Book",
+      "location": "Tokyo, Japan",
+      "price": "$29.99",
+      "time_ago": "1 DAY AGO"
+    },
+    {
+      "id": 5,
+      "book_title": "2017 Gulfstream Ameri-lite",
+      "image_url": "https://via.placeholder.com/150?text=Programming+Book",
+      "location": "Sydney, Australia",
+      "price": "$24.99",
+      "time_ago": "1 DAY AGO"
+    }
+  ]
+}

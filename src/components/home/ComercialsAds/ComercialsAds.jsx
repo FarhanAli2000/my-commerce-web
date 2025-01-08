@@ -70,7 +70,6 @@ export default function Carousel() {
 
           {/*  */}
 
-
           {/*  */}
         </div>
         <div className="row">
@@ -87,9 +86,7 @@ export default function Carousel() {
                       <Link to="/index">
                         <img src={img1} className="img-fluid" alt="blog-img" />
                       </Link>
-  
                     </div>
-
                   </div>
                 </div>
 
@@ -109,9 +106,7 @@ export default function Carousel() {
                       <Link to="/index">
                         <img src={img1} className="img-fluid" alt="blog-img" />
                       </Link>
- 
                     </div>
-    
                   </div>
                 </div>
 
@@ -121,9 +116,7 @@ export default function Carousel() {
                       <Link to="/index">
                         <img src={img1} className="img-fluid" alt="blog-img" />
                       </Link>
- 
                     </div>
-    
                   </div>
                 </div>
 
@@ -133,9 +126,7 @@ export default function Carousel() {
                       <Link to="/index">
                         <img src={img1} className="img-fluid" alt="blog-img" />
                       </Link>
- 
                     </div>
-    
                   </div>
                 </div>
 
@@ -145,9 +136,7 @@ export default function Carousel() {
                       <Link to="/index">
                         <img src={img1} className="img-fluid" alt="blog-img" />
                       </Link>
- 
                     </div>
-    
                   </div>
                 </div>
 
@@ -157,9 +146,7 @@ export default function Carousel() {
                       <Link to="/index">
                         <img src={img2} className="img-fluid" alt="blog-img" />
                       </Link>
-
                     </div>
- 
                   </div>
                 </div>
 
@@ -169,9 +156,7 @@ export default function Carousel() {
                       <Link to="/index">
                         <img src={img2} className="img-fluid" alt="blog-img" />
                       </Link>
- 
                     </div>
- 
                   </div>
                 </div>
               </Slider>

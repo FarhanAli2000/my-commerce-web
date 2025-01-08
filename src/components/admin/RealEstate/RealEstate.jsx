@@ -19,6 +19,7 @@ const RealEstate = () => {
   const [link, setLink] = useState("");
   const [timeAgo, setTimeAgo] = useState(new Date()); // Default to current date
   const [imageFile, setImageFile] = useState(null); // For storing the selected image file
+  const [propertyType, setPropertyType] = useState(""); // For storing selected property type
 
   // Handle image upload to Cloudinary
   const handleImageUpload = async (file) => {
@@ -48,7 +49,11 @@ const RealEstate = () => {
       handleImageUpload(file); // Upload the selected file
     }
   };
-
+  const handlePropertyTypeChange = (e) => {
+    const selectedType = e.target.value;
+    setPropertyType(selectedType);
+    console.log("Selected Property Type:", selectedType); // Log the selected property type
+  };
   // Function to add a new listing to Firestore
   const handleAddListing = async (e) => {
     e.preventDefault();
@@ -70,6 +75,8 @@ const RealEstate = () => {
         location: location,
         price: price,
         link: link,
+        propertyType: propertyType,
+
         timeAgo: timeAgo.toISOString(), // Convert to ISO string to store the date
       });
 
@@ -120,6 +127,20 @@ const RealEstate = () => {
                   />
                 </Form.Group>
 
+                <Form.Group controlId="formPropertyType" className="mb-3">
+                  <Form.Label>Property Type</Form.Label>
+                  <Form.Control
+                    as="select"
+                    value={propertyType}
+                    onChange={handlePropertyTypeChange}
+                    required
+                  >
+                    <option value="">Select Property Type</option>
+                    <option value="Sale">Sale</option>
+                    <option value="Rent">Rent</option>
+                    <option value="Buy">Buy</option>
+                  </Form.Control>
+                </Form.Group>
                 {/* Location */}
                 <Form.Group controlId="formLocation" className="mb-3">
                   <Form.Label>Location</Form.Label>

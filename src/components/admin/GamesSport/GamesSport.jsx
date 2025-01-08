@@ -10,14 +10,14 @@ import "react-datepicker/dist/react-datepicker.css";
 // Cloudinary upload
 import axios from "axios";
 
-const HealthCare = () => {
-  const [image, setImage] = useState(""); // For storing image URL from Cloudinary
+const GamesSport = () => {
+  const [img, setImg] = useState(""); // For storing image URL from Cloudinary
   const [title, setTitle] = useState("");
-  const [details, setDetails] = useState("");
+  const [description, setDescription] = useState("");
   const [location, setLocation] = useState("");
   const [price, setPrice] = useState("");
   const [link, setLink] = useState("");
-  const [postedAgo, setPostedAgo] = useState(new Date()); // Default to current date
+  const [timeAgo, setTimeAgo] = useState(new Date()); // Default to current date
   const [imageFile, setImageFile] = useState(null); // For storing the selected image file
   const [heathcaretype, setheathcaretype] = useState(""); // For storing selected property type
   const handlePropertyTypeChange = (e) => {
@@ -37,7 +37,7 @@ const HealthCare = () => {
         "https://api.cloudinary.com/v1_1/duvddbfbf/image/upload",
         formData
       );
-      setImage(response.data.secure_url); // Save the image URL from Cloudinary
+      setImg(response.data.secure_url); // Save the image URL from Cloudinary
       console.log("Image uploaded successfully:", response.data.secure_url);
     } catch (error) {
       console.error("Error uploading image:", error);
@@ -58,35 +58,36 @@ const HealthCare = () => {
   const handleAddListing = async (e) => {
     e.preventDefault();
 
-    if (!image) {
+    if (!img) {
       alert("Please upload an image before submitting.");
       return;
     }
 
     try {
-      // Get a reference to the 'listings' collection
-      const listingsCollection = collection(db, "HealthCare");
+      // Get a reference to the 'GamesSport' collection
+      const gamesSportCollection = collection(db, "GamesSport");
 
-      // Add a new document to the 'listings' collection
-      const docRef = await addDoc(listingsCollection, {
-        image: image,
+      // Add a new document to the 'GamesSport' collection
+      const docRef = await addDoc(gamesSportCollection, {
+        img: img,
         title: title,
-        details: details,
+        description: description,
         location: location,
         price: price,
-        heathcaretype: heathcaretype,
+
+        SportGamesType: heathcaretype,
         link: link,
-        postedAgo: postedAgo.toISOString(), // Convert to ISO string to store the date
+        timeAgo: timeAgo.toISOString(), // Convert to ISO string to store the date
       });
 
       alert("Listing added successfully!");
       setTitle("");
-      setImage("");
+      setImg("");
       setLocation("");
       setPrice("");
       setLink("");
-      setDetails("");
-      setPostedAgo(new Date()); // Reset time to current date
+      setDescription("");
+      setTimeAgo(new Date()); // Reset time to current date
     } catch (error) {
       console.error("Error adding listing: ", error);
       alert("Error adding listing.");
@@ -99,7 +100,7 @@ const HealthCare = () => {
         <Col xs={12} md={8} lg={6}>
           <Card>
             <Card.Header className="text-center">
-              <h3>Add a New HealthCare</h3>
+              <h3>Add a New Game or Sport</h3>
             </Card.Header>
             <Card.Body>
               <Form onSubmit={handleAddListing}>
@@ -108,7 +109,7 @@ const HealthCare = () => {
                   <Form.Label>Title</Form.Label>
                   <Form.Control
                     type="text"
-                    placeholder="Enter listing title"
+                    placeholder="Enter title"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                     required
@@ -116,7 +117,7 @@ const HealthCare = () => {
                 </Form.Group>
 
                 {/* Image Upload */}
-                <Form.Group controlId="formImage" className="mb-3">
+                <Form.Group controlId="formImg" className="mb-3">
                   <Form.Label>Image Upload</Form.Label>
                   <Form.Control
                     type="file"
@@ -126,7 +127,7 @@ const HealthCare = () => {
                   />
                 </Form.Group>
                 <Form.Group controlId="formPropertyType" className="mb-3">
-                  <Form.Label>Health Care Type</Form.Label>
+                  <Form.Label>Sport & Games Type</Form.Label>
                   <Form.Control
                     as="select"
                     value={heathcaretype}
@@ -134,9 +135,10 @@ const HealthCare = () => {
                     required
                   >
                     <option value="">Select Property Type</option>
-                    <option value="Sugae Apparatus">Sugae Apparatus</option>
-                    <option value="Bp Apparatus">Bp Apparatus</option>
-                    <option value="Medicine">Medicine</option>
+                    <option value="Football">Football</option>
+                    <option value="Cricket">Cricket</option>
+                    <option value="Gloves">Gloves</option>
+                    <option value="Stumps">Stumps</option>
                   </Form.Control>
                 </Form.Group>
                 {/* Location */}
@@ -167,7 +169,7 @@ const HealthCare = () => {
                 <Form.Group controlId="formLink" className="mb-3">
                   <Form.Label>Link</Form.Label>
                   <Form.Control
-                    type="url"
+                    type="text"
                     placeholder="Enter link"
                     value={link}
                     onChange={(e) => setLink(e.target.value)}
@@ -175,25 +177,25 @@ const HealthCare = () => {
                   />
                 </Form.Group>
 
-                {/* Details */}
-                <Form.Group controlId="formDetails" className="mb-3">
-                  <Form.Label>Details</Form.Label>
+                {/* Description */}
+                <Form.Group controlId="formDescription" className="mb-3">
+                  <Form.Label>Description</Form.Label>
                   <Form.Control
                     as="textarea"
                     rows={3}
-                    placeholder="Enter details"
-                    value={details}
-                    onChange={(e) => setDetails(e.target.value)}
+                    placeholder="Enter description"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
                     required
                   />
                 </Form.Group>
 
-                {/* Posted Ago */}
-                <Form.Group controlId="formPostedAgo" className="mb-3">
-                  <Form.Label>Posted Ago (Date Posted)</Form.Label>
+                {/* Time Ago */}
+                <Form.Group controlId="formTimeAgo" className="mb-3">
+                  <Form.Label>Time Ago (Date Added)</Form.Label>
                   <DatePicker
-                    selected={postedAgo}
-                    onChange={(date) => setPostedAgo(date)} // Update the date state
+                    selected={timeAgo}
+                    onChange={(date) => setTimeAgo(date)} // Update the date state
                     dateFormat="MMMM d, yyyy"
                     showYearDropdown
                     scrollableYearDropdown
@@ -215,4 +217,4 @@ const HealthCare = () => {
   );
 };
 
-export default HealthCare;
+export default GamesSport;

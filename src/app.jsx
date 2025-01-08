@@ -54,6 +54,9 @@ import config from "config";
 import Dynamic_Routes from "./components/dyanmic_routes/index";
 import HealthCare from "./components/admin/HealthCare/HealthCare";
 import RealEstate from "./components/admin/RealEstate/RealEstate";
+import Electronic from "./components/admin/Electronic/Electronic";
+import GamesSport from "./components/admin/GamesSport/GamesSport";
+import ComercialsAds from "./components/admin/ComercialsAds/ComercialsAds";
 export const App = () => {
   return (
     <BrowserRouter basename={`${config.publicPath}`}>
@@ -70,6 +73,9 @@ export const App = () => {
         <Route path="/index-9" element={<Home9 />} />
         <Route path="/HealthCare" element={<HealthCare />} />
         <Route path="/RealEstate" element={<RealEstate />} />
+        <Route path="/Electronic" element={<Electronic />} />
+        <Route path="/GamesSport" element={<GamesSport />} />
+        <Route path="/ComercialsAds" element={<ComercialsAds />} />
 
         <Route path="/listing-grid" element={<Listing_Grid />} />
         <Route path="/service-details" element={<ServiceDetails />} />

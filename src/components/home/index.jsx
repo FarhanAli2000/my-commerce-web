@@ -96,9 +96,7 @@ import insta from "./insta.png";
 import fb from "./fb.png";
 import tiktok from "./tiktoc.png";
 import whatapp from "./whatapp (3).png";
-import popup  from  "./popup_image.png"
-
-
+import popup from "./popup_image.png";
 
 const Home = () => {
   useEffect(() => {
@@ -148,11 +146,11 @@ const Home = () => {
     };
   }, []);
 
-    const [isVisible, setIsVisible] = useState(true);
-  
-    const handleClose = () => {
-      setIsVisible(false); 
-    };
+  const [isVisible, setIsVisible] = useState(true);
+
+  const handleClose = () => {
+    setIsVisible(false);
+  };
 
   return (
     <>
@@ -166,22 +164,24 @@ const Home = () => {
           <div className="container">
             <div className="home-banner">
               <div className="home-banner-about">
-                <div className="section-search aos r  homebannerwrapper_2" data-aos="fade-up">
+                <div
+                  className="section-search aos r  homebannerwrapper_2"
+                  data-aos="fade-up"
+                >
                   <p className="explore-text   banner-text">
                     {" "}
                     <span>Explore top-rated attractions</span>
                   </p>
                   {/* <img src={ArrowBanner} className="arrow-img" alt="arrow" /> */}
                   <h1>
-                    Let us help you 
+                    Let us help you
                     <span>Find, Buy</span> & Own Dreams
                   </h1>
-                  <p  className="banner-para" >
+                  <p className="banner-para">
                     Countrys most loved and trusted classNameified ad listing
                     website classNameified ad.randomised words which don't look
                     even slightly Browse thousand of items near you.
                   </p>
-
                 </div>
 
                 {/* <div className="col-lg-5">
@@ -195,18 +195,17 @@ const Home = () => {
                 </div> */}
                 <div className="bannerimages_wrapper">
                   <div className="wrapper_container">
-                    <img src={image1}  className="banner_img"  alt="" />
-                    <img src={image2}   className="banner_img" />
+                    <img src={image1} className="banner_img" alt="" />
+                    <img src={image2} className="banner_img" />
                   </div>
                   <div className="wrapper_container">
-                    <img src={image3}  className="banner_img"  alt="" />
-                    <img src={image4}    className="banner_img" />
+                    <img src={image3} className="banner_img" alt="" />
+                    <img src={image4} className="banner_img" />
                   </div>
                 </div>
               </div>
             </div>
           </div>
-
         </section>
         {/* Banner Section */}
 
@@ -233,16 +232,6 @@ const Home = () => {
         </div>
 
         {/* Trending  Products */}
-
-
-
-
-
-
-
-
-
-
 
         {/* Category Section */}
         <section className="category-section">
@@ -356,18 +345,9 @@ const Home = () => {
         </section>
         {/* Category Section */}
 
-
-
-
-
-
-        
         {/* Featured Ads Section */}
         <Carousel />
         {/* Featured Ads Section */}
-
-
-
 
         {/* All carosuel */}
 
@@ -387,7 +367,6 @@ const Home = () => {
 
         <LatestBlog />
 
-     
         {/* Blog Section */}
 
         {/* Footer */}
@@ -401,17 +380,18 @@ const Home = () => {
           </div>
         </div> */}
 
-    <div>
-      {isVisible && (
-        <div className="popup_cnt">
-          <div className="img">
-            <div className="close_btn" onClick={handleClose}>X</div>
-            <img src={popup} alt="popup" />
-          </div>
+        <div>
+          {isVisible && (
+            <div className="popup_cnt">
+              <div className="img">
+                <div className="close_btn" onClick={handleClose}>
+                  X
+                </div>
+                <img src={popup} alt="popup" />
+              </div>
+            </div>
+          )}
         </div>
-      )}
-    </div>
-
       </div>
       {/* scrollToTop start */}
       <div className="progress-wrap active-progress">
@@ -434,8 +414,6 @@ const Home = () => {
       {/* scrollToTop end */}
     </>
   );
-
-
 };
 
 export default Home;

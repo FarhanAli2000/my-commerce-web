@@ -155,7 +155,7 @@ const Footer = () => {
                       <Link to="/index">Our product</Link>
                     </li>
                     <li>
-                      <Link to="#">Automative</Link>
+                      <Link to="#"> </Link>
                     </li>
                     <li>
                       <Link to="/index">Electronic</Link>

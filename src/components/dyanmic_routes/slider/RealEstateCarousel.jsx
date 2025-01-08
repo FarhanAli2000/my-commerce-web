@@ -282,9 +282,7 @@ export default function RealEstateCarousel() {
                         {/* </div> */}
                         {/* </div> */}
                         <h6>
-                          <Link to="/index">
-                            Furnished Apparament
-                          </Link>
+                          <Link to="/index">Furnished Apparament</Link>
                         </h6>
                         <div
                           className="location-info"
@@ -357,9 +355,7 @@ export default function RealEstateCarousel() {
                         {/* </div> */}
                         {/* </div> */}
                         <h6>
-                          <Link to="/index">
-                            Furnished Apparament
-                          </Link>
+                          <Link to="/index">Furnished Apparament</Link>
                         </h6>
                         <div
                           className="location-info"
@@ -507,9 +503,7 @@ export default function RealEstateCarousel() {
                         {/* </div> */}
                         {/* </div> */}
                         <h6>
-                          <Link to="/index">
-                            Furnished Apparament
-                          </Link>
+                          <Link to="/index">Furnished Apparament</Link>
                         </h6>
                         <div
                           className="location-info"

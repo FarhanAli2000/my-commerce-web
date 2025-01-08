@@ -76,8 +76,6 @@ export default function AutomativeCarousel() {
           <div className="featureline">
             <div className="highlighter"></div>
           </div>
-
-
         </div>
         <div className="row">
           <div className="col-md-12">

@@ -53,6 +53,9 @@ import ForgotPassword from "./components/forgotPassword";
 import config from "config";
 import Dynamic_Routes from "./components/dyanmic_routes/index";
 import AddBooks from "./components/admin/AddBooks/AddBooks";
+import AddCars from "./components/admin/AddCars/AddCars";
+import RealEstate from "./components/admin/RealEstate/RealEstate";
+import Electronic from "./components/admin/Electronic/Electronic";
 export const App = () => {
   return (
     <BrowserRouter basename={`${config.publicPath}`}>
@@ -68,6 +71,9 @@ export const App = () => {
         <Route path="/index-8" element={<Home8 />} />
         <Route path="/index-9" element={<Home9 />} />
         <Route path="/AddBooks" element={<AddBooks />} />
+        <Route path="/AddCars" element={<AddCars />} />
+        <Route path="/RealEstate" element={<RealEstate />} />
+        <Route path="/Electronic" element={<Electronic />} />
 
         <Route path="/listing-grid" element={<Listing_Grid />} />
         <Route path="/service-details" element={<ServiceDetails />} />

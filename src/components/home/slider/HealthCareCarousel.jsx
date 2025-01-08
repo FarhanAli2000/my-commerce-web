@@ -60,10 +60,6 @@ export default function HealthCareCarousel() {
           <div className="featureline">
             <div className="highlighter"></div>
           </div>
-
-
-
-          
         </div>
         <div className="row">
           <div className="col-md-12">
@@ -218,7 +214,7 @@ export default function HealthCareCarousel() {
                     </div>
                   </div>
                 </div>
-                
+
                 <div className="card aos" data-aos="fade-up">
                   <div className="blog-widget">
                     <div className="blog-img">
@@ -267,7 +263,6 @@ export default function HealthCareCarousel() {
                   </div>
                 </div>
 
-                
                 <div className="card aos" data-aos="fade-up">
                   <div className="blog-widget">
                     <div className="blog-img">
@@ -316,7 +311,6 @@ export default function HealthCareCarousel() {
                   </div>
                 </div>
 
-                
                 <div className="card aos" data-aos="fade-up">
                   <div className="blog-widget">
                     <div className="blog-img">

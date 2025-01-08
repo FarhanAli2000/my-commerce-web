@@ -9,6 +9,7 @@ import "./assets/css/feather.css";
 import "./assets/css/owl.theme.default.min.css";
 import "./assets/css/slick.css";
 import "./assets/css/style.css";
+import "./assets/css/quaries.css";
 import Home2 from "./components/home2";
 import Home3 from "./components/home3";
 import Home4 from "./components/home4";
@@ -50,13 +51,13 @@ import SignUp from "./components/signUp";
 import Login from "./components/login";
 import ForgotPassword from "./components/forgotPassword";
 import config from "config";
-
+import Dynamic_Routes from "./components/dyanmic_routes/index";
 export const App = () => {
   return (
     <BrowserRouter basename={`${config.publicPath}`}>
       <Routes>
         {/* Home Routes */}
-        <Route path="/" element={<Home />} />
+        <Route path="/index" element={<Home />} />
         <Route path="/index-2" element={<Home2 />} />
         <Route path="/index-3" element={<Home3 />} />
         <Route path="/index-4" element={<Home4 />} />
@@ -97,6 +98,8 @@ export const App = () => {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        {/* features  dynamic   routes */}
+        <Route path="/routes/:id" element={<Dynamic_Routes />} />
       </Routes>
     </BrowserRouter>
   );

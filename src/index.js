@@ -1,24 +1,23 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { createRoot } from 'react-dom';
+import { createRoot } from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 import { App } from "./app";
-import ScrollToTop from "./hooks/ScrollToTop";
+// import ScrollToTop from "./hooks/ScrollToTop";
+import { MyProvider } from "./components/store/Contexxt.store";
 
 // const root = createRoot(document.getElementById('root'));
 // root.render(
-  //<React.StrictMode>
-  <>    
+//<React.StrictMode>
+<>
   {/* <AppRouter/> */}
-    {/* <Header/> */}
-    {/* <BrowserRouter>
+  {/* <Header/> */}
+  {/* <BrowserRouter>
       <ScrollToTop>
         <App />
       </ScrollToTop>
     </BrowserRouter> */}
-
-    
-    </>
+</>;
 //  </React.StrictMode>
 
 // );
@@ -27,9 +26,11 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <>
-    {/* <ScrollToTop> */}
+      <MyProvider>
+        {/* <ScrollToTop> */}
         <App />
-      {/* </ScrollToTop> */}
-      </>
+        {/* </ScrollToTop> */}
+      </MyProvider>
+    </>
   </React.StrictMode>
 );

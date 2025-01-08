@@ -1,5 +1,11 @@
 export { default as Bannerbg } from "../assets/img/bannerbg.png";
 
+export {default as ENG } from "../assets/img/flag/uk.png"
+export {default as KSA } from "../assets/img/flag/ksa.png"
+
+
+
+
 export { default as LogoPng } from "../assets/img/logo.png";
 export { default as LogoSvg } from "../assets/img/logo.svg";
 export { default as Home01 } from "../assets/img/home-01.jpg";

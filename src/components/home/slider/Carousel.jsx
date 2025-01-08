@@ -1,464 +1,225 @@
 import React, { useRef } from "react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import {
-  Feature2,
-  Feature3,
-  Feature4,
-  Feature5,
-  Feature9,
-  ProfileAvatar02,
-  ProfileAvatar04,
-  ProfileAvatar05,
-  ProfileAvatar06,
-} from "../../imagepath";
 import Slider from "react-slick";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import image from "./image.png";
+
+import { db } from "./../../Firebase/FirebaseConfig.jsx";
+import { getDocs, collection } from "firebase/firestore";
 
 export default function Carousel() {
+  const [slidesToShow, setSlidesToShow] = useState(5);
+  const [ads, setAds] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch ads from Firestore
+  useEffect(() => {
+    const fetchAds = async () => {
+      try {
+        const adsCollection = collection(db, "ads"); // Get reference to the 'ads' collection
+        const adsSnapshot = await getDocs(adsCollection); // Fetch the data
+        console.log(adsSnapshot.docs, "adsSnapshot____________");
+        const adsList = adsSnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(), // Spread the document data
+        }));
+        console.log(adsList, "adsSnapshot____________1");
+
+        setAds(adsList); // Set the state with the ads data
+        setLoading(false); // Stop loading when data is fetched
+      } catch (error) {
+        console.error("Error fetching ads:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchAds();
+  }, []);
+  // const { cartApi, setCartApi } = useMyContext();
+
+  // const fetchData = async () => {
+  //   try {
+  //     const response = await Product();
+  //     setCartApi(response.data);
+  //     // console.log("data", response.data);
+  //   } catch (error) {
+  //     console.log("error", error.message);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+
+      if (width <= 767) {
+        setSlidesToShow(1);
+      } else if (width >= 768 && width <= 1024) {
+        setSlidesToShow(3);
+      } else {
+        setSlidesToShow(5);
+      }
+    };
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  const data = {
+    books: [
+      {
+        id: 1,
+        book_title: " Gulfstream Ameri-lite",
+        image_url: "https://via.placeholder.com/150?text=ML+Book",
+        location: "New York, USA",
+        price: "$39.99",
+        time_ago: "1 DAY AGO",
+      },
+      {
+        id: 2,
+        book_title: " Gulfstream Ameri-lite",
+        image_url: "https://via.placeholder.com/150?text=Physics+Book",
+        location: "London, UK",
+        price: "$49.99",
+        time_ago: "1 DAY AGO",
+      },
+      {
+        id: 3,
+        book_title: " Gulfstream Ameri-lite",
+        image_url: "https://via.placeholder.com/150?text=Maths+Book",
+        location: "Berlin, Germany",
+        price: "$59.99",
+        time_ago: "1 DAY AGO",
+      },
+      {
+        id: 4,
+        book_title: " Gulfstream Ameri-lite",
+        image_url: "https://via.placeholder.com/150?text=History+Book",
+        location: "Tokyo, Japan",
+        price: "$29.99",
+        time_ago: "1 DAY AGO",
+      },
+      {
+        id: 5,
+        book_title: " Gulfstream Ameri-lite",
+        image_url: "https://via.placeholder.com/150?text=Programming+Book",
+        location: "Sydney, Australia",
+        price: "$24.99",
+        time_ago: "1 DAY AGO",
+      },
+      {
+        id: 5,
+        book_title: " Gulfstream Ameri-lite",
+        image_url: "https://via.placeholder.com/150?text=Programming+Book",
+        location: "Sydney, Australia",
+        price: "$24.99",
+        time_ago: "1 DAY AGO",
+      },
+    ],
+  };
+
+  // console.log("data", data);
+
   const settings = {
     dots: false,
-    arrows: false,
+    arrows: true,
     infinite: true,
     lazyLoad: true,
     speed: 1000,
-    slidesToShow: 4,
+    slidesToShow: slidesToShow,
     slidesToScroll: 1,
   };
   const slider = useRef();
+
+  const dataBase = async () => {
+    try {
+      const response = await getDocs(collection(db, "ads"));
+      response.forEach((doc) => {
+        console.log("documents", doc.id, "=>", doc.data());
+      });
+    } catch (error) {
+      console.error("Error fetching documents:", error);
+    }
+  };
+
+  dataBase();
+
   return (
     <section className="featured-section">
       <div className="container">
         <div className="row align-items-center">
           <div className="col-md-6 aos aos-init aos-animate" data-aos="fade-up">
             <div className="section-heading">
-              <h2>
-                Featu<span className="title-right magentaCircle">red</span> Ads
-              </h2>
-              <p>Checkout these latest coo ads from our members</p>
-            </div>
-          </div>
-          <div className="col-md-6 text-md-end aos" data-aos="fade-up">
-            <div className="owl-nav mynav2">
-              <button
-                type="button"
-                role="presentation"
-                className="owl-prev"
-                onClick={() => {console.log(slider?.current); slider?.current?.slickPrev()}}
-                
-              >
-                <i className="fa-solid fa-angle-left"></i>
-              </button>
-              <button
-                type="button"
-                role="presentation"
-                className="owl-next"
-                onClick={() => slider?.current?.slickNext()}
-              >
-                <i className="fa-solid fa-angle-right"></i>
-              </button>
+              <h3>Feature Ads</h3>
             </div>
           </div>
         </div>
         <div className="row">
           <div className="col-md-12">
-            <div >
-              <Slider ref={slider} {...settings} className=" featured-slider grid-view">
-                <div className="card aos" data-aos="fade-up">
-                  <div className="blog-widget">
-                    <div className="blog-img">
-                      <Link to="/service-details">
-                        <img
-                          src={Feature9}
-                          className="img-fluid"
-                          alt="blog-img"
-                        />
-                      </Link>
-                      <div className="fav-item">
-                        <span className="Featured-text">Featured</span>
-                        <Link to="#" className="fav-icon">
-                          <i className="feather-heart"></i>
+            <div>
+              <Slider
+                ref={slider}
+                {...settings}
+                className=" featured-slider grid-view"
+              >
+                {data.books.map((item) => (
+                  <div key={item.id} className="card aos" data-aos="fade-up">
+                    <div className="blog-widget">
+                      <div className="blog-img">
+                        <Link to={`/routes/${item.id}`}>
+                          {/* Feature_Ads */}
+                          <img
+                            src={image}
+                            className="img-fluid"
+                            alt="blog-img"
+                          />
                         </Link>
+                        <div className="fav-item">
+                          <span className="Featured-text">Featured</span>
+                        </div>
                       </div>
-                    </div>
-                    <div className="bloglist-content">
-                      <div className="card-body">
-                        <div className="blogfeaturelink">
-                          <div className="grid-author">
-                            <img src={ProfileAvatar02} alt="author" />
+                      <div className="bloglist-content">
+                        <div className="card-body">
+                          {/* <div className="blogfeaturelink"></div> */}
+                          <h6>
+                            <Link to="/index">{item.book_title}</Link>
+                          </h6>
+                          <p style={{ fontSize: "0.7rem", lineHeight: "none" }}>
+                            Education | Education | Education
+                          </p>
+                          <div className="blog-location-details ">
+                            <div
+                              className="location-info  mt-2"
+                              style={{ fontFamily: "Inter" }}
+                            >
+                              {item.location}
+                            </div>
                           </div>
-                          <div className="blog-features">
-                            <Link to="#">
-                              <span>
-                                {" "}
-                                <i className="fa-regular fa-circle-stop"></i>{" "}
-                                Education
+                          <div className="amount-details">
+                            <div className="amount">
+                              <span
+                                className="validrate"
+                                style={{ fontFamily: "Inter" }}
+                              >
+                                {item.price}
                               </span>
-                            </Link>
-                          </div>
-                          <div className="blog-author text-end">
-                            <span>
-                              {" "}
-                              <i className="feather-eye"></i>4000{" "}
-                            </span>
-                          </div>
-                        </div>
-                        <h6>
-                          <Link to="/service-details">
-                            2017 Gulfsteam Ameri-lite
-                          </Link>
-                        </h6>
-                        <div className="blog-location-details">
-                          <div className="location-info">
-                            <i className="feather-map-pin"></i> Los Angeles
-                          </div>
-                          <div className="location-info">
-                            <i className="fa-regular fa-calendar-days"></i> 06
-                            Oct, 2022
-                          </div>
-                        </div>
-                        <div className="amount-details">
-                          <div className="amount">
-                            <span className="validrate">$350</span>
-                            <span>$450</span>
-                          </div>
-                          <div className="ratings">
-                            <span>4.7</span> (50)
+                            </div>
+                            <div className="ratings">{item.time_ago}</div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div className="card aos" data-aos="fade-up">
-                  <div className="blog-widget">
-                    <div className="blog-img">
-                      <Link to="/service-details">
-                        <img
-                          src={Feature2}
-                          className="img-fluid"
-                          alt="blog-img"
-                        />
-                      </Link>
-                      <div className="fav-item">
-                        <span className="Featured-text">Featured</span>
-                        <Link to="#" className="fav-icon">
-                          <i className="feather-heart"></i>
-                        </Link>
-                      </div>
-                    </div>
-                    <div className="bloglist-content">
-                      <div className="card-body">
-                        <div className="blogfeaturelink">
-                          <div className="grid-author">
-                            <img src={ProfileAvatar05} alt="author" />
-                          </div>
-                          <div className="blog-features">
-                            <Link to="#">
-                              <span>
-                                {" "}
-                                <i className="fa-regular fa-circle-stop"></i>{" "}
-                                Electronics
-                              </span>
-                            </Link>
-                          </div>
-                          <div className="blog-author text-end">
-                            <span>
-                              {" "}
-                              <i className="feather-eye"></i>4000{" "}
-                            </span>
-                          </div>
-                        </div>
-                        <h6>
-                          <Link to="/service-details">
-                            Fashion luxury Men date
-                          </Link>
-                        </h6>
-                        <div className="blog-location-details">
-                          <div className="location-info">
-                            <i className="feather-map-pin"></i> Los Angeles
-                          </div>
-                          <div className="location-info">
-                            <i className="fa-solid fa-calendar-days"></i> 08
-                            Oct, 2022
-                          </div>
-                        </div>
-                        <div className="amount-details">
-                          <div className="amount">
-                            <span className="validrate">$250</span>
-                            <span>$350</span>
-                          </div>
-                          <div className="ratings">
-                            <span>4.6</span> (50)
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="card aos" data-aos="fade-up">
-                  <div className="blog-widget">
-                    <div className="blog-img">
-                      <Link to="/service-details">
-                        <img
-                          src={Feature3}
-                          className="img-fluid"
-                          alt="blog-img"
-                        />
-                      </Link>
-                      <div className="fav-item">
-                        <span className="Featured-text">Featured</span>
-                        <Link to="#" className="fav-icon">
-                          <i className="feather-heart"></i>
-                        </Link>
-                      </div>
-                    </div>
-                    <div className="bloglist-content">
-                      <div className="card-body">
-                        <div className="blogfeaturelink">
-                          <div className="grid-author">
-                            <img src={ProfileAvatar04} alt="author" />
-                          </div>
-                          <div className="blog-features">
-                            <Link to="#">
-                              <span>
-                                {" "}
-                                <i className="fa-regular fa-circle-stop"></i>{" "}
-                                Electronics
-                              </span>
-                            </Link>
-                          </div>
-                          <div className="blog-author text-end">
-                            <span>
-                              {" "}
-                              <i className="feather-eye"></i>4000{" "}
-                            </span>
-                          </div>
-                        </div>
-                        <h6>
-                          <Link to="/service-details">
-                            Apple Iphone 6 16GB 4G LTE
-                          </Link>
-                        </h6>
-                        <div className="blog-location-details">
-                          <div className="location-info">
-                            <i className="feather-map-pin"></i> Los Angeles
-                          </div>
-                          <div className="location-info">
-                            <i className="fa-solid fa-calendar-days"></i> 09
-                            Oct, 2022
-                          </div>
-                        </div>
-                        <div className="amount-details">
-                          <div className="amount">
-                            <span className="validrate">$550</span>
-                            <span>$400</span>
-                          </div>
-                          <div className="ratings">
-                            <span>4.7</span> (50)
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="card aos" data-aos="fade-up">
-                  <div className="blog-widget">
-                    <div className="blog-img">
-                      <Link to="/service-details">
-                        <img
-                          src={Feature4}
-                          className="img-fluid"
-                          alt="blog-img"
-                        />
-                      </Link>
-                      <div className="fav-item">
-                        <span className="Featured-text">Featured</span>
-                        <Link to="#" className="fav-icon">
-                          <i className="feather-heart"></i>
-                        </Link>
-                      </div>
-                    </div>
-                    <div className="bloglist-content">
-                      <div className="card-body">
-                        <div className="blogfeaturelink">
-                          <div className="grid-author">
-                            <img src={ProfileAvatar05} alt="author" />
-                          </div>
-                          <div className="blog-features">
-                            <Link to="#">
-                              <span>
-                                {" "}
-                                <i className="fa-regular fa-circle-stop"></i>{" "}
-                                Gadgets
-                              </span>
-                            </Link>
-                          </div>
-                          <div className="blog-author text-end">
-                            <span>
-                              {" "}
-                              <i className="feather-eye"></i>4000{" "}
-                            </span>
-                          </div>
-                        </div>
-                        <h6>
-                          <Link to="/service-details">
-                            Customized Apple Imac{" "}
-                          </Link>
-                        </h6>
-                        <div className="blog-location-details">
-                          <div className="location-info">
-                            <i className="feather-map-pin"></i> Los Angeles
-                          </div>
-                          <div className="location-info">
-                            <i className="fa-solid fa-calendar-days"></i> 10
-                            Oct, 2022
-                          </div>
-                        </div>
-                        <div className="amount-details">
-                          <div className="amount">
-                            <span className="validrate">$450</span>
-                            <span>$300</span>
-                          </div>
-                          <div className="ratings">
-                            <span>4.5</span> (50)
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="card aos" data-aos="fade-up">
-                  <div className="blog-widget">
-                    <div className="blog-img">
-                      <Link to="/service-details">
-                        <img
-                          src={Feature9}
-                          className="img-fluid"
-                          alt="blog-img"
-                        />
-                      </Link>
-                      <div className="fav-item">
-                        <span className="Featured-text">Featured</span>
-                        <Link to="#" className="fav-icon">
-                          <i className="feather-heart"></i>
-                        </Link>
-                      </div>
-                    </div>
-                    <div className="bloglist-content">
-                      <div className="card-body">
-                        <div className="blogfeaturelink">
-                          <div className="grid-author">
-                            <img src={ProfileAvatar02} alt="author" />
-                          </div>
-                          <div className="blog-features">
-                            <Link to="#">
-                              <span>
-                                {" "}
-                                <i className="fa-regular fa-circle-stop"></i>{" "}
-                                Education
-                              </span>
-                            </Link>
-                          </div>
-                          <div className="blog-author text-end">
-                            <span>
-                              {" "}
-                              <i className="feather-eye"></i>4000{" "}
-                            </span>
-                          </div>
-                        </div>
-                        <h6>
-                          <Link to="/service-details">
-                            2017 Gulfsteam Ameri-lite
-                          </Link>
-                        </h6>
-                        <div className="blog-location-details">
-                          <div className="location-info">
-                            <i className="feather-map-pin"></i> Los Angeles
-                          </div>
-                          <div className="location-info">
-                            <i className="fa-solid fa-calendar-days"></i> 06
-                            Oct, 2022
-                          </div>
-                        </div>
-                        <div className="amount-details">
-                          <div className="amount">
-                            <span className="validrate">$350</span>
-                            <span>$450</span>
-                          </div>
-                          <div className="ratings">
-                            <span>4.7</span> (50)
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="card aos" data-aos="fade-up">
-                  <div className="blog-widget">
-                    <div className="blog-img">
-                      <Link to="/service-details">
-                        <img
-                          src={Feature5}
-                          className="img-fluid"
-                          alt="blog-img"
-                        />
-                      </Link>
-                      <div className="fav-item">
-                        <span className="Featured-text">Featured</span>
-                        <Link to="#" className="fav-icon">
-                          <i className="feather-heart"></i>
-                        </Link>
-                      </div>
-                    </div>
-                    <div className="bloglist-content">
-                      <div className="card-body">
-                        <div className="blogfeaturelink">
-                          <div className="grid-author">
-                            <img src={ProfileAvatar06} alt="author" />
-                          </div>
-                          <div className="blog-features">
-                            <Link to="#">
-                              <span>
-                                {" "}
-                                <i className="fa-regular fa-circle-stop"></i>{" "}
-                                Construction
-                              </span>
-                            </Link>
-                          </div>
-                          <div className="blog-author text-end">
-                            <span>
-                              <i className="feather-eye"></i> 4000{" "}
-                            </span>
-                          </div>
-                        </div>
-                        <h6>
-                          <Link to="/service-details">
-                            Villa 457 sq.m. In Benidorm Fully
-                          </Link>
-                        </h6>
-                        <div className="blog-location-details">
-                          <div className="location-info">
-                            <i className="feather-map-pin"></i> Los Angeles
-                          </div>
-                          <div className="location-info">
-                            <i className="fa-solid fa-calendar-days"></i> 11
-                            Oct, 2022
-                          </div>
-                        </div>
-                        <div className="amount-details">
-                          <div className="amount">
-                            <span className="validrate">$650</span>
-                            <span>$600</span>
-                          </div>
-                          <div className="ratings">
-                            <span>4.5</span> (50)
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                ))}
               </Slider>
             </div>
           </div>

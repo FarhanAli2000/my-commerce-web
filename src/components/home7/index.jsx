@@ -1,23 +1,86 @@
 import React, { useEffect } from "react";
 import Header7 from "./header/header7";
-import { ProfileAvatar01, ProfileAvatar02, ProfileAvatar03, ProfileAvatar04, ProfileAvatar06, ProfileAvatar07, ProfileAvatar08, Restaurant_1, Restaurant_2, Restaurant_3, Restaurant_4, banner_bottom_bg, banner_img_1, banner_img_2, banner_img_3, banner_img_4, banner_left_bg, banner_right_bg, blog_seven1, blog_seven2, blog_seven3, category_img_1, category_img_2, category_img_3, category_img_4, category_img_5, category_img_6, cities_1, cities_2, cities_3, cities_4, cities_5, cities_6, heading_logo, heading_logo_small, latest_restaurant_1, latest_restaurant_2, latest_restaurant_3, latest_restaurant_4, logo_new, main_img } from "../imagepath";
+import {
+  ProfileAvatar01,
+  ProfileAvatar02,
+  ProfileAvatar03,
+  ProfileAvatar04,
+  ProfileAvatar06,
+  ProfileAvatar07,
+  ProfileAvatar08,
+  Restaurant_1,
+  Restaurant_2,
+  Restaurant_3,
+  Restaurant_4,
+  banner_bottom_bg,
+  banner_img_1,
+  banner_img_2,
+  banner_img_3,
+  banner_img_4,
+  banner_left_bg,
+  banner_right_bg,
+  blog_seven1,
+  blog_seven2,
+  blog_seven3,
+  category_img_1,
+  category_img_2,
+  category_img_3,
+  category_img_4,
+  category_img_5,
+  category_img_6,
+  cities_1,
+  cities_2,
+  cities_3,
+  cities_4,
+  cities_5,
+  cities_6,
+  heading_logo,
+  heading_logo_small,
+  latest_restaurant_1,
+  latest_restaurant_2,
+  latest_restaurant_3,
+  latest_restaurant_4,
+  logo_new,
+  main_img,
+} from "../imagepath";
 import Select from "../home/select";
 import BiggestClients from "./slider/BiggestClients";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import Select5 from "../home5/select5/Select5";
 import { Link } from "react-router-dom";
-
-
-
+import { db } from "./../Firebase/FirebaseConfig.jsx";
+import { getDocs, collection } from "firebase/firestore";
 const Home7 = () => {
+  const [ads, setAds] = useState([]);
+  const [loading, setLoading] = useState(true);
 
+  // Fetch ads from Firestore
+  useEffect(() => {
+    const fetchAds = async () => {
+      try {
+        const adsCollection = collection(db, "ads"); // Get reference to the 'ads' collection
+        const adsSnapshot = await getDocs(adsCollection); // Fetch the data
+        console.log(adsSnapshot, "adsSnapshot____________");
+        const adsList = adsSnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(), // Spread the document data
+        }));
+        setAds(adsList); // Set the state with the ads data
+        setLoading(false); // Stop loading when data is fetched
+      } catch (error) {
+        console.error("Error fetching ads:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchAds();
+  }, []);
   const country = [
     { label: "Choose Category", value: "Choose Category" },
     { label: "USA", value: "USA" },
     { label: "UK", value: "UK" },
     { label: "UAE", value: "UAE" },
-
   ];
 
   useEffect(() => {
@@ -44,9 +107,8 @@ const Home7 = () => {
                         <div className="search-input line">
                           <div className="form-group mb-0">
                             <div className="categoryselectbox">
-                            <Select />
+                              <Select />
                             </div>
-                            
                           </div>
                         </div>
                         <div className="search-input line">
@@ -106,11 +168,7 @@ const Home7 = () => {
               </div>
               <div className="banner-bg-img">
                 <div className="bg-one">
-                  <img
-                    src={banner_left_bg}
-                    className="img-fluid"
-                    alt="image"
-                  />
+                  <img src={banner_left_bg} className="img-fluid" alt="image" />
                 </div>
                 <div className="bg-two">
                   <img
@@ -157,7 +215,9 @@ const Home7 = () => {
                     </div>
                     <div>
                       <h2>Our Category</h2>
-                      <p>Explore restaurants and cafes by your favorite cuisine</p>
+                      <p>
+                        Explore restaurants and cafes by your favorite cuisine
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -174,7 +234,10 @@ const Home7 = () => {
                 </div>
               </div>
               <div className="row">
-                <div className="col-lg-2 col-md-4 col-sm-6  aos" data-aos="fade-up">
+                <div
+                  className="col-lg-2 col-md-4 col-sm-6  aos"
+                  data-aos="fade-up"
+                >
                   <div className="our-category-box">
                     <Link to="#">
                       <div className="our-category-img">
@@ -192,7 +255,10 @@ const Home7 = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-lg-2 col-md-4 col-sm-6 aos" data-aos="fade-up">
+                <div
+                  className="col-lg-2 col-md-4 col-sm-6 aos"
+                  data-aos="fade-up"
+                >
                   <div className="our-category-box">
                     <Link to="#">
                       <div className="our-category-img">
@@ -210,7 +276,10 @@ const Home7 = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-lg-2 col-md-4 col-sm-6  aos" data-aos="fade-up">
+                <div
+                  className="col-lg-2 col-md-4 col-sm-6  aos"
+                  data-aos="fade-up"
+                >
                   <div className="our-category-box">
                     <Link to="#">
                       <div className="our-category-img">
@@ -228,7 +297,10 @@ const Home7 = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-lg-2 col-md-4 col-sm-6  aos" data-aos="fade-up">
+                <div
+                  className="col-lg-2 col-md-4 col-sm-6  aos"
+                  data-aos="fade-up"
+                >
                   <div className="our-category-box">
                     <Link to="#">
                       <div className="our-category-img">
@@ -246,7 +318,10 @@ const Home7 = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-lg-2 col-md-4 col-sm-6  aos" data-aos="fade-up">
+                <div
+                  className="col-lg-2 col-md-4 col-sm-6  aos"
+                  data-aos="fade-up"
+                >
                   <div className="our-category-box">
                     <Link to="#">
                       <div className="our-category-img">
@@ -264,7 +339,10 @@ const Home7 = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-lg-2 col-md-4 col-sm-6  aos" data-aos="fade-up">
+                <div
+                  className="col-lg-2 col-md-4 col-sm-6  aos"
+                  data-aos="fade-up"
+                >
                   <div className="our-category-box">
                     <Link to="#">
                       <div className="our-category-img">
@@ -312,11 +390,7 @@ const Home7 = () => {
                 <div className="dishes-box aos" data-aos="fade-up">
                   <div className="dishes-img">
                     <Link to="#">
-                      <img
-                        src={Restaurant_1}
-                        className="img-fluid"
-                        alt="img"
-                      />
+                      <img src={Restaurant_1} className="img-fluid" alt="img" />
                     </Link>
                     <div className="feature-content justify-content-end">
                       <span className="featured-text">Featured</span>
@@ -379,11 +453,7 @@ const Home7 = () => {
                 <div className="dishes-box aos" data-aos="fade-up">
                   <div className="dishes-img">
                     <Link to="#">
-                      <img
-                        src={Restaurant_2}
-                        className="img-fluid"
-                        alt="img"
-                      />
+                      <img src={Restaurant_2} className="img-fluid" alt="img" />
                     </Link>
                     <div className="feature-content justify-content-end">
                       <span className="featured-text">Featured</span>
@@ -410,7 +480,8 @@ const Home7 = () => {
                         {" "}
                         <Link to="#">
                           {" "}
-                          Casual dining <i className="fa-solid fa-circle-check" />
+                          Casual dining{" "}
+                          <i className="fa-solid fa-circle-check" />
                         </Link>
                       </h5>
                       <div className="dishes-review">
@@ -447,11 +518,7 @@ const Home7 = () => {
                 <div className="dishes-box aos" data-aos="fade-up">
                   <div className="dishes-img">
                     <Link to="#">
-                      <img
-                        src={Restaurant_3}
-                        className="img-fluid"
-                        alt="img"
-                      />
+                      <img src={Restaurant_3} className="img-fluid" alt="img" />
                     </Link>
                     <div className="feature-content justify-content-end">
                       <span className="featured-text">Featured</span>
@@ -515,11 +582,7 @@ const Home7 = () => {
                 <div className="dishes-box aos" data-aos="fade-up">
                   <div className="dishes-img">
                     <Link to="#">
-                      <img
-                        src={Restaurant_4}
-                        className="img-fluid"
-                        alt="img"
-                      />
+                      <img src={Restaurant_4} className="img-fluid" alt="img" />
                     </Link>
                     <div className="feature-content justify-content-end">
                       <span className="featured-text">Featured</span>
@@ -609,14 +672,13 @@ const Home7 = () => {
                 </div>
               </div>
               <div className="row">
-                <div className="col-lg-4 col-md-6 col-sm-6 aos" data-aos="fade-up">
+                <div
+                  className="col-lg-4 col-md-6 col-sm-6 aos"
+                  data-aos="fade-up"
+                >
                   <div className="cities-box">
                     <div className="cities-img">
-                      <img
-                        src={cities_1}
-                        className="img-fluid"
-                        alt="img"
-                      />
+                      <img src={cities_1} className="img-fluid" alt="img" />
                     </div>
                     <div className="cities-overlay-item">
                       <div className="cities-overlay">
@@ -643,14 +705,13 @@ const Home7 = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-lg-4 col-md-6 col-sm-6 aos" data-aos="fade-up">
+                <div
+                  className="col-lg-4 col-md-6 col-sm-6 aos"
+                  data-aos="fade-up"
+                >
                   <div className="cities-box">
                     <div className="cities-img ">
-                      <img
-                        src={cities_2}
-                        className="img-fluid"
-                        alt="img"
-                      />
+                      <img src={cities_2} className="img-fluid" alt="img" />
                     </div>
                     <div className="cities-overlay-item">
                       <div className="cities-overlay">
@@ -677,14 +738,13 @@ const Home7 = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-lg-4 col-md-6 col-sm-6 aos" data-aos="fade-up">
+                <div
+                  className="col-lg-4 col-md-6 col-sm-6 aos"
+                  data-aos="fade-up"
+                >
                   <div className="cities-box">
                     <div className="cities-img">
-                      <img
-                        src={cities_3}
-                        className="img-fluid"
-                        alt="img"
-                      />
+                      <img src={cities_3} className="img-fluid" alt="img" />
                     </div>
                     <div className="cities-overlay-item">
                       <div className="cities-overlay">
@@ -711,14 +771,13 @@ const Home7 = () => {
                     </div>
                   </div>
                 </div>
-                <div className=" col-lg-3 col-md-6 col-sm-6 aos" data-aos="fade-up">
+                <div
+                  className=" col-lg-3 col-md-6 col-sm-6 aos"
+                  data-aos="fade-up"
+                >
                   <div className="cities-box cities-spl-box">
                     <div className="cities-img cities-height">
-                      <img
-                        src={cities_4}
-                        className="img-fluid"
-                        alt="img"
-                      />
+                      <img src={cities_4} className="img-fluid" alt="img" />
                     </div>
                     <div className="cities-overlay-item">
                       <div className="cities-overlay">
@@ -744,14 +803,13 @@ const Home7 = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-lg-6 col-md-6 col-sm-6 aos" data-aos="fade-up">
+                <div
+                  className="col-lg-6 col-md-6 col-sm-6 aos"
+                  data-aos="fade-up"
+                >
                   <div className="cities-box">
                     <div className="cities-img loca-height">
-                      <img
-                        src={cities_5}
-                        className="img-fluid"
-                        alt="img"
-                      />
+                      <img src={cities_5} className="img-fluid" alt="img" />
                     </div>
                     <div className="cities-overlay-item">
                       <div className="cities-overlay">
@@ -778,14 +836,13 @@ const Home7 = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-lg-3 col-md-6 col-sm-6 aos" data-aos="fade-up">
+                <div
+                  className="col-lg-3 col-md-6 col-sm-6 aos"
+                  data-aos="fade-up"
+                >
                   <div className="cities-box">
                     <div className="cities-img">
-                      <img
-                        src={cities_6}
-                        className="img-fluid"
-                        alt="img"
-                      />
+                      <img src={cities_6} className="img-fluid" alt="img" />
                     </div>
                     <div className="cities-overlay-item">
                       <div className="cities-overlay">
@@ -835,8 +892,9 @@ const Home7 = () => {
                   />
                   <h2>Restaurateurs join us</h2>
                   <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit,eiusmod
-                    tempor incididunt ullamco minim ut labore et dolore magna aliqua.
+                    Lorem ipsum dolor sit amet, consectetur adipiscing
+                    elit,eiusmod tempor incididunt ullamco minim ut labore et
+                    dolore magna aliqua.
                   </p>
                   <Link to="/signup" className="btn">
                     Join Us <i className="fa-solid fa-arrow-right" />{" "}
@@ -1172,7 +1230,10 @@ const Home7 = () => {
             </div>
             <div className="price-wrap">
               <div className="row">
-                <div className="col-lg-3 col-md-6 d-flex aos" data-aos="fade-up">
+                <div
+                  className="col-lg-3 col-md-6 d-flex aos"
+                  data-aos="fade-up"
+                >
                   <div className="price-card price-seven flex-fill">
                     <div>
                       <div className="price-head">
@@ -1184,7 +1245,9 @@ const Home7 = () => {
                         </div>
                       </div>
                       <div className="price-body">
-                        <p>For most businesses that want to otpimize web queries</p>
+                        <p>
+                          For most businesses that want to otpimize web queries
+                        </p>
                         <ul>
                           <li className="active">Chat support</li>
                           <li className="active">All limited links</li>
@@ -1202,7 +1265,10 @@ const Home7 = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-lg-3 col-md-6 d-flex aos" data-aos="fade-up">
+                <div
+                  className="col-lg-3 col-md-6 d-flex aos"
+                  data-aos="fade-up"
+                >
                   <div className="price-card price-seven   flex-fill">
                     <div>
                       <div className="price-head">
@@ -1214,7 +1280,9 @@ const Home7 = () => {
                         </div>
                       </div>
                       <div className="price-body">
-                        <p>For most businesses that want to otpimize web queries</p>
+                        <p>
+                          For most businesses that want to otpimize web queries
+                        </p>
                         <ul>
                           <li className="active">Chat support</li>
                           <li className="active">All limited links</li>
@@ -1247,7 +1315,9 @@ const Home7 = () => {
                         </div>
                       </div>
                       <div className="price-body">
-                        <p>For most businesses that want to otpimize web queries</p>
+                        <p>
+                          For most businesses that want to otpimize web queries
+                        </p>
                         <ul>
                           <li className="active">Chat support</li>
                           <li className="active">All limited links</li>
@@ -1265,7 +1335,10 @@ const Home7 = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-lg-3 col-md-6 d-flex aos" data-aos="fade-up">
+                <div
+                  className="col-lg-3 col-md-6 d-flex aos"
+                  data-aos="fade-up"
+                >
                   <div className="price-card price-seven flex-fill">
                     <div>
                       <div className="price-head">
@@ -1277,7 +1350,9 @@ const Home7 = () => {
                         </div>
                       </div>
                       <div className="price-body">
-                        <p>For most businesses that want to otpimize web queries</p>
+                        <p>
+                          For most businesses that want to otpimize web queries
+                        </p>
                         <ul>
                           <li className="active">Chat support</li>
                           <li className="active">All limited links</li>
@@ -1342,14 +1417,20 @@ const Home7 = () => {
                     alt="title-img"
                   />
                   <h2>From Our Blog</h2>
-                  <p>Checkout what people are saying about our commuity businesses</p>
+                  <p>
+                    Checkout what people are saying about our commuity
+                    businesses
+                  </p>
                 </div>
               </div>
             </div>
             <div className="container">
               <div className="row">
                 <div className="col-lg-4 col-md-6 col-sm-6 d-flex">
-                  <div className="blog-seven grid-blog-seven aos" data-aos="fade-up">
+                  <div
+                    className="blog-seven grid-blog-seven aos"
+                    data-aos="fade-up"
+                  >
                     <div className="blog-image-seven">
                       <Link to="/blog-details">
                         <img
@@ -1378,17 +1459,14 @@ const Home7 = () => {
                         </Link>
                       </h3>
                       <p className="blog-description-seven">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut
-                        lectus elementum lectus eu nisl, purus...
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Ut lectus elementum lectus eu nisl, purus...
                       </p>
                       <ul className="entry-meta meta-item-seven">
                         <li>
                           <div className="post-author-seven">
                             <div className="post-author-img-seven">
-                              <img
-                                src={ProfileAvatar02}
-                                alt="Post Author"
-                              />
+                              <img src={ProfileAvatar02} alt="Post Author" />
                             </div>
                             <Link to="#" className="mb-0">
                               {" "}
@@ -1401,7 +1479,10 @@ const Home7 = () => {
                   </div>
                 </div>
                 <div className="col-lg-4 col-md-6 col-sm-6 d-flex">
-                  <div className="blog-seven grid-blog-seven aos" data-aos="fade-up">
+                  <div
+                    className="blog-seven grid-blog-seven aos"
+                    data-aos="fade-up"
+                  >
                     <div className="blog-image-seven">
                       <Link to="/blog-details">
                         <img
@@ -1430,17 +1511,14 @@ const Home7 = () => {
                         </Link>
                       </h3>
                       <p className="blog-description-seven">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut
-                        lectus elementum lectus eu nisl, purus...
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Ut lectus elementum lectus eu nisl, purus...
                       </p>
                       <ul className="entry-meta meta-item-seven">
                         <li>
                           <div className="post-author-seven">
                             <div className="post-author-img-seven">
-                              <img
-                                src={ProfileAvatar07}
-                                alt="Post Author"
-                              />
+                              <img src={ProfileAvatar07} alt="Post Author" />
                             </div>
                             <Link to="#" className="mb-0">
                               {" "}
@@ -1453,7 +1531,10 @@ const Home7 = () => {
                   </div>
                 </div>
                 <div className="col-lg-4 col-md-6 col-sm-6 d-flex">
-                  <div className="blog-seven grid-blog-seven aos" data-aos="fade-up">
+                  <div
+                    className="blog-seven grid-blog-seven aos"
+                    data-aos="fade-up"
+                  >
                     <div className="blog-image-seven">
                       <Link to="/blog-details">
                         <img
@@ -1482,17 +1563,14 @@ const Home7 = () => {
                         </Link>
                       </h3>
                       <p className="blog-description-seven">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut
-                        lectus elementum lectus eu nisl, purus...
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Ut lectus elementum lectus eu nisl, purus...
                       </p>
                       <ul className="entry-meta meta-item-seven">
                         <li>
                           <div className="post-author-seven">
                             <div className="post-author-img-seven">
-                              <img
-                                src={ProfileAvatar04}
-                                alt="Post Author"
-                              />
+                              <img src={ProfileAvatar04} alt="Post Author" />
                             </div>
                             <Link to="#" className="mb-0">
                               {" "}
@@ -1518,7 +1596,10 @@ const Home7 = () => {
                 <div className="col-lg-6 col-md-6">
                   <div className="footer-left-part pull-left">
                     <h4>Newsletter</h4>
-                    <p>Be the first one to know about discounts, offers and events</p>
+                    <p>
+                      Be the first one to know about discounts, offers and
+                      events
+                    </p>
                   </div>
                 </div>
                 <div className="col-lg-6 col-md-6">
@@ -1753,5 +1834,5 @@ const Home7 = () => {
       </div>
     </>
   );
-}
+};
 export default Home7;

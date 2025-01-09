@@ -69,12 +69,12 @@ const HealthCare = () => {
 
       // Add a new document to the 'listings' collection
       const docRef = await addDoc(listingsCollection, {
-        image: image,
+        img: image,
         title: title,
         details: details,
         location: location,
         price: price,
-        heathcaretype: heathcaretype,
+        Type: heathcaretype,
         link: link,
         postedAgo: postedAgo.toISOString(), // Convert to ISO string to store the date
       });

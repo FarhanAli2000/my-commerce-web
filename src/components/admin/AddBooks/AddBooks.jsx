@@ -62,8 +62,8 @@ const AddBooks = () => {
 
       // Add a new document to the 'books' collection
       const docRef = await addDoc(booksCollection, {
-        book_title: bookTitle,
-        image_url: imageUrl,
+        title: bookTitle,
+        img: imageUrl,
         location: location,
         price: price,
         time_ago: timeAgo.toISOString(), // Convert to ISO string to store the date

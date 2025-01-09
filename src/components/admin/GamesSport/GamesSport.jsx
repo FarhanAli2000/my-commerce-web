@@ -75,7 +75,7 @@ const GamesSport = () => {
         location: location,
         price: price,
 
-        SportGamesType: heathcaretype,
+        Type: heathcaretype,
         link: link,
         timeAgo: timeAgo.toISOString(), // Convert to ISO string to store the date
       });

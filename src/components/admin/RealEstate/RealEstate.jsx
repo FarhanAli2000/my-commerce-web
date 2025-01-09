@@ -69,13 +69,13 @@ const RealEstate = () => {
 
       // Add a new document to the 'listings' collection
       const docRef = await addDoc(listingsCollection, {
-        imgSrc: imgSrc,
+        img: imgSrc,
         title: title,
         description: description,
         location: location,
         price: price,
         link: link,
-        propertyType: propertyType,
+        Type: propertyType,
 
         timeAgo: timeAgo.toISOString(), // Convert to ISO string to store the date
       });

@@ -58,6 +58,7 @@ import Electronic from "./components/admin/Electronic/Electronic";
 import GamesSport from "./components/admin/GamesSport/GamesSport";
 import ComercialsAds from "./components/admin/ComercialsAds/ComercialsAds";
 import AddBooks from "./components/admin/AddBooks/AddBooks";
+import AddCars from "./components/admin/AddCars/AddCars";
 export const App = () => {
   return (
     <BrowserRouter basename={`${config.publicPath}`}>
@@ -78,6 +79,7 @@ export const App = () => {
         <Route path="/GamesSport" element={<GamesSport />} />
         <Route path="/ComercialsAds" element={<ComercialsAds />} />
         <Route path="/AddBooks" element={<AddBooks />} />
+        <Route path="/AddCars" element={<AddCars />} />
 
         <Route path="/listing-grid" element={<Listing_Grid />} />
         <Route path="/service-details" element={<ServiceDetails />} />

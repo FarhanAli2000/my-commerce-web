@@ -66,7 +66,9 @@ const AddBooks = () => {
         img: imageUrl,
         location: location,
         price: price,
-        time_ago: timeAgo.toISOString(), // Convert to ISO string to store the date
+        isFeatured: true,
+
+        timeAgo: timeAgo.toISOString(), // Convert to ISO string to store the date
       });
 
       alert("Book added successfully!");

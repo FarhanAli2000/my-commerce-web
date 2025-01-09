@@ -64,7 +64,7 @@ const AddCars = () => {
 
       // Add a new document to the 'books' collection
       const docRef = await addDoc(booksCollection, {
-        name: name,
+        title: name,
         img: imageUrl,
         location: location,
         price: price,

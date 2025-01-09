@@ -76,7 +76,7 @@ const HealthCare = () => {
         price: price,
         Type: heathcaretype,
         link: link,
-        postedAgo: postedAgo.toISOString(), // Convert to ISO string to store the date
+        timeAgo: postedAgo.toISOString(), // Convert to ISO string to store the date
       });
 
       alert("Listing added successfully!");

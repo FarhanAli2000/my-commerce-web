@@ -70,7 +70,7 @@ const RealEstate = () => {
       // Add a new document to the 'listings' collection
       const docRef = await addDoc(listingsCollection, {
         img: imgSrc,
-        name: title,
+        title: title,
         description: description,
         location: location,
         price: price,

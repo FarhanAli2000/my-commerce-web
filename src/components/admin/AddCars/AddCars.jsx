@@ -70,7 +70,7 @@ const AddCars = () => {
         price: price,
         link: link,
         description: description,
-        time_ago: timeAgo.toISOString(), // Convert to ISO string to store the date
+        timeAgo: timeAgo.toISOString(), // Convert to ISO string to store the date
       });
 
       alert("Book added successfully!");

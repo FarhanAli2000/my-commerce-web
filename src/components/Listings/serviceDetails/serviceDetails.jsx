@@ -1,6 +1,40 @@
 import React from "react";
 import Header from "../../home/header";
-import { Feature_1_svg, Feature_2_svg, Feature_3_svg, Feature_4_svg, Feature_5_svg, Feature_6_svg, Feature_7_svg, Feature_8_svg, GalleryImg1, GalleryImg10, GalleryImg11, GalleryImg2, GalleryImg3, GalleryImg9, ProfileAvatar01, ProfileAvatar02, ProfileAvatar10, ProfileAvatar12, avatar_11, details_icon, gallery_09, gallery_10, gallery_11, gallery_1_jpg, gallery_2_jpg, gallery_3_jpg, gallery_4_jpg, gallery_5_jpg, gallery_6_jpg, gallery_8_jpg, galleryicon, statistic_icon, website } from "../../imagepath";
+import {
+  Feature_1_svg,
+  Feature_2_svg,
+  Feature_3_svg,
+  Feature_4_svg,
+  Feature_5_svg,
+  Feature_6_svg,
+  Feature_7_svg,
+  Feature_8_svg,
+  GalleryImg1,
+  GalleryImg10,
+  GalleryImg11,
+  GalleryImg2,
+  GalleryImg3,
+  GalleryImg9,
+  ProfileAvatar01,
+  ProfileAvatar02,
+  ProfileAvatar10,
+  ProfileAvatar12,
+  avatar_11,
+  details_icon,
+  gallery_09,
+  gallery_10,
+  gallery_11,
+  gallery_1_jpg,
+  gallery_2_jpg,
+  gallery_3_jpg,
+  gallery_4_jpg,
+  gallery_5_jpg,
+  gallery_6_jpg,
+  gallery_8_jpg,
+  galleryicon,
+  statistic_icon,
+  website,
+} from "../../imagepath";
 import Footer from "../../home/footer/Footer";
 import StickyBox from "react-sticky-box";
 import { useState } from "react";
@@ -13,29 +47,25 @@ import Roomspics from "./myComponent3";
 import RoomsProfile from "./myComponent4";
 import PhotoAlbum from "react-photo-album";
 
-
-
 const ServiceDetails = () => {
   const [showFancyBox, setBox] = useState(false);
   let imagess = [
     {
       url: { gallery_1_jpg },
-
     },
     {
       url: { gallery_2_jpg },
+    },
+  ];
 
-    }
-  ]
-
-  const parms=useLocation().pathname
+  const parms = useLocation().pathname;
   return (
     <>
-      <Header parms={parms}/>
+      <Header parms={parms} />
       {/*Galler Slider Section*/}
       <div className="bannergallery-section">
         <div className="gallery-slider d-flex">
-          <Rooms/>
+          <Rooms />
           <div className="showphotos">
             <Link
               // to={gallery_3_jpg}
@@ -45,9 +75,7 @@ const ServiceDetails = () => {
               ... Show Photos
             </Link>
           </div>
-          {showFancyBox && (
-            <PhotoAlbum photos={imagess} layout="rows" />
-          )}
+          {showFancyBox && <PhotoAlbum photos={imagess} layout="rows" />}
         </div>
       </div>
       {/*/Galler Slider Section*/}
@@ -99,7 +127,8 @@ const ServiceDetails = () => {
                   </li>
                   <li>
                     <Link to="#">
-                      <i className="fa-regular fa-comment-dots" /> Write a review
+                      <i className="fa-regular fa-comment-dots" /> Write a
+                      review
                     </Link>
                   </li>
                   <li>
@@ -143,18 +172,19 @@ const ServiceDetails = () => {
                 </div>
                 <div className="card-body">
                   <p>
-                    Lorem Ipsum is simply dummy text of the printing and typesetting
-                    industry. Lorem Ipsum has been the industry's standard dummy
-                    text ever since the 1500s, when an unknown printer took a galley
-                    of type and scrambled it to make a type specimen book. It has
-                    survived not only five centuries, but also the leap into
-                    electronic typesetting, remaining essentially unchanged.
+                    Lorem Ipsum is simply dummy text of the printing and
+                    typesetting industry. Lorem Ipsum has been the industry's
+                    standard dummy text ever since the 1500s, when an unknown
+                    printer took a galley of type and scrambled it to make a
+                    type specimen book. It has survived not only five centuries,
+                    but also the leap into electronic typesetting, remaining
+                    essentially unchanged.
                   </p>
                   <p>
                     It was popularised in the 1960s with the release of Letraset
-                    sheets containing Lorem Ipsum passages, and more recently with
-                    desktop publishing software like Aldus PageMaker including
-                    versions of Lorem Ipsum.
+                    sheets containing Lorem Ipsum passages, and more recently
+                    with desktop publishing software like Aldus PageMaker
+                    including versions of Lorem Ipsum.
                   </p>
                 </div>
               </div>
@@ -169,10 +199,7 @@ const ServiceDetails = () => {
                     <div className="row">
                       <div className="featureslist d-flex align-items-center col-lg-4 col-md-4">
                         <div className="feature-img">
-                          <img
-                            src={Feature_1_svg}
-                            alt="Room amenties"
-                          />
+                          <img src={Feature_1_svg} alt="Room amenties" />
                         </div>
                         <div className="featues-info">
                           <h6>
@@ -182,10 +209,7 @@ const ServiceDetails = () => {
                       </div>
                       <div className="featureslist d-flex align-items-center col-lg-4 col-md-4">
                         <div className="feature-img">
-                          <img
-                            src={Feature_2_svg}
-                            alt="Bathroom amenities"
-                          />
+                          <img src={Feature_2_svg} alt="Bathroom amenities" />
                         </div>
                         <div className="featues-info">
                           <h6>
@@ -195,10 +219,7 @@ const ServiceDetails = () => {
                       </div>
                       <div className="featureslist d-flex align-items-center col-lg-4 col-md-4">
                         <div className="feature-img">
-                          <img
-                            src={Feature_3_svg}
-                            alt="Media Technology"
-                          />
+                          <img src={Feature_3_svg} alt="Media Technology" />
                         </div>
                         <div className="featues-info">
                           <h6>
@@ -208,10 +229,7 @@ const ServiceDetails = () => {
                       </div>
                       <div className="featureslist d-flex align-items-center col-lg-4 col-md-4">
                         <div className="feature-img">
-                          <img
-                            src={Feature_4_svg}
-                            alt="Food Security"
-                          />
+                          <img src={Feature_4_svg} alt="Food Security" />
                         </div>
                         <div className="featues-info">
                           <h6>
@@ -221,10 +239,7 @@ const ServiceDetails = () => {
                       </div>
                       <div className="featureslist d-flex align-items-center col-lg-4 col-md-4">
                         <div className="feature-img">
-                          <img
-                            src={Feature_5_svg}
-                            alt="Media Technology"
-                          />
+                          <img src={Feature_5_svg} alt="Media Technology" />
                         </div>
                         <div className="featues-info">
                           <h6>
@@ -234,10 +249,7 @@ const ServiceDetails = () => {
                       </div>
                       <div className="featureslist d-flex align-items-center col-lg-4 col-md-4">
                         <div className="feature-img">
-                          <img
-                            src={Feature_6_svg}
-                            alt="Media Technology"
-                          />
+                          <img src={Feature_6_svg} alt="Media Technology" />
                         </div>
                         <div className="featues-info">
                           <h6>
@@ -247,10 +259,7 @@ const ServiceDetails = () => {
                       </div>
                       <div className="featureslist d-flex  access-feature align-items-center col-lg-4 col-md-4">
                         <div className="feature-img">
-                          <img
-                            src={Feature_7_svg}
-                            alt="Media Technology"
-                          />
+                          <img src={Feature_7_svg} alt="Media Technology" />
                         </div>
                         <div className="featues-info">
                           <h6>
@@ -260,10 +269,7 @@ const ServiceDetails = () => {
                       </div>
                       <div className="featureslist d-flex align-items-center access-feature col-lg-4 col-md-4">
                         <div className="feature-img">
-                          <img
-                            src={Feature_8_svg}
-                            alt="Media Technology"
-                          />
+                          <img src={Feature_8_svg} alt="Media Technology" />
                         </div>
                         <div className="featues-info">
                           <h6>
@@ -285,9 +291,7 @@ const ServiceDetails = () => {
                 </div>
                 <div className="card-body">
                   <div className="gallery-content">
-                   
-                      <Roomspics/>
-                    
+                    <Roomspics />
                   </div>
                 </div>
               </div>
@@ -426,8 +430,8 @@ const ServiceDetails = () => {
                               <i className="fa-regular fa-star rating-overall" />
                             </div>
                             <div>
-                              <i className="fa-sharp fa-solid fa-calendar-days" /> 4
-                              months ago
+                              <i className="fa-sharp fa-solid fa-calendar-days" />{" "}
+                              4 months ago
                             </div>
                             <div>by: Demo Test</div>
                           </div>
@@ -438,9 +442,9 @@ const ServiceDetails = () => {
                             when an unknown printer took a galley of type and
                             scrambled it to make a type specimen book.
                           </p>
-                         
-                            <RoomsProfile/>
-                          
+
+                          <RoomsProfile />
+
                           <div className="reply-box ">
                             <p>
                               Was This Review...?{" "}
@@ -478,8 +482,8 @@ const ServiceDetails = () => {
                               <i className="fa-regular fa-star rating-overall" />
                             </div>
                             <div>
-                              <i className="fa-sharp fa-solid fa-calendar-days" /> 4
-                              months ago
+                              <i className="fa-sharp fa-solid fa-calendar-days" />{" "}
+                              4 months ago
                             </div>
                             <div>by: Demo Test</div>
                           </div>
@@ -513,8 +517,8 @@ const ServiceDetails = () => {
                               <i className="fa-regular fa-star rating-overall" />
                             </div>
                             <div>
-                              <i className="fa-sharp fa-solid fa-calendar-days" /> 4
-                              months ago
+                              <i className="fa-sharp fa-solid fa-calendar-days" />{" "}
+                              4 months ago
                             </div>
                             <div>by: Demo Test</div>
                           </div>
@@ -614,8 +618,7 @@ const ServiceDetails = () => {
                 <div className="rightsidebar">
                   <div className="card">
                     <h4>
-                      <img src={details_icon} alt="details-icon" />{" "}
-                      Details
+                      <img src={details_icon} alt="details-icon" /> Details
                     </h4>
                     <ul>
                       <li>
@@ -652,7 +655,8 @@ const ServiceDetails = () => {
                   </div>
                   <div className="card">
                     <h4>
-                      <img src="assets/img/breifcase.svg" alt="" /> Business Info
+                      <img src="assets/img/breifcase.svg" alt="" /> Business
+                      Info
                     </h4>
                     <div className="map-details">
                       <div className="map-frame">
@@ -680,8 +684,7 @@ const ServiceDetails = () => {
                           <i className="feather-mail" /> support@listee.com
                         </li>
                         <li>
-                          <img src={website} alt="website" />{" "}
-                          www.listee.com
+                          <img src={website} alt="website" /> www.listee.com
                         </li>
                         <li className="socialicons pb-0">
                           <Link to="#" target="_blank">
@@ -702,8 +705,7 @@ const ServiceDetails = () => {
                   </div>
                   <div className="card">
                     <h4>
-                      <img src={statistic_icon} alt="location" />{" "}
-                      Statisfic
+                      <img src={statistic_icon} alt="location" /> Statisfic
                     </h4>
                     <ul className="statistics-list">
                       <li>
@@ -788,7 +790,10 @@ const ServiceDetails = () => {
                         />
                       </div>
                       <div className="submit-section">
-                        <button className="btn btn-primary submit-btn" type="submit">
+                        <button
+                          className="btn btn-primary submit-btn"
+                          type="submit"
+                        >
                           Send Message
                         </button>
                       </div>
@@ -803,7 +808,6 @@ const ServiceDetails = () => {
       {/* /Details Main Section */}
       <Footer />
     </>
-
   );
-}
+};
 export default ServiceDetails;

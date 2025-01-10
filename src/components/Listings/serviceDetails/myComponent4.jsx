@@ -1,43 +1,43 @@
-import React from "react";
-import {
-  GalleryImg1,
-  GalleryImg2,
-  GalleryImg3,
-  GalleryImg9,
-} from "../../imagepath";
-import { Link } from "react-router-dom";
-import Lightbox from "react-lightbox";
+import React, { useState } from "react";
+import Lightbox from "react-image-lightbox";
+import "react-image-lightbox/style.css"; // Import styles
 
-const Roomsprofile = () => {
-  const galleryItems = [
-    { original: GalleryImg1 },
-    { original: GalleryImg2 },
-    { original: GalleryImg3 },
-    { original: GalleryImg9 },
-  ];
+const MyComponent4 = ({ images }) => {
+  // Assuming you pass an array of image URLs as props
+  const [isOpen, setIsOpen] = useState(false);
+  const [photoIndex, setPhotoIndex] = useState(0);
 
   return (
-    <div className="row">
-      {galleryItems.map((item, index) => (
-        <div className="col-lg-3 col-md-3 col-sm-3" key={index}>
-          <div className="review-gallery">
-            <Link to="#" data-fancybox="gallery1">
-              <Lightbox
-                images={[{ src: item.original, title: `Image ${index + 1}` }]}
-                renderImage={(image, index) => (
-                  <img
-                    className="img-fluid"
-                    alt={`Image ${index + 1}`}
-                    src={image.src}
-                  />
-                )}
-              />
-            </Link>
-          </div>
-        </div>
+    <div>
+      {images.map((image, index) => (
+        <img
+          key={index}
+          src={image}
+          alt={`Image ${index + 1}`}
+          onClick={() => {
+            setPhotoIndex(index);
+            setIsOpen(true);
+          }}
+          style={{ cursor: "pointer", margin: "5px" }} // Basic styling for the image
+        />
       ))}
+
+      {isOpen && (
+        <Lightbox
+          mainSrc={images[photoIndex]}
+          nextSrc={images[(photoIndex + 1) % images.length]}
+          prevSrc={images[(photoIndex + images.length - 1) % images.length]}
+          onCloseRequest={() => setIsOpen(false)}
+          onMovePrevRequest={() =>
+            setPhotoIndex((photoIndex + images.length - 1) % images.length)
+          }
+          onMoveNextRequest={() =>
+            setPhotoIndex((photoIndex + 1) % images.length)
+          }
+        />
+      )}
     </div>
   );
 };
 
-export default Roomsprofile;
+export default MyComponent4;

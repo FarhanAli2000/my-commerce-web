@@ -1,7 +1,7 @@
 {
   "name": "my-app",
   "version": "1.0.0",
-  "homepage": "https://ksa4sale-classified-new-yzyo.vercel.app/index",
+  "homepage": "https://ksa4sale-classified-new-yzyo.vercel.app/",
   "description": "ksasale",
   "main": "index.js",
   "scripts": {

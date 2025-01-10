@@ -113,8 +113,9 @@ Version      : 1.0
   padding-bottom: 1rem;
 }
 
-.slick-prev:before, .slick-next:before{
-  color: #36A680;
+.slick-prev:before,
+.slick-next:before {
+  color: #36a680;
 }
 
 .upperHeaderContainer {
@@ -2848,7 +2849,7 @@ a:focus {
 }
 .cta-section {
   padding: 100px 0;
-  background-image: url(../img/whitebg.png);
+  /* background-image: url(../img/whitebg.png); */
   background-repeat: no-repeat;
   background-position: right center;
 }
@@ -21900,37 +21901,36 @@ section.advertisement {
     flex-direction: column;
     align-items: center;
   } */
-  
-  
+
   .footer-content {
     max-width: none;
   }
-  
-  .footerContact_Wrapper{
-    padding-left: 30px   !important;
+
+  .footerContact_Wrapper {
+    padding-left: 30px !important;
   }
-  
-  .contantIndoPhone_Wrapper{
+
+  .contantIndoPhone_Wrapper {
     gap: 20px !important;
   }
 
   .footer-content {
     max-width: none;
   }
-  
-  .footerContact_Wrapper{
-    padding-left: 30px   !important;
+
+  .footerContact_Wrapper {
+    padding-left: 30px !important;
   }
-  
-  .contantIndoPhone_Wrapper{
+
+  .contantIndoPhone_Wrapper {
     gap: 20px !important;
   }
-  
-  .footer_ul{
+
+  .footer_ul {
     width: 50%;
     margin-top: 12px;
   }
-  
+
   .footer-logo {
     display: flex;
     flex-direction: row;
@@ -21949,8 +21949,6 @@ section.advertisement {
   flex-direction: column;
   align-items: center;
 }
-
-
 
 .cat_icon_main .category_icons {
   width: 223px;

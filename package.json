@@ -1,7 +1,7 @@
 {
   "name": "my-app",
   "version": "1.0.0",
-  "description": "",
+  "description": "ksa4sale",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server",

@@ -1,7 +1,7 @@
 {
   "name": "my-app",
   "version": "1.0.0",
-  "description": "ksa4sale",
+  "homepage": "https://ksa4sale-classified-new-yzyo.vercel.app/index",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server",

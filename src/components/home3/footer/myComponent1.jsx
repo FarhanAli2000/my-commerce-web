@@ -1,6 +1,8 @@
-import React, { useState } from "react";
-import "react-image-lightbox/style.css"; // Import styles
-import Lightbox from "react-image-lightbox";
+import React from "react";
+import "photoswipe/dist/photoswipe.css";
+// import "photoswipe/dist/default-skin/default-skin.css";
+
+import { Gallery, Item } from "react-photoswipe-gallery";
 import { Link } from "react-router-dom";
 import {
   GalleryImg1,
@@ -10,55 +12,67 @@ import {
 } from "../../imagepath";
 
 const FancyIndex3 = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [photoIndex, setPhotoIndex] = useState(0);
-
-  const galleryItems = [
-    { src: GalleryImg1, alt: "Image 1" },
-    { src: GalleryImg2, alt: "Image 2" },
-    { src: GalleryImg9, alt: "Image 3" },
-    { src: GalleryImg10, alt: "Image 4" },
-  ];
-
   return (
-    <div>
+    <Gallery>
       <ul className="gallery-blk d-flex align-items-center">
-        {galleryItems.map((item, index) => (
-          <li key={index}>
-            <Link
-              to="#"
-              onClick={() => {
-                setPhotoIndex(index);
-                setIsOpen(true);
-              }}
-            >
-              <img className="img-fluid" src={item.src} alt={item.alt} />
-            </Link>
-          </li>
-        ))}
+        <li>
+          <Item
+            original={GalleryImg1}
+            thumbnail={GalleryImg1}
+            width="1024"
+            height="768"
+          >
+            {({ ref, open }) => (
+              <Link onClick={open}>
+                <img ref={ref} className="img-fluid" src={GalleryImg1} />
+              </Link>
+            )}
+          </Item>
+        </li>
+        <li>
+          <Item
+            original={GalleryImg2}
+            thumbnail={GalleryImg2}
+            width="1024"
+            height="768"
+          >
+            {({ ref, open }) => (
+              <Link onClick={open}>
+                <img ref={ref} className="img-fluid" src={GalleryImg2} />
+              </Link>
+            )}
+          </Item>
+        </li>
+        <li>
+          <Item
+            original={GalleryImg9}
+            thumbnail={GalleryImg9}
+            width="1024"
+            height="768"
+          >
+            {({ ref, open }) => (
+              <Link onClick={open}>
+                <img ref={ref} className="img-fluid" src={GalleryImg9} />
+              </Link>
+            )}
+          </Item>
+        </li>
+        <li>
+          <Item
+            original={GalleryImg10}
+            thumbnail={GalleryImg10}
+            width="1024"
+            height="768"
+          >
+            {({ ref, open }) => (
+              <Link onClick={open}>
+                <img ref={ref} className="img-fluid" src={GalleryImg10} />
+              </Link>
+            )}
+          </Item>
+        </li>
       </ul>
-
-      {isOpen && (
-        <Lightbox
-          mainSrc={galleryItems[photoIndex].src}
-          nextSrc={galleryItems[(photoIndex + 1) % galleryItems.length].src}
-          prevSrc={
-            galleryItems[
-              (photoIndex + galleryItems.length - 1) % galleryItems.length
-            ].src
-          }
-          onCloseRequest={() => setIsOpen(false)}
-          onMovePrevRequest={() =>
-            setPhotoIndex(
-              (photoIndex + galleryItems.length - 1) % galleryItems.length
-            )
-          }
-          onMoveNextRequest={() =>
-            setPhotoIndex((photoIndex + 1) % galleryItems.length)
-          }
-        />
-      )}
-    </div>
+    </Gallery>
   );
 };
 

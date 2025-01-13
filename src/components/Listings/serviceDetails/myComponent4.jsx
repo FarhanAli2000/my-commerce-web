@@ -1,43 +1,43 @@
-import React, { useState } from "react";
-import Lightbox from "react-image-lightbox";
-import "react-image-lightbox/style.css"; // Import styles
+import React from "react";
+import {
+  GalleryImg1,
+  GalleryImg2,
+  GalleryImg3,
+  GalleryImg9,
+  gallery_1_jpg,
+  gallery_2_jpg,
+  gallery_3_jpg,
+  gallery_4_jpg,
+  gallery_5_jpg,
+  galleryimage_9,
+} from "../../imagepath";
+import { Link } from "react-router-dom";
 
-const MyComponent4 = ({ images }) => {
-  // Assuming you pass an array of image URLs as props
-  const [isOpen, setIsOpen] = useState(false);
-  const [photoIndex, setPhotoIndex] = useState(0);
+import { SlideshowLightbox } from "lightbox.js-react";
+import "lightbox.js-react/dist/index.css";
+
+const Roomsprofile = () => {
+  const galleryItems = [
+    { original: GalleryImg1 },
+    { original: GalleryImg2 },
+    { original: GalleryImg3 },
+    { original: GalleryImg9 },
+  ];
 
   return (
-    <div>
-      {images.map((image, index) => (
-        <img
-          key={index}
-          src={image}
-          alt={`Image ${index + 1}`}
-          onClick={() => {
-            setPhotoIndex(index);
-            setIsOpen(true);
-          }}
-          style={{ cursor: "pointer", margin: "5px" }} // Basic styling for the image
-        />
+    <div className="row">
+      {galleryItems.map((item, index) => (
+        <div class="col-lg-3  col-md-3 col-sm-3" key={index}>
+          <div class="review-gallery">
+            <Link to="#" data-fancybox="gallery1">
+              <SlideshowLightbox>
+                <img className="img-fluid" alt="Image" src={item.original} />
+              </SlideshowLightbox>
+            </Link>
+          </div>
+        </div>
       ))}
-
-      {isOpen && (
-        <Lightbox
-          mainSrc={images[photoIndex]}
-          nextSrc={images[(photoIndex + 1) % images.length]}
-          prevSrc={images[(photoIndex + images.length - 1) % images.length]}
-          onCloseRequest={() => setIsOpen(false)}
-          onMovePrevRequest={() =>
-            setPhotoIndex((photoIndex + images.length - 1) % images.length)
-          }
-          onMoveNextRequest={() =>
-            setPhotoIndex((photoIndex + 1) % images.length)
-          }
-        />
-      )}
     </div>
   );
 };
-
-export default MyComponent4;
+export default Roomsprofile;

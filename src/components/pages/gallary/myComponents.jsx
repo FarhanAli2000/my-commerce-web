@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
 import {
   GalleryImg1,
   GalleryImg2,
@@ -22,10 +21,10 @@ import {
   galleryimage_8,
   galleryimage_9,
 } from "../../imagepath";
+import { Link } from "react-router-dom";
 
-// Alternative lightbox solution
-import Lightbox from "react-image-lightbox";
-import "react-image-lightbox/style.css"; // Import styles
+import { SlideshowLightbox } from "lightbox.js-react";
+import "lightbox.js-react/dist/index.css";
 
 const Apps = () => {
   const galleryItems = [
@@ -43,55 +42,20 @@ const Apps = () => {
     { original: galleryimage_3 },
   ];
 
-  const [isOpen, setIsOpen] = useState(false);
-  const [photoIndex, setPhotoIndex] = useState(0);
-
   return (
     <div className="row">
       {galleryItems.map((item, index) => (
-        <div className="col-lg-3 col-md-3 col-sm-3" key={index}>
+        <div className="col-lg-3 col-md-3 col-sm-3">
           <div className="galleryimg">
-            <Link
-              to="#"
-              onClick={() => {
-                setPhotoIndex(index);
-                setIsOpen(true);
-              }}
-            >
-              <img
-                className="img-fluid"
-                alt={`Image ${index + 1}`}
-                src={item.original}
-              />
+            <Link to="#" data-fancybox="gallery1">
+              <SlideshowLightbox>
+                <img className="img-fluid" alt="Image" src={item.original} />
+              </SlideshowLightbox>
             </Link>
           </div>
         </div>
       ))}
-
-      {isOpen && (
-        <Lightbox
-          mainSrc={galleryItems[photoIndex].original}
-          nextSrc={
-            galleryItems[(photoIndex + 1) % galleryItems.length].original
-          }
-          prevSrc={
-            galleryItems[
-              (photoIndex + galleryItems.length - 1) % galleryItems.length
-            ].original
-          }
-          onCloseRequest={() => setIsOpen(false)}
-          onMovePrevRequest={() =>
-            setPhotoIndex(
-              (photoIndex + galleryItems.length - 1) % galleryItems.length
-            )
-          }
-          onMoveNextRequest={() =>
-            setPhotoIndex((photoIndex + 1) % galleryItems.length)
-          }
-        />
-      )}
     </div>
   );
 };
-
 export default Apps;

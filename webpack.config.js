@@ -20,7 +20,7 @@ module.exports = {
     historyApiFallback: true,
     onAfterSetupMiddleware: function () {
       // Open the browser after the dev server is up and running
-      opn(`http://localhost:${this.port}/index`);
+      opn(`http://localhost:${this.port}`);
     },
   },
 
@@ -34,9 +34,10 @@ module.exports = {
   },
   output: {
     filename: "js/[name].bundle.js",
-    path: path.resolve(__dirname, "dist"), // base path where to send compiled assets
-    publicPath: publicPath, // base path where referenced files will be look for
+    path: path.resolve(__dirname, "dist"),
+    publicPath: "/", // Root path for assets
   },
+
   resolve: {
     extensions: [".tsx", ".ts", ".js", ".jsx"],
   },

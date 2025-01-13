@@ -64,7 +64,7 @@ export const App = () => {
     <BrowserRouter basename={`${config.publicPath}`}>
       <Routes>
         {/* Home Routes */}
-        <Route path="/index" element={<Home />} />
+        <Route path="/" element={<Home />} />
         <Route path="/index-2" element={<Home2 />} />
         <Route path="/index-3" element={<Home3 />} />
         <Route path="/index-4" element={<Home4 />} />

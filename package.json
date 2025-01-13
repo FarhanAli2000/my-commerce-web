@@ -1,8 +1,8 @@
 {
   "name": "my-app",
   "version": "1.0.0",
-  "homepage": ".",
-  "description": "i am desc",
+  "homepage": "https://ArfaDevelopers.github.io/ksa4sale-classifiedNew",
+  "description": "ssss",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server",
@@ -39,7 +39,7 @@
     "react-icons": "^5.4.0",
     "react-owl-carousel": "^2.3.3",
     "react-photo-album": "^2.3.0",
-    "react-photoswipe-gallery": "^3.0.2",
+    "react-photoswipe-gallery": "^3.0.0",
     "react-range-slider-input": "^3.0.7",
     "react-router-dom": "^6.2.1",
     "react-select": "^5.7.2",

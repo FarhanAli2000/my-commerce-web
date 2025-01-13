@@ -373,9 +373,9 @@ const Home = () => {
         <Footer />
         {/* Footer */}
 
-        {/* <div class="popup_cnt" id="my-popover">
-          <div class="img">
-            <div class="close_btn">X</div>
+        {/* <div className="popup_cnt" id="my-popover">
+          <div className="img">
+            <div className="close_btn">X</div>
             <img src={popup}   />
           </div>
         </div> */}

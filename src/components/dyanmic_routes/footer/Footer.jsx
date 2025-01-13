@@ -197,7 +197,7 @@ const Footer = () => {
               <div className="col-lg-2 col-md-6">
                 <div className="footer-widget footer-menu">
                   {/* <h2 className="footer-title">Quick links</h2> */}
-                  <ul class="col_2">
+                  <ul className="col_2">
                     <li>
                       <Link to="#">Property</Link>
                     </li>

@@ -1,7 +1,7 @@
 import React from "react";
-import OwlCarousel from 'react-owl-carousel';
-import 'owl.carousel/dist/assets/owl.carousel.css';
-import 'owl.carousel/dist/assets/owl.theme.default.css';
+import OwlCarousel from "react-owl-carousel";
+import "owl.carousel/dist/assets/owl.carousel.css";
+import "owl.carousel/dist/assets/owl.theme.default.css";
 import {
   TitleSvg,
   TrendingCar1,
@@ -20,24 +20,24 @@ const Trending6 = () => {
     dots: true,
     nav: false,
     navText: [
-        '<i class="fa-solid fa-angle-left"></i>',
-        '<i class="fa-solid fa-angle-right"></i>',
+      '<i className="fa-solid fa-angle-left"></i>',
+      '<i className="fa-solid fa-angle-right"></i>',
     ],
 
     loop: true,
     responsiveClass: true,
     responsive: {
-        0: {
-            items: 1,
-        },
-        768: {
-            items: 2,
-        },
-        1170: {
-            items: 5,
-        },
+      0: {
+        items: 1,
+      },
+      768: {
+        items: 2,
+      },
+      1170: {
+        items: 5,
+      },
     },
-};
+  };
   return (
     <section className="home-six-trending-search common-padding">
       <div className="container">
@@ -59,7 +59,10 @@ const Trending6 = () => {
           <div className="col-lg-12">
             <div className="trending-carousel">
               <div className="trending-carousel-button">
-              <OwlCarousel {...settings} className="trending-slider owl-carousel owl-theme">
+                <OwlCarousel
+                  {...settings}
+                  className="trending-slider owl-carousel owl-theme"
+                >
                   <div className="trending-slider-item aos" data-aos="fade-up">
                     <Link to="/categories">
                       <img src={TrendingCar1} alt="" />
@@ -116,7 +119,7 @@ const Trending6 = () => {
                       <span>Low Mileage Pickup Trucks</span>
                     </Link>
                   </div>
-                  </OwlCarousel>
+                </OwlCarousel>
               </div>
             </div>
           </div>

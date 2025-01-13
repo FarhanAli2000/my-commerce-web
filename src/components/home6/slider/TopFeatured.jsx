@@ -1,7 +1,7 @@
 import React from "react";
-import OwlCarousel from 'react-owl-carousel';
-import 'owl.carousel/dist/assets/owl.carousel.css';
-import 'owl.carousel/dist/assets/owl.theme.default.css';
+import OwlCarousel from "react-owl-carousel";
+import "owl.carousel/dist/assets/owl.carousel.css";
+import "owl.carousel/dist/assets/owl.theme.default.css";
 import {
   FeatureCar1,
   FeatureCar2,
@@ -23,8 +23,8 @@ const TopFeatured = () => {
     dots: true,
     nav: false,
     navText: [
-      '<i class="fa-solid fa-angle-left"></i>',
-      '<i class="fa-solid fa-angle-right"></i>',
+      '<i className="fa-solid fa-angle-left"></i>',
+      '<i className="fa-solid fa-angle-right"></i>',
     ],
 
     loop: true,
@@ -44,8 +44,11 @@ const TopFeatured = () => {
 
   return (
     <div className="car-class-carousel">
-      <div >
-        <OwlCarousel {...settings} className="car-featured-slider owl-carousel owl-theme">
+      <div>
+        <OwlCarousel
+          {...settings}
+          className="car-featured-slider owl-carousel owl-theme"
+        >
           <div className="featured-car-item">
             <div className="featured-car-item-list">
               <Link className="featurecar-img" to="/categories">
@@ -75,8 +78,8 @@ const TopFeatured = () => {
                   <h3>AG MC Ford Raptor</h3>
                 </Link>
                 <p>
-                  Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis
-                  suscipit laboriosam, aliquid ex commodi minima veniam
+                  Ut enim ad minima veniam, quis nostrum exercitationem ullam
+                  corporis suscipit laboriosam, aliquid ex commodi minima veniam
                 </p>
               </div>
               <div className="featured-car-foot">
@@ -125,8 +128,8 @@ const TopFeatured = () => {
                   <h3>Benz G-Class</h3>
                 </Link>
                 <p>
-                  Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis
-                  suscipit laboriosam, aliquid ex commodi minima veniam
+                  Ut enim ad minima veniam, quis nostrum exercitationem ullam
+                  corporis suscipit laboriosam, aliquid ex commodi minima veniam
                 </p>
               </div>
               <div className="featured-car-foot">
@@ -175,8 +178,8 @@ const TopFeatured = () => {
                   <h3>Toyota Camry</h3>
                 </Link>
                 <p>
-                  Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis
-                  suscipit laboriosam, aliquid ex commodi minima veniam
+                  Ut enim ad minima veniam, quis nostrum exercitationem ullam
+                  corporis suscipit laboriosam, aliquid ex commodi minima veniam
                 </p>
               </div>
               <div className="featured-car-foot">
@@ -225,8 +228,8 @@ const TopFeatured = () => {
                   <h3>Benz G-Class</h3>
                 </Link>
                 <p>
-                  Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis
-                  suscipit laboriosam, aliquid ex commodi minima veniam
+                  Ut enim ad minima veniam, quis nostrum exercitationem ullam
+                  corporis suscipit laboriosam, aliquid ex commodi minima veniam
                 </p>
               </div>
               <div className="featured-car-foot">
@@ -246,7 +249,7 @@ const TopFeatured = () => {
               </div>
             </div>
           </div>
-          </OwlCarousel>
+        </OwlCarousel>
       </div>
     </div>
   );

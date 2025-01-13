@@ -1,7 +1,7 @@
 import React from "react";
-import OwlCarousel from 'react-owl-carousel';
-import 'owl.carousel/dist/assets/owl.carousel.css';
-import 'owl.carousel/dist/assets/owl.theme.default.css';
+import OwlCarousel from "react-owl-carousel";
+import "owl.carousel/dist/assets/owl.carousel.css";
+import "owl.carousel/dist/assets/owl.theme.default.css";
 import {
   Brand1,
   Brand2,
@@ -12,7 +12,6 @@ import {
 } from "../../imagepath";
 import { Link } from "react-router-dom";
 
-
 const Browse = () => {
   const settings = {
     // autoWidth: true,
@@ -21,8 +20,8 @@ const Browse = () => {
     dots: true,
     nav: false,
     navText: [
-      '<i class="fa-solid fa-angle-left"></i>',
-      '<i class="fa-solid fa-angle-right"></i>',
+      '<i className="fa-solid fa-angle-left"></i>',
+      '<i className="fa-solid fa-angle-right"></i>',
     ],
 
     loop: true,
@@ -41,8 +40,11 @@ const Browse = () => {
   };
   return (
     <div className="car-class-carousel">
-      <div >
-        <OwlCarousel {...settings} className="car-brand-slider owl-carousel owl-theme">
+      <div>
+        <OwlCarousel
+          {...settings}
+          className="car-brand-slider owl-carousel owl-theme"
+        >
           <Link to="/categories">
             <div className="browse-by-brand-item aos" data-aos="flip-left">
               <img src={Brand1} alt="" />
@@ -102,7 +104,6 @@ const Browse = () => {
         </OwlCarousel>
       </div>
     </div>
-
   );
 };
 

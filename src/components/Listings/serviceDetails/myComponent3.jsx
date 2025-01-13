@@ -35,8 +35,8 @@ const Roomspics = () => {
   return (
     <div className="row">
       {galleryItems.map((item, index) => (
-        <div class="col-lg-3  col-md-3 col-sm-3" key={index}>
-          <div class="review-gallery">
+        <div className="col-lg-3  col-md-3 col-sm-3" key={index}>
+          <div className="review-gallery">
             <Link to="#" data-fancybox="gallery1">
               <SlideshowLightbox>
                 <img className="img-fluid" alt="Image" src={item.original} />

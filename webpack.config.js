@@ -16,11 +16,11 @@ module.exports = {
     static: {
       directory: path.join(__dirname, "public/"),
     },
-    port: 3002,
+    port: 3000,
     historyApiFallback: true,
     onAfterSetupMiddleware: function () {
       // Open the browser after the dev server is up and running
-      opn(`http://localhost:${this.port}/index`);
+      opn(`http://localhost:${this.port}`);
     },
   },
 

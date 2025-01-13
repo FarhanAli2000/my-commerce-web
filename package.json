@@ -1,7 +1,7 @@
 {
   "name": "my-app",
   "version": "1.0.0",
-  "homepage": "https://ksa4sale-classified-new.vercel.app/",
+  "homepage": ".",
   "description": "i am desc",
   "main": "index.js",
   "scripts": {

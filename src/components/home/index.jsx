@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   ArrowBanner,
   BannerArrow,
@@ -20,51 +19,11 @@ import {
   Category8Svg,
   Category9Svg,
   Category1Svg,
-  // CtaImg,
-  // Feature2,
-  // Feature3,
-  // Feature4,
-  // Feature5,
-  // Feature6,
-  // Feature7,
-  // Feature8,
-  // Feature9,
-  // LocationsAustralia,
-  // LocationsCanada,
-  // LocationsChina,
-  // LocationsFrance,
-  // LocationsUk,
-  // LocationsUsa,
-  // Partners1,
-  // Partners2,
-  // Partners3,
-  // Partners4,
-  // Partners5,
-  // Partners6,
-  // PopularImg,
-  // ProfileAvatar02,
-  // ProfileAvatar03,
-  // ProfileAvatar04,
-  // ProfileAvatar05,
-  // ProfileAvatar06,
-  // ProfileAvatar07,
-  // ProfileAvatar12,
-  // ProfileAvatar13,
-  // ProfileAvatar14,
-  // Quotes,
-  // RightImg,
-  // Testimonial1,
-  // Testimonial2,
 } from "../imagepath";
 import Carousel from "./slider/Carousel";
 import Footer from "./footer/Footer";
-
 import Header from "./header";
-// import Testimonial from "./slider/Testimonial";
-// import Sponsors from "./slider/Sponsors";
-// import Select from "./select";
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import AutomativeCarosuel from "..//home/slider/AutomativeCarousel.jsx";
@@ -130,7 +89,6 @@ const Home = () => {
     };
 
     $(".switch").on("click", handleSwitchClick);
-
     $(window).on("scroll", handleScroll);
 
     $(".progress-wrap").on("click", function (e) {
@@ -158,41 +116,27 @@ const Home = () => {
         <Header />
         {/* Banner Section */}
         <section className="banner-section">
-          {/* <div className="banner-circle">
-            <img src={Bannerbg} className="img-fluid" alt="bannercircle" />
-          </div> */}
           <div className="container">
             <div className="home-banner">
               <div className="home-banner-about">
                 <div
-                  className="section-search aos r  homebannerwrapper_2"
+                  className="section-search aos r homebannerwrapper_2"
                   data-aos="fade-up"
                 >
-                  <p className="explore-text   banner-text">
-                    {" "}
+                  <p className="explore-text banner-text">
                     <span>Explore top-rated attractions</span>
                   </p>
-                  {/* <img src={ArrowBanner} className="arrow-img" alt="arrow" /> */}
                   <h1>
                     Let us help you
+                    <span>Find, Buy</span>
                     <span>Find, Buy</span> & Own Dreams
                   </h1>
                   <p className="banner-para">
-                    Countrys most loved and trusted classNameified ad listing
-                    website classNameified ad.randomised words which don't look
-                    even slightly Browse thousand of items near you.
+                    Countrys most loved and trusted classified ad listing
+                    website. Randomised words which don't look even slightly
+                    Browse thousands of items near you.
                   </p>
                 </div>
-
-                {/* <div className="col-lg-5">
-                  <div className="banner-imgs">
-                    <img
-                      src={RightImg}
-                      className="img-fluid"
-                      alt="bannerimage"
-                    />
-                  </div>
-                </div> */}
                 <div className="bannerimages_wrapper">
                   <div className="wrapper_container">
                     <img src={image1} className="banner_img" alt="" />
@@ -209,49 +153,41 @@ const Home = () => {
         </section>
         {/* Banner Section */}
 
-        {/* Trending  Products */}
+        {/* Trending Products */}
         <div className="trendingprodct_wrapper container">
           <h3 className="trendingproduct_heading"> Our Trending Product</h3>
           <div className="trendingproducts_container">
             <button className="trendingProductsallname">Iphone 16</button>
-
             <button className="trendingProductsallname">Cricket Kit</button>
-
             <button className="trendingProductsallname">Bags</button>
-
-            <button className="trendingProductsallname">Aparmants</button>
-
+            <button className="trendingProductsallname">Apparel</button>
             <button className="trendingProductsallname">Mens Hoodies</button>
-
-            <button className="trendingProductsallname">Apparmants</button>
-
+            <button className="trendingProductsallname">Apparel</button>
             <button className="trendingProductsallname">Magazines</button>
-
             <button className="trendingProductsallname">Mens Hoodies</button>
           </div>
         </div>
-
-        {/* Trending  Products */}
+        {/* Trending Products */}
 
         {/* Category Section */}
         <section className="category-section">
           <div className="container">
             <div className="allMedia_Icons">
-              <icon>
+              <div>
                 <img src={xIcon} alt="Xicon" />
-              </icon>
-              <icon>
-                <img src={insta} alt="instragram" />
-              </icon>
-              <icon>
+              </div>
+              <div>
+                <img src={insta} alt="instagram" />
+              </div>
+              <div>
                 <img src={fb} alt="facebook" />
-              </icon>
-              <icon>
+              </div>
+              <div>
                 <img src={tiktok} alt="tiktok" />
-              </icon>
-              <icon>
-                <img src={whatapp} alt="whatapp" />
-              </icon>
+              </div>
+              <div>
+                <img src={whatapp} alt="whatsapp" />
+              </div>
             </div>
             <div className="section-heading">
               <div className="row align-items-center">
@@ -349,8 +285,7 @@ const Home = () => {
         <Carousel />
         {/* Featured Ads Section */}
 
-        {/* All carosuel */}
-
+        {/* All carousel */}
         <div className="allCarosuel_wrapper">
           <AutomativeCarosuel />
           <RealEstateCarousel />
@@ -358,13 +293,11 @@ const Home = () => {
           <HealthCareCarousel />
           <SportandgameCarouseCarousel />
         </div>
-
-        {/* All carosuel */}
+        {/* All carousel */}
 
         <ComercialsAds />
 
-        {/* Latest Blogs  components */}
-
+        {/* Latest Blogs components */}
         <LatestBlog />
 
         {/* Blog Section */}
@@ -372,13 +305,6 @@ const Home = () => {
         {/* Footer */}
         <Footer />
         {/* Footer */}
-
-        {/* <div className="popup_cnt" id="my-popover">
-          <div className="img">
-            <div className="close_btn">X</div>
-            <img src={popup}   />
-          </div>
-        </div> */}
 
         <div>
           {isVisible && (

@@ -1,30 +1,36 @@
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import {
-  Feature2,
-  Feature3,
-  Feature4,
-  Feature5,
-  Feature9,
-  ProfileAvatar02,
-  ProfileAvatar04,
-  ProfileAvatar05,
-  ProfileAvatar06,
-} from "../../imagepath";
 import Slider from "react-slick";
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
-import img1 from "./img1.png";
-import img2 from "./image 39 (2).png";
-import img3 from "./img3.png";
-import img4 from "./image 41 (1).png";
+import { db } from "./../../Firebase/FirebaseConfig.jsx";
+import { getDocs, collection } from "firebase/firestore";
 
-export default function Carousel() {
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 767);
-  const [slidesToShow, setSlidesToShow] = useState(4);
+export default function AutomativeCarousel() {
+  const [slidesToShow, setSlidesToShow] = useState(5);
+  const [ads, setAds] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchAds = async () => {
+      try {
+        const adsCollection = collection(db, "ComercialsAds"); // Get reference to the 'ads' collection
+        const adsSnapshot = await getDocs(adsCollection); // Fetch the data
+        const adsList = adsSnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(), // Spread the document data
+        }));
+        console.log("Ads data fetched from backend:", adsList);
+        setAds(adsList); // Set the state with the ads data
+        setLoading(false); // Stop loading when data is fetched
+      } catch (error) {
+        console.error("Error fetching ads:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchAds();
+  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -33,7 +39,7 @@ export default function Carousel() {
       if (width <= 767) {
         setSlidesToShow(1);
       } else if (width >= 768 && width <= 1024) {
-        setSlidesToShow(3);
+        setSlidesToShow(4);
       } else {
         setSlidesToShow(4);
       }
@@ -56,109 +62,39 @@ export default function Carousel() {
     slidesToShow: slidesToShow,
     slidesToScroll: 1,
   };
+
   const slider = useRef();
+
   return (
-    <section className="featured-section bg-white commercials_card_section ">
+    <section className=" electronic_card_section">
       <div className="container">
         <div className="row align-items-center">
-          <div className=" featuresection_infodev1  featuresection_infodev mb-5 ">
-            <h4 className="featuresection_header  ">Commercials Ads</h4>
-            <button className="featuresection_btn   featuresection_btn1 ">
-              View All Ads
-            </button>
+          <div className="featuresection_infodev">
+            <h4 className="featuresection_header">Commercial Ads</h4>
+            <button className="featuresection_btn">View All</button>
           </div>
-
-          {/*  */}
-
-          {/*  */}
+          {/* Removed the line with the highlighter class */}
         </div>
         <div className="row">
           <div className="col-md-12">
             <div>
-              <Slider
-                ref={slider}
-                {...settings}
-                className=" featured-slider grid-view"
-              >
-                <div className="card aos" data-aos="fade-up">
-                  <div className="blog-widget">
-                    <div className="blog-img">
-                      <Link to="/index">
-                        <img src={img1} className="img-fluid" alt="blog-img" />
-                      </Link>
+              <Slider ref={slider} {...settings} className="featured-slider grid-view">
+                {ads.map((ad) => (
+                  <div key={ad.id} className="card aos" data-aos="fade-up">
+                    <div className="blog-widget">
+                      <div className="blog-img">
+                        <Link to={`/car-details/${ad.id}`}>
+                          <img
+                            src={ad.img}
+                            className="img-fluid"
+                            alt={ad.name}
+                            style={{ height: "200px", objectFit: "cover" }}
+                          />
+                        </Link>
+                      </div>
                     </div>
                   </div>
-                </div>
-
-                <div className="card aos" data-aos="fade-up">
-                  <div className="blog-widget">
-                    <div className="blog-img">
-                      <Link to="/index">
-                        <img src={img2} className="img-fluid" alt="blog-img" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="card aos" data-aos="fade-up">
-                  <div className="blog-widget">
-                    <div className="blog-img">
-                      <Link to="/index">
-                        <img src={img1} className="img-fluid" alt="blog-img" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="card aos" data-aos="fade-up">
-                  <div className="blog-widget">
-                    <div className="blog-img">
-                      <Link to="/index">
-                        <img src={img1} className="img-fluid" alt="blog-img" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="card aos" data-aos="fade-up">
-                  <div className="blog-widget">
-                    <div className="blog-img">
-                      <Link to="/index">
-                        <img src={img1} className="img-fluid" alt="blog-img" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="card aos" data-aos="fade-up">
-                  <div className="blog-widget">
-                    <div className="blog-img">
-                      <Link to="/index">
-                        <img src={img1} className="img-fluid" alt="blog-img" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="card aos" data-aos="fade-up">
-                  <div className="blog-widget">
-                    <div className="blog-img">
-                      <Link to="/index">
-                        <img src={img2} className="img-fluid" alt="blog-img" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="card aos" data-aos="fade-up">
-                  <div className="blog-widget">
-                    <div className="blog-img">
-                      <Link to="/index">
-                        <img src={img2} className="img-fluid" alt="blog-img" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
+                ))}
               </Slider>
             </div>
           </div>

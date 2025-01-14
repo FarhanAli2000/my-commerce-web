@@ -169,7 +169,7 @@ const RealEstate = () => {
                 <Form.Group controlId="formLink" className="mb-3">
                   <Form.Label>Link</Form.Label>
                   <Form.Control
-                    type="url"
+                    type="text"
                     placeholder="Enter link"
                     value={link}
                     onChange={(e) => setLink(e.target.value)}

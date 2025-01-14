@@ -1,13 +1,49 @@
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
-import img from "./health.png";
+import { db } from "./../../Firebase/FirebaseConfig.jsx";
+import { getDocs, collection } from "firebase/firestore";
 
-export default function HealthCareCarousel() {
+// Function to format the time ago in human-readable form
+const timeAgo = (timestamp) => {
+  const date = new Date(timestamp); // Convert ISO string to Date object
+  const now = new Date();
+  const diffTime = Math.abs(now - date);
+  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)); // Get difference in days
+  
+  if (diffDays === 0) {
+    return 'Today'; // If posted today
+  }
+  return `${diffDays} day${diffDays > 1 ? 's' : ''} ago`; // Return difference in days
+};
+
+export default function AutomativeCarousel() {
   const [slidesToShow, setSlidesToShow] = useState(5);
+  const [ads, setAds] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchAds = async () => {
+      try {
+        const adsCollection = collection(db, "HealthCare"); // Get reference to the 'HealthCare' collection
+        const adsSnapshot = await getDocs(adsCollection); // Fetch the data
+        const adsList = adsSnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(), // Spread the document data
+        }));
+        console.log(adsList,'mydata');
+        setAds(adsList); // Set the state with the ads data
+        setLoading(false); // Stop loading when data is fetched
+      } catch (error) {
+        console.error("Error fetching ads:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchAds();
+  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -16,7 +52,7 @@ export default function HealthCareCarousel() {
       if (width <= 767) {
         setSlidesToShow(1);
       } else if (width >= 768 && width <= 1024) {
-        setSlidesToShow(3);
+        setSlidesToShow(5);
       } else {
         setSlidesToShow(5);
       }
@@ -39,21 +75,23 @@ export default function HealthCareCarousel() {
     slidesToShow: slidesToShow,
     slidesToScroll: 1,
   };
+
   const slider = useRef();
+
   return (
-    <section className="featured-section-color  electronic_card_section  ">
+    <section className="featured-section-color electronic_card_section">
       <div className="container">
         <div className="row align-items-center">
           <div className="featuresection_infodev">
-            <h4 className="featuresection_header">Health Care</h4>
+            <h4 className="featuresection_header">Healthcare</h4>
             <button className="featuresection_btn">View All</button>
           </div>
 
           <div className="feature-section-info">
             <ul className="info-list">
-              <li>Sugae Apparatus</li>
-              <li>Bp Apparatus</li>
-              <li>Medicine</li>
+              <li>Sugar Apparatus</li>
+              <li>BP Apparatus</li>
+              <li>Medicines</li>
             </ul>
           </div>
 
@@ -64,393 +102,48 @@ export default function HealthCareCarousel() {
         <div className="row">
           <div className="col-md-12">
             <div>
-              <Slider
-                ref={slider}
-                {...settings}
-                className=" featured-slider grid-view"
-              >
-                <div className="card aos" data-aos="fade-up">
-                  <div className="blog-widget">
-                    <div className="blog-img">
-                      <Link to="/index">
-                        <img src={img} className="img-fluid" alt="blog-img" />
-                      </Link>
-                    </div>
-                    <div className="bloglist-content">
-                      <div className="card-body">
-                        <h6>
-                          <Link to="/index">Bp Apparatus</Link>
-                        </h6>
-                        <div
-                          className="location-info"
-                          style={{ fontSize: "0.7rem" }}
-                        >
-                          1 piece| Optional| Bp Apparatus
-                        </div>
-                        <div className="blog-location-details">
-                          <div
-                            className="location-info"
-                            style={{ marginTop: "1rem" }}
-                          >
-                            Los Angeles
+              <Slider ref={slider} {...settings} className="featured-slider grid-view">
+                {ads.map((ad) => (
+                  <div key={ad.id} className="card aos" data-aos="fade-up">
+                    <div className="blog-widget">
+                      <div className="blog-img">
+                        <Link to={`/car-details/${ad.id}`}>
+                          <img 
+                            src={ad.img} 
+                            className="img-fluid"
+                            alt={ad.name}
+                            style={{ height: "200px", objectFit: "cover" }} 
+                          />
+                        </Link>
+                      </div>
+                      <div className="bloglist-content">
+                        <div className="card-body">
+                          <h6>
+                            <Link to={`/car-details/${ad.id}`}>{ad.title}</Link>
+                          </h6>
+                          <div className="location-info">
+                            <p style={{ fontSize: "0.7rem" }}>{ad.details}</p>
                           </div>
-                        </div>
-                        <div className="amount-details">
-                          <div className="amount">
-                            <span
-                              className="validrate"
-                              style={{ fontFamily: "Inter" }}
-                            >
-                              $350
-                            </span>
-                            {/* <span>$450</span> */}
+                          <div className="blog-location-details">
+                            <div className="location-info" style={{ marginTop: "1rem" }}>
+                              {ad.location}
+                            </div>
                           </div>
-                          <div className="ratings">
-                            {/* <span>4.7</span>  */}1 DAYS AGO
+                          <div className="amount-details">
+                            <div className="amount">
+                              <span className="validrate" style={{ fontFamily: "Inter" }}>
+                                ${ad.price}
+                              </span>
+                            </div>
+                            <div className="ratings" style={{ fontFamily: "Inter" }}>
+                              {timeAgo(ad.postedAgo)} {/* Call timeAgo function here */}
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-
-                <div className="card aos" data-aos="fade-up">
-                  <div className="blog-widget">
-                    <div className="blog-img">
-                      <Link to="/service-details">
-                        <img src={img} className="img-fluid" alt="blog-img" />
-                      </Link>
-                    </div>
-                    <div className="bloglist-content">
-                      <div className="card-body">
-                        <h6>
-                          <Link to="/service-details">Bp Apparatus</Link>
-                        </h6>
-                        <div
-                          className="location-info"
-                          style={{ fontSize: "0.7rem" }}
-                        >
-                          1 piece| Optional| Bp Apparatus
-                        </div>
-                        <div className="blog-location-details">
-                          <div
-                            className="location-info"
-                            style={{ marginTop: "1rem" }}
-                          >
-                            {/* <i className="feather-map-pin"></i> */}
-                            Los Angeles
-                          </div>
-                          {/* <div className="location-info">
-                            <i className="fa-regular fa-calendar-days"></i> 06
-                            Oct, 2022
-                          </div> */}
-                        </div>
-                        <div className="amount-details">
-                          <div className="amount">
-                            <span
-                              className="validrate"
-                              style={{ fontFamily: "Inter" }}
-                            >
-                              $350
-                            </span>
-                            {/* <span>$450</span> */}
-                          </div>
-                          <div
-                            className="ratings"
-                            style={{ fontFamily: "Inter" }}
-                          >
-                            {/* <span>4.7</span>  */}1 DAYS AGO
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="card aos" data-aos="fade-up">
-                  <div className="blog-widget">
-                    <div className="blog-img">
-                      <Link to="/service-details">
-                        <img src={img} className="img-fluid" alt="blog-img" />
-                      </Link>
-                    </div>
-                    <div className="bloglist-content">
-                      <div className="card-body">
-                        <h6>
-                          <Link to="/service-details">Bp Apparatus</Link>
-                        </h6>
-                        <div
-                          className="location-info"
-                          style={{ fontSize: "0.7rem" }}
-                        >
-                          1 piece| Optional| Bp Apparatus
-                        </div>
-                        <div className="blog-location-details">
-                          <div
-                            className="location-info"
-                            style={{ marginTop: "1rem" }}
-                          >
-                            Los Angeles
-                          </div>
-                        </div>
-                        <div className="amount-details">
-                          <div className="amount">
-                            <span
-                              className="validrate"
-                              style={{ fontFamily: "Inter" }}
-                            >
-                              $350
-                            </span>
-                            {/* <span>$450</span> */}
-                          </div>
-                          <div
-                            className="ratings"
-                            style={{ fontFamily: "Inter" }}
-                          >
-                            {/* <span>4.7</span>  */}1 DAYS AGO
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="card aos" data-aos="fade-up">
-                  <div className="blog-widget">
-                    <div className="blog-img">
-                      <Link to="/service-details">
-                        <img src={img} className="img-fluid" alt="blog-img" />
-                      </Link>
-                    </div>
-                    <div className="bloglist-content">
-                      <div className="card-body">
-                        <h6>
-                          <Link to="/service-details">Bp Apparatus</Link>
-                        </h6>
-                        <div
-                          className="location-info"
-                          style={{ fontSize: "0.7rem" }}
-                        >
-                          1 piece| Optional| Bp Apparatus
-                        </div>
-                        <div className="blog-location-details">
-                          <div
-                            className="location-info"
-                            style={{ marginTop: "1rem" }}
-                          >
-                            Los Angeles
-                          </div>
-                        </div>
-                        <div className="amount-details">
-                          <div className="amount">
-                            <span
-                              className="validrate"
-                              style={{ fontFamily: "Inter" }}
-                            >
-                              $350
-                            </span>
-                            {/* <span>$450</span> */}
-                          </div>
-                          <div
-                            className="ratings"
-                            style={{ fontFamily: "Inter" }}
-                          >
-                            {/* <span>4.7</span>  */}1 DAYS AGO
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="card aos" data-aos="fade-up">
-                  <div className="blog-widget">
-                    <div className="blog-img">
-                      <Link to="/service-details">
-                        <img src={img} className="img-fluid" alt="blog-img" />
-                      </Link>
-                    </div>
-                    <div className="bloglist-content">
-                      <div className="card-body">
-                        <h6>
-                          <Link to="/service-details">Bp Apparatus</Link>
-                        </h6>
-                        <div
-                          className="location-info"
-                          style={{ fontSize: "0.7rem" }}
-                        >
-                          1 piece| Optional| Bp Apparatus
-                        </div>
-                        <div className="blog-location-details">
-                          <div
-                            className="location-info"
-                            style={{ marginTop: "1rem" }}
-                          >
-                            Los Angeles
-                          </div>
-                        </div>
-                        <div className="amount-details">
-                          <div className="amount">
-                            <span
-                              className="validrate"
-                              style={{ fontFamily: "Inter" }}
-                            >
-                              $350
-                            </span>
-                            {/* <span>$450</span> */}
-                          </div>
-                          <div
-                            className="ratings"
-                            style={{ fontFamily: "Inter" }}
-                          >
-                            {/* <span>4.7</span>  */}1 DAYS AGO
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="card aos" data-aos="fade-up">
-                  <div className="blog-widget">
-                    <div className="blog-img">
-                      <Link to="/service-details">
-                        <img src={img} className="img-fluid" alt="blog-img" />
-                      </Link>
-                    </div>
-                    <div className="bloglist-content">
-                      <div className="card-body">
-                        <h6>
-                          <Link to="/service-details">Bp Apparatus</Link>
-                        </h6>
-                        <div
-                          className="location-info"
-                          style={{ fontSize: "0.7rem" }}
-                        >
-                          1 piece| Optional| Bp Apparatus
-                        </div>
-                        <div className="blog-location-details">
-                          <div
-                            className="location-info"
-                            style={{ marginTop: "1rem" }}
-                          >
-                            Los Angeles
-                          </div>
-                        </div>
-                        <div className="amount-details">
-                          <div className="amount">
-                            <span
-                              className="validrate"
-                              style={{ fontFamily: "Inter" }}
-                            >
-                              $350
-                            </span>
-                            {/* <span>$450</span> */}
-                          </div>
-                          <div
-                            className="ratings"
-                            style={{ fontFamily: "Inter" }}
-                          >
-                            {/* <span>4.7</span>  */}1 DAYS AGO
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="card aos" data-aos="fade-up">
-                  <div className="blog-widget">
-                    <div className="blog-img">
-                      <Link to="/service-details">
-                        <img src={img} className="img-fluid" alt="blog-img" />
-                      </Link>
-                    </div>
-                    <div className="bloglist-content">
-                      <div className="card-body">
-                        <h6>
-                          <Link to="/service-details">Bp Apparatus</Link>
-                        </h6>
-                        <div
-                          className="location-info"
-                          style={{ fontSize: "0.7rem" }}
-                        >
-                          1 piece| Optional| Bp Apparatus
-                        </div>
-                        <div className="blog-location-details">
-                          <div
-                            className="location-info"
-                            style={{ marginTop: "1rem" }}
-                          >
-                            Los Angeles
-                          </div>
-                        </div>
-                        <div className="amount-details">
-                          <div className="amount">
-                            <span
-                              className="validrate"
-                              style={{ fontFamily: "Inter" }}
-                            >
-                              $350
-                            </span>
-                          </div>
-                          <div
-                            className="ratings"
-                            style={{ fontFamily: "Inter" }}
-                          >
-                            {/* <span>4.7</span>  */}1 DAYS AGO
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="card aos" data-aos="fade-up">
-                  <div className="blog-widget">
-                    <div className="blog-img">
-                      <Link to="/service-details">
-                        <img src={img} className="img-fluid" alt="blog-img" />
-                      </Link>
-                    </div>
-                    <div className="bloglist-content">
-                      <div className="card-body">
-                        <h6>
-                          <Link to="/service-details">Bp Apparatus</Link>
-                        </h6>
-                        <div
-                          className="location-info"
-                          style={{ fontSize: "0.7rem" }}
-                        >
-                          1 piece| Optional| Bp Apparatus
-                        </div>
-                        <div
-                          className="blog-location-details"
-                          style={{ marginTop: "1rem" }}
-                        >
-                          <div className="location-info"> Optional| Luxury</div>
-                        </div>
-                        <div className="amount-details">
-                          <div className="amount">
-                            <span
-                              className="validrate"
-                              style={{ fontFamily: "Inter" }}
-                            >
-                              $350
-                            </span>
-                            {/* <span>$450</span> */}
-                          </div>
-                          <div
-                            className="ratings"
-                            style={{ fontFamily: "Inter" }}
-                          >
-                            {/* <span>4.7</span>  */}1 DAYS AGO
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                ))}
               </Slider>
             </div>
           </div>

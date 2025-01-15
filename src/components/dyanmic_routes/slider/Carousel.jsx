@@ -147,7 +147,7 @@ export default function Carousel() {
                 className=" featured-slider grid-view"
               >
                 {data.books.map((item) => (
-                  <div key={item.id} className="card aos" data-aos="fade-up">
+                  <div key={item.id} className="card aos" data-aos="fade-up" style={{ height: "350px" }}>
                     <div className="blog-widget">
                       <div className="blog-img">
                         {/* <Link to="/service-details"> */}

@@ -33,7 +33,7 @@ export default function AutomativeCarousel() {
           id: doc.id,
           ...doc.data(), // Spread the document data
         }));
-        // console.log(adsList,'dtaa');
+        console.log(adsList,'dtaa');
         setAds(adsList); // Set the state with the ads data
         setLoading(false); // Stop loading when data is fetched
       } catch (error) {
@@ -128,7 +128,7 @@ export default function AutomativeCarousel() {
                               <Link to={`/car-details/${ad.id}`}>{ad.name}</Link>
                             </h6>
                             <div className="location-info">
-                              <p style={{ fontSize: "0.7rem" }}>{ad.category}</p>
+                              <p style={{ fontSize: "0.7rem" }}>{ad.description}</p>
                             </div>
                             <div className="blog-location-details">
                               <div className="location-info" style={{ marginTop: "1rem" }}>

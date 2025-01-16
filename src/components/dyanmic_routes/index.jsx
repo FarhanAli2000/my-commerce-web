@@ -84,8 +84,16 @@ const timeAgo = postedTime
 
 
 
-  const images = [carimg, carimg, carimg, carimg, carimg, carimg, carimg];
-  const featuresData = [
+  const images = [
+    itemData.img,
+    itemData.img2,
+    itemData.img3,
+    itemData.img4,
+    itemData.img5,
+    itemData.img6,
+  ].filter(
+    (img) => img // Only include valid image URLs
+  );  const featuresData = [
     ["Ads", "Normal Condition", "Immobilizer Key", "Power Mirrors"],
     ["Ads", "Normal Condition", "Immobilizer Key", "Power Mirrors"],
     ["Ads", "Normal Condition", "Immobilizer Key", "Power Mirrors"],

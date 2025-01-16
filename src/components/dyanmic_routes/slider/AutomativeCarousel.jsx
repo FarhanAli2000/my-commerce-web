@@ -1,13 +1,26 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef } from "react";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import {
+  Feature2,
+  Feature3,
+  Feature4,
+  Feature5,
+  Feature9,
+  ProfileAvatar02,
+  ProfileAvatar04,
+  ProfileAvatar05,
+  ProfileAvatar06,
+} from "../../imagepath";
 import Slider from "react-slick";
+import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
 import img from "./automotive.png";
 
 export default function AutomativeCarousel() {
   const [slidesToShow, setSlidesToShow] = useState(5);
-  const slider = useRef();
 
   useEffect(() => {
     const handleResize = () => {
@@ -40,6 +53,32 @@ export default function AutomativeCarousel() {
     slidesToScroll: 1,
   };
 
+  const slider = useRef();
+
+  // Inline styles for the card and image
+  const cardStyle = {
+    height: "400px", // Fixed height for the card
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    overflow: "hidden", // Prevent content overflow
+  };
+
+  const imageStyle = {
+    objectFit: "cover", // Ensure the image fits the space
+    width: "100%",
+    height: "200px", // Adjust the image height to fit within the card
+  };
+
+  const contentStyle = {
+    flexGrow: 1, // Allow content to grow and take available space
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between", // Ensures content is spaced out
+    padding: "1rem",
+    overflow: "hidden", // Prevent overflow if content is too long
+  };
+
   return (
     <section className="featured-section-color automotive_card_section">
       <div className="container">
@@ -66,11 +105,8 @@ export default function AutomativeCarousel() {
           <button
             type="button"
             role="presentation"
-            className="owl-prev  owl-button"
-            onClick={() => {
-              console.log(slider?.current);
-              slider?.current?.slickPrev();
-            }}
+            className="owl-prev owl-button"
+            onClick={() => slider?.current?.slickPrev()}
           >
             <FontAwesomeIcon icon={faAngleLeft} />
           </button>
@@ -86,49 +122,52 @@ export default function AutomativeCarousel() {
         </div>
         <div className="row">
           <div className="col-md-12">
-            <Slider ref={slider} {...settings} className="featured-slider grid-view">
-              {[...Array(6)].map((_, index) => (
-                <div key={index} className="card aos" data-aos="fade-up">
-                  <div className="blog-widget">
-                    <div className="blog-img" style={{ height: "200px", overflow: "hidden" }}>
-                      <Link to="/automative">
-                        <img
-                          src={img}
-                          className="img-fluid"
-                          alt="blog-img"
-                          style={{ height: "80%", width: "100%", objectFit: "cover" }}
-                        />
-                      </Link>
-                    </div>
-                    <div className="bloglist-content" style={{ display: "flex", flexDirection: "column", height: "100%" }}>
-                      <div className="card-body" style={{ flexGrow: 1 }}>
-                        <h6>
-                          <Link to="/automative">Mercedez Benz</Link>
-                        </h6>
-                        <div className="location-info">
-                          <p style={{ fontSize: "0.7rem" }}>Education | Education | Education</p>
-                        </div>
-                        <div className="blog-location-details">
-                          <div className="location-info" style={{ marginTop: "1rem" }}>
-                            Los Angeles
+            <div>
+              <Slider
+                ref={slider}
+                {...settings}
+                className="featured-slider grid-view"
+              >
+                {[...Array(6)].map((_, index) => (
+                  <div className="card aos" data-aos="fade-up" key={index} style={cardStyle}>
+                    <div className="blog-widget">
+                      <div className="blog-img">
+                        <Link to="/automative">
+                          <img src={img} className="img-fluid" alt="blog-img" style={imageStyle} />
+                        </Link>
+                      </div>
+                      <div className="bloglist-content" style={contentStyle}>
+                        <div className="card-body">
+                          <h6>
+                            <Link to="/automative">Mercedez Benz</Link>
+                          </h6>
+                          <div className="location-info">
+                            <p style={{ fontSize: "0.7rem" }}>
+                              Education | Education | Education
+                            </p>
                           </div>
-                        </div>
-                        <div className="amount-details">
-                          <div className="amount">
-                            <span className="validrate" style={{ fontFamily: "Inter" }}>
-                              $350
-                            </span>
+                          <div className="blog-location-details">
+                            <div className="location-info" style={{ marginTop: "1rem" }}>
+                              Los Angeles
+                            </div>
                           </div>
-                          <div className="ratings" style={{ fontFamily: "Inter" }}>
-                            1 DAYS AGO
+                          <div className="amount-details">
+                            <div className="amount">
+                              <span className="validrate" style={{ fontFamily: "Inter" }}>
+                                $350
+                              </span>
+                            </div>
+                            <div className="ratings" style={{ fontFamily: "Inter" }}>
+                              1 DAY AGO
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </Slider>
+                ))}
+              </Slider>
+            </div>
           </div>
         </div>
       </div>

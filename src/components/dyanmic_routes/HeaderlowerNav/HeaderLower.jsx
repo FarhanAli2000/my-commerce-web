@@ -35,7 +35,7 @@ const HeaderLower = () => {
               padding: "10px 15px",
               fontSize: "16px",
               display: "inline-block",
-              outline:none,
+            
             }}
           >
             {category}

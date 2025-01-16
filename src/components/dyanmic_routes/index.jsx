@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import Footer from "./footer/Footer";
 import Header from "./header";
 import img from "./home-07.jpg";
@@ -22,16 +22,65 @@ import image2 from "../../assets/img/banner/bannerimage2.png";
 import image3 from "../../assets/img/banner/bannerimage3.png";
 import image4 from "../../assets/img/banner/bannerimage4.png";
 import ads from "./adsimg.png";
+import { getDocs, collection } from "firebase/firestore";
+import { db } from "../Firebase/FirebaseConfig";
 
 const Dynamic_Routes = () => {
   const { id } = useParams();
-  const { cartApi } = useMyContext();
+  const [itemData, setItemData] = useState(null); // State to store ads data
+  const [loading, setLoading] = useState(true); // Loading state
+console.log(itemData,'item Data');
+  useEffect(() => {
+    const fetchItem = async () => {
+      try {
+        const adsCollection = collection(db, "books"); // Reference to 'books' collection
+        const adsSnapshot = await getDocs(adsCollection); // Fetch all documents
+        const adsList = adsSnapshot.docs.map((doc) => ({
+          id: doc.id, // Include document ID
+          ...doc.data(), // Spread document data
+        }));
 
-  console.log("dynamic route", id);
+        console.log(adsList, "Fetched Ads");
 
-  const filtering = cartApi.filter((item) => item.id === id);
+        // Find the ad that matches the `id` from the URL
+        const selectedAd = adsList.find((ad) => ad.id === id);
+        if (selectedAd) {
+          setItemData({
+            ...selectedAd,
+            timeAgo: selectedAd.createdAt
+              ? formatDistanceToNow(selectedAd.createdAt.toDate(), { addSuffix: true })
+              : "Unknown time",
+          });}
+else{ setItemData(selectedAd || null); }
+       
+        setLoading(false); // Stop loading
+      } catch (error) {
+        console.error("Error fetching item:", error);
+        setLoading(false); // Stop loading on error
+      }
+    };
 
-  console.log("filtering", filtering);
+    fetchItem(); // Call the fetch function
+  }, [id]); // Re-run if `id` changes
+
+  if (loading) {
+    return <p>Loading...</p>; // Display loading state
+  }
+
+  if (!itemData) {
+    return <p>No item found for the given ID.</p>; // Handle case where no item matches the `id`
+  }
+
+//   const postedTime = itemData.createdAt?.toDate
+//   ? itemData.createdAt.toDate()
+//   : null;
+// const timeAgo = postedTime
+//   ? formatDistanceToNow(postedTime, { addSuffix: true })
+//   : "Unknown time";
+
+
+
+
 
   const images = [carimg, carimg, carimg, carimg, carimg, carimg, carimg];
   const featuresData = [
@@ -219,19 +268,22 @@ const Dynamic_Routes = () => {
             {/*  */}
             <div className="col border border-primary container ">
               <div className="col border border-primary">
-                <div>
-                  <img
-                    src={carimg}
-                    className="w-md-24 h-auto"
-                    alt=""
-                    style={{
-                      width: "100%",
-                      height: "29rem",
-                      marginTop: "1rem",
-                      borderRadius: "0.3rem",
-                    }}
-                  />
-                </div>
+              <div>
+                
+  <img
+    src={itemData?.img || img || "default-image.jpg"} // Fallback for undefined values
+    className="w-md-24 h-auto"
+    alt={itemData?.title || "Default Item"} // Optional descriptive alt text
+    style={{
+      width: "100%",
+      height: "29rem",
+      marginTop: "1rem",
+      borderRadius: "0.3rem",
+    }}
+  />
+</div>
+
+
                 <div className="multiplesimage-wrapper">
                   {images.map((img, index) => (
                     <div className="multiplesimage-wrapper-item" key={index}>
@@ -344,7 +396,9 @@ const Dynamic_Routes = () => {
 
             <div className="col-md-2 border border-primary leftCard responsive_card">
               <div className="profileInfo_div">
-                <h1 className="infodev_price">1999,000$</h1>
+              <h1 className="infodev_price">
+        {itemData?.price ? (itemData.price) : 'Price not available'}$
+      </h1>
                 <div className="profile_div1">
                   <h5>Safety Tips</h5>
                   <ul

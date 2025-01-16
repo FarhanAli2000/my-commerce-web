@@ -1,7 +1,7 @@
 // Import the functions you need from the Firebase SDK
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getFirestore } from "firebase/firestore"; // Import Firestore
+import { getFirestore, doc, getDoc } from "firebase/firestore"; // Import Firestore methods
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -19,6 +19,7 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
 // Initialize Firestore
-export const db = getFirestore(app); // Use getFirestore instead of firestore()
+const db = getFirestore(app); // Do this here and then export it below
 
-export { app, analytics };
+// Export Firestore methods along with the app and analytics
+export { app, analytics, db, doc, getDoc }; // No duplicate exports

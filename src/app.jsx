@@ -116,7 +116,7 @@ export const App = () => {
         {/* features  dynamic   routes */}
         <Route path="/routes/:id" element={<Dynamic_Routes />} />
         <Route path="/car-details" element={<Dynamic_Routes />} />
-
+        {/* <Route path="/car-details" element={<Dynamic_Routes />} /> */}
 
       </Routes>
     </BrowserRouter>

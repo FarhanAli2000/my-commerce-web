@@ -30,6 +30,7 @@ const Dynamic_Routes = () => {
   const { id } = useParams();
   const [itemData, setItemData] = useState(null); // State to store ads data
   const [loading, setLoading] = useState(true); // Loading state
+  
 console.log(itemData,'item Data');
   useEffect(() => {
     const fetchItem = async () => {

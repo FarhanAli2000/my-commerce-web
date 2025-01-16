@@ -24,6 +24,7 @@ import image4 from "../../assets/img/banner/bannerimage4.png";
 import ads from "./adsimg.png";
 import { getDocs, collection } from "firebase/firestore";
 import { db } from "../Firebase/FirebaseConfig";
+import { formatDistanceToNow } from "date-fns";
 
 const Dynamic_Routes = () => {
   const { id } = useParams();
@@ -71,12 +72,12 @@ else{ setItemData(selectedAd || null); }
     return <p>No item found for the given ID.</p>; // Handle case where no item matches the `id`
   }
 
-//   const postedTime = itemData.createdAt?.toDate
-//   ? itemData.createdAt.toDate()
-//   : null;
-// const timeAgo = postedTime
-//   ? formatDistanceToNow(postedTime, { addSuffix: true })
-//   : "Unknown time";
+  const postedTime = itemData.createdAt?.toDate
+  ? itemData.createdAt.toDate()
+  : null;
+const timeAgo = postedTime
+  ? formatDistanceToNow(postedTime, { addSuffix: true })
+  : "Unknown time";
 
 
 
@@ -220,8 +221,9 @@ else{ setItemData(selectedAd || null); }
 
           {/* More buttons */}
           <h1 className="fw-bold" style={{ marginBottom: "24px" }}>
-            Mercedez Benz
-          </h1>
+  {itemData?.title || "Default Title"} {/* Dynamically display the title */}
+</h1>
+
           <div className="head2_wrapper">
             <div className="CategoryInfodiv_btn2container">
               <button className="head2btn">
@@ -259,7 +261,7 @@ else{ setItemData(selectedAd || null); }
                   marginBottom: "24.5px",
                 }}
               >
-                Posted 5 minutes ago
+                Posted {itemData?.timeAgo || "Loading..."}
               </p>
             </div>
           </div>
@@ -302,39 +304,37 @@ else{ setItemData(selectedAd || null); }
                         <tbody className="info_body">
                           <tr>
                             <th className="table_text">Seller Type:</th>
-                            <td className="table_text">Agency</td>
+                            <td className="table_text">{itemData?.sellerType || "Default Seller Type"}</td>
                             <th className="table_text">Registered City:</th>
-                            <td className="table_text">Un-Registered</td>
+                            <td className="table_text">{itemData?.registeredCity || "Default Registered City"}</td>
                           </tr>
                           <tr>
                             <th className="table_text">Assembly:</th>
-                            <td className="table_text">Imported</td>
+                            <td className="table_text">{itemData?.assembly || "Default Assembly"}</td>
                             <th className="table_text">Engine Capacity:</th>
-                            <td className="table_text">1500CC </td>
+                            <td className="table_text">{itemData?.engineCapacity || "Default Engine Capacity"}</td>
                           </tr>
                           <tr>
                             <th className="table_text">Body Type:</th>
-                            <td className="table_text">Cross-over</td>
+                            <td className="table_text">{itemData?.bodyType || "Default Body type"}</td>
                             <th className="table_text">Last Updated:</th>
-                            <td className="table_text">Nov 26, 2024</td>
+                            <td className="table_text">{itemData?.lastUpdated || "Default last updated"}</td>
                           </tr>
                           <tr>
                             <th className="table_text">Condition:</th>
-                            <td className="table_text">Used</td>
+                            <td className="table_text">{itemData?.condition|| "Default Condition"}</td>
                             <th className="table_text">Exterior Color:</th>
-                            <td className="table_text">Black</td>
+                            <td className="table_text">{itemData?.exteriorColor || "Default Exterior Color"}</td>
                           </tr>
                           <tr>
                             <th className="table_text">Purpose:</th>
-                            <td className="table_text">Sell</td>
+                            <td className="table_text">{itemData?.purpose|| "Default Purpose"}</td>
                             <th className="table_text">Model:</th>
-                            <td className="table_text">2022</td>
+                            <td className="table_text">{itemData?.model|| "Default Model"}</td>
                           </tr>
                           <tr>
                             <th className="table_text">Color:</th>
-                            <td className="table_text" colSpan={1}>
-                              Black
-                            </td>
+                            <td className="table_text">{itemData?.color|| "Default color"}</td>
                           </tr>
                         </tbody>
                       </table>
@@ -397,8 +397,9 @@ else{ setItemData(selectedAd || null); }
             <div className="col-md-2 border border-primary leftCard responsive_card">
               <div className="profileInfo_div">
               <h1 className="infodev_price">
-        {itemData?.price ? (itemData.price) : 'Price not available'}$
-      </h1>
+  {itemData?.price ? `$${itemData.price}` : 'Price not available'}
+</h1>
+
                 <div className="profile_div1">
                   <h5>Safety Tips</h5>
                   <ul
@@ -471,20 +472,23 @@ else{ setItemData(selectedAd || null); }
                         Call
                       </button>
 
-                      <div>
-                        <button className="whatsapp-button">
-                          <span>
-                            <FaWhatsapp />
-                          </span>
-                          whatsapp
-                        </button>
-                      </div>
+                      <div style={{ cursor: "pointer" }}>
+  <a href={`https://wa.me/${itemData.whatsapp}`} target="_blank" rel="noopener noreferrer">
+    <button className="whatsapp-button">
+      <span>
+        <FaWhatsapp />
+      </span>
+      WhatsApp
+    </button>
+  </a>
+</div>
+
+
 
                       <h5 className="mt-4 mb-4">Location </h5>
 
                       <button className="location_btn ">
-                        Sheikh Zayed, Dubai
-                      </button>
+{itemData.location}                      </button>
                     </div>
                   </div>
                 </div>

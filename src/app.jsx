@@ -115,6 +115,9 @@ export const App = () => {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         {/* features  dynamic   routes */}
         <Route path="/routes/:id" element={<Dynamic_Routes />} />
+        <Route path="/car-details" element={<Dynamic_Routes />} />
+
+
       </Routes>
     </BrowserRouter>
   );

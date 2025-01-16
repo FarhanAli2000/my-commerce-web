@@ -113,8 +113,8 @@ export default function AutomativeCarousel() {
                     <div key={ad.id} className="card aos" data-aos="fade-up">
                       <div className="blog-widget">
                         <div className="blog-img">
-                          <Link to={`/car-details/${ad.id}`}>
-                            <img 
+                        <Link to={`/car-details?id=${ad.id}&callingFrom=automotive`}>
+                        <img 
                               src={ad.img} 
                               className="img-fluid"
                               alt={ad.name}

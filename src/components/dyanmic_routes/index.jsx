@@ -9,7 +9,7 @@ import { FaWhatsapp } from "react-icons/fa";
 import { FaMobile } from "react-icons/fa";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPhone } from "@fortawesome/free-solid-svg-icons";
-import { useParams } from "react-router";
+import { useParams, useLocation } from "react-router";
 import { useMyContext } from "../store/Contexxt.store";
 import arrow from "./Vector.png";
 import left from "./left.png";
@@ -28,42 +28,69 @@ import { formatDistanceToNow } from "date-fns";
 
 const Dynamic_Routes = () => {
   const { id } = useParams();
+  const location = useLocation(); // Access the full location object
+
+  const getQueryParam = (param) => {
+    const searchParams = new URLSearchParams(location.search);
+    return searchParams.get(param);
+  };
+  const [_Id, setId] = useState(null); // State to store ads data
+  const [callingFrom, setCallingFrom] = useState(null); // State to store ads data
+
+  useEffect(() => {
+    const callingFrom = getQueryParam("callingFrom");
+    const ids = getQueryParam("id");
+
+    console.log("callingFrom______ID:ids", ids);
+    console.log("callingFrom______Calling From:", callingFrom);
+    setCallingFrom(callingFrom)
+setId(ids)
+  }, [id, location]);
+  
   const [itemData, setItemData] = useState(null); // State to store ads data
   const [loading, setLoading] = useState(true); // Loading state
   
 console.log(itemData,'item Data');
-  useEffect(() => {
-    const fetchItem = async () => {
-      try {
-        const adsCollection = collection(db, "books"); // Reference to 'books' collection
-        const adsSnapshot = await getDocs(adsCollection); // Fetch all documents
-        const adsList = adsSnapshot.docs.map((doc) => ({
-          id: doc.id, // Include document ID
-          ...doc.data(), // Spread document data
-        }));
+const NewId = callingFrom === "automotive" ? _Id : id;
+  
+useEffect(() => {
+  const fetchItem = async () => {
+    setLoading(true); // Start loading
+    try {
+      // Determine collection based on `callingFrom`
+      const collectionName = callingFrom === "automotive" ? "carData" : "books";
+      const adsCollection = collection(db, collectionName); // Reference to dynamic collection
+      const adsSnapshot = await getDocs(adsCollection); // Fetch all documents
+      const adsList = adsSnapshot.docs.map((doc) => ({
+        id: doc.id, // Include document ID
+        ...doc.data(), // Spread document data
+      }));
 
-        console.log(adsList, "Fetched Ads");
+      console.log(adsList, "Fetched Ads");
 
-        // Find the ad that matches the `id` from the URL
-        const selectedAd = adsList.find((ad) => ad.id === id);
-        if (selectedAd) {
-          setItemData({
-            ...selectedAd,
-            timeAgo: selectedAd.createdAt
-              ? formatDistanceToNow(selectedAd.createdAt.toDate(), { addSuffix: true })
-              : "Unknown time",
-          });}
-else{ setItemData(selectedAd || null); }
-       
-        setLoading(false); // Stop loading
-      } catch (error) {
-        console.error("Error fetching item:", error);
-        setLoading(false); // Stop loading on error
+      // Find the ad that matches the `id` from the URL
+      const selectedAd = adsList.find((ad) => ad.id === NewId);
+      if (selectedAd) {
+        setItemData({
+          ...selectedAd,
+          timeAgo: selectedAd.createdAt
+            ? formatDistanceToNow(selectedAd.createdAt.toDate(), { addSuffix: true })
+            : "Unknown time",
+        });
+      } else {
+        setItemData(null);
       }
-    };
 
-    fetchItem(); // Call the fetch function
-  }, [id]); // Re-run if `id` changes
+      setLoading(false); // Stop loading
+    } catch (error) {
+      console.error("Error fetching item:", error);
+      setError("Failed to fetch data");
+      setLoading(false); // Stop loading on error
+    }
+  };
+
+  fetchItem(); // Call the fetch function
+}, [id, callingFrom, db]); // Re-run if `id` changes
 
   if (loading) {
     return <p>Loading...</p>; // Display loading state
@@ -293,7 +320,6 @@ const timeAgo = postedTime
     }}
   />
 </div>
-
 
                 <div className="multiplesimage-wrapper">
                   {images.map((img, index) => (

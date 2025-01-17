@@ -13,12 +13,12 @@ const HeaderLower = () => {
     <div className="header-lower container">
       <nav className="nav-links" style={{ fontFamily: "VIP Rawy Regular" }}>
         <NavLink
-          to="/index"
+          to="/AutomotiveComp"
           className={({ isActive }) =>
             isActive ? "nav-link active-link" : "nav-link"
           }
         >
-          Automotive
+          Automotive  
         </NavLink>
         <NavLink
           to="/index"

@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink} from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const HeaderLower = () => {
   // Directly check window width on initial render
@@ -11,9 +11,9 @@ const HeaderLower = () => {
 
   return (
     <div className="header-lower container">
-      <nav className="nav-links" style={{ fontFamily: "VIP Rawy Regular"}}>
+      <nav className="nav-links" style={{ fontFamily: "VIP Rawy Regular" }}>
         {[
-          "Automotive",
+          "AutomotiveComp",
           "Electronics",
           "Fashion Style",
           "Health Care",
@@ -35,7 +35,6 @@ const HeaderLower = () => {
               padding: "10px 15px",
               fontSize: "16px",
               display: "inline-block",
-            
             }}
           >
             {category}

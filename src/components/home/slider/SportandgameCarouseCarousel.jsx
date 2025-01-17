@@ -12,11 +12,11 @@ const timeAgo = (timestamp) => {
   const now = new Date();
   const diffTime = Math.abs(now - date); // Calculate the difference in time
   const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)); // Get difference in days
-  
+
   if (diffDays === 0) {
-    return 'Today'; // If posted today
+    return "Today"; // If posted today
   } else if (diffDays === 1) {
-    return '1 day ago'; // If posted 1 day ago
+    return "1 day ago"; // If posted 1 day ago
   } else {
     return `${diffDays} days ago`; // Otherwise, show days ago
   }
@@ -36,6 +36,7 @@ export default function AutomativeCarousel() {
           id: doc.id,
           ...doc.data(), // Spread the document data
         }));
+        console.log(adsList, "adsList___________");
         setAds(adsList); // Set the state with the ads data
         setLoading(false); // Stop loading when data is fetched
       } catch (error) {
@@ -105,17 +106,25 @@ export default function AutomativeCarousel() {
         <div className="row">
           <div className="col-md-12">
             <div>
-              <Slider ref={slider} {...settings} className="featured-slider grid-view">
+              <Slider
+                ref={slider}
+                {...settings}
+                className="featured-slider grid-view"
+              >
                 {ads.map((ad) => (
                   <div key={ad.id} className="card aos" data-aos="fade-up">
                     <div className="blog-widget">
                       <div className="blog-img">
-                        <Link to={`/car-details/${ad.id}`}>
-                          <img 
-                            src={ad.img} 
+                        <Link
+                          to={`/car-details?id=${ad.id}&callingFrom=GamesSport`}
+
+                          //  to={`/car-details/${ad.id}`}
+                        >
+                          <img
+                            src={ad.img}
                             className="img-fluid"
                             alt={ad.name}
-                            style={{ height: "200px", objectFit: "cover" }} 
+                            style={{ height: "200px", objectFit: "cover" }}
                           />
                         </Link>
                       </div>
@@ -125,7 +134,9 @@ export default function AutomativeCarousel() {
                             <Link to={`/car-details/${ad.id}`}>{ad.title}</Link>
                           </h6>
                           <div className="location-info">
-                            <p style={{ fontSize: "0.7rem" }}>{ad.description}</p>
+                            <p style={{ fontSize: "0.7rem" }}>
+                              {ad.description}
+                            </p>
                           </div>
                           <div className="blog-location-details">
                             <div
@@ -148,7 +159,8 @@ export default function AutomativeCarousel() {
                               className="ratings"
                               style={{ fontFamily: "Inter" }}
                             >
-                              {timeAgo(ad.timeAgo)} {/* Call timeAgo function here */}
+                              {timeAgo(ad.timeAgo)}{" "}
+                              {/* Call timeAgo function here */}
                             </div>
                           </div>
                         </div>

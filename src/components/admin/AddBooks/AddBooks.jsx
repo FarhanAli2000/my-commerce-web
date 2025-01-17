@@ -95,7 +95,7 @@ const AddBooks = () => {
         img6: imageUrls[5], // img6
         location: location,
         price: price,
-        isFeatured: true,
+        isFeatured: "Commercial",
         timeAgo: timeAgo.toISOString(), // Convert to ISO string to store the date
         sellerType: sellerType,
         registeredCity: registeredCity,

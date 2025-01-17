@@ -78,12 +78,19 @@ export default function AutomativeCarousel() {
         <div className="row">
           <div className="col-md-12">
             <div>
-              <Slider ref={slider} {...settings} className="featured-slider grid-view">
+              <Slider
+                ref={slider}
+                {...settings}
+                className="featured-slider grid-view"
+              >
                 {ads.map((ad) => (
                   <div key={ad.id} className="card aos" data-aos="fade-up">
                     <div className="blog-widget">
                       <div className="blog-img">
-                        <Link to={`/car-details/${ad.id}`}>
+                        <Link
+                          //  to={`/car-details/${ad.id}`}
+                          to={`/car-details?id=${ad.id}&callingFrom=ComercialsAds`}
+                        >
                           <img
                             src={ad.img}
                             className="img-fluid"

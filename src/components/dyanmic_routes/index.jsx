@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import Footer from "./footer/Footer";
 import Header from "./header";
 import img from "./home-07.jpg";
@@ -43,54 +43,84 @@ const Dynamic_Routes = () => {
 
     console.log("callingFrom______ID:ids", ids);
     console.log("callingFrom______Calling From:", callingFrom);
-    setCallingFrom(callingFrom)
-setId(ids)
+    setCallingFrom(callingFrom);
+    setId(ids);
   }, [id, location]);
-  
+
   const [itemData, setItemData] = useState(null); // State to store ads data
   const [loading, setLoading] = useState(true); // Loading state
-  
-console.log(itemData,'item Data');
-const NewId = callingFrom === "automotive" ? _Id : id;
-  
-useEffect(() => {
-  const fetchItem = async () => {
-    setLoading(true); // Start loading
-    try {
-      // Determine collection based on `callingFrom`
-      const collectionName = callingFrom === "automotive" ? "carData" : "books";
-      const adsCollection = collection(db, collectionName); // Reference to dynamic collection
-      const adsSnapshot = await getDocs(adsCollection); // Fetch all documents
-      const adsList = adsSnapshot.docs.map((doc) => ({
-        id: doc.id, // Include document ID
-        ...doc.data(), // Spread document data
-      }));
 
-      console.log(adsList, "Fetched Ads");
+  console.log(itemData, "item Data");
+  // const NewId = callingFrom === "automotive" || "RealEstate" ? _Id : id;
+  const NewId =
+    callingFrom === "automotive"
+      ? _Id
+      : callingFrom === "RealEstate"
+      ? _Id
+      : callingFrom === "Electronic"
+      ? _Id
+      : callingFrom === "HealthCare"
+      ? _Id
+      : callingFrom === "GamesSport"
+      ? _Id
+      : callingFrom === "ComercialsAds"
+      ? _Id
+      : id;
 
-      // Find the ad that matches the `id` from the URL
-      const selectedAd = adsList.find((ad) => ad.id === NewId);
-      if (selectedAd) {
-        setItemData({
-          ...selectedAd,
-          timeAgo: selectedAd.createdAt
-            ? formatDistanceToNow(selectedAd.createdAt.toDate(), { addSuffix: true })
-            : "Unknown time",
-        });
-      } else {
-        setItemData(null);
+  useEffect(() => {
+    const fetchItem = async () => {
+      setLoading(true); // Start loading
+      try {
+        const collectionName =
+          callingFrom === "automotive"
+            ? "carData"
+            : callingFrom === "RealEstate"
+            ? "RealEstate"
+            : callingFrom === "Electronic"
+            ? "Electronic"
+            : callingFrom === "HealthCare"
+            ? "HealthCare"
+            : callingFrom === "GamesSport"
+            ? "GamesSport"
+            : callingFrom === "ComercialsAds"
+            ? "ComercialsAds"
+            : "books";
+        // Determine collection based on `callingFrom`
+        // const collectionName = callingFrom === "automotive" ? "carData" : "books";
+        const adsCollection = collection(db, collectionName); // Reference to dynamic collection
+        const adsSnapshot = await getDocs(adsCollection); // Fetch all documents
+        const adsList = adsSnapshot.docs.map((doc) => ({
+          id: doc.id, // Include document ID
+          ...doc.data(), // Spread document data
+        }));
+
+        console.log(adsList, "Fetched Ads");
+
+        // Find the ad that matches the `id` from the URL
+        const selectedAd = adsList.find((ad) => ad.id === NewId);
+        if (selectedAd) {
+          setItemData({
+            ...selectedAd,
+            timeAgo: selectedAd.createdAt
+              ? formatDistanceToNow(selectedAd.createdAt.toDate(), {
+                  addSuffix: true,
+                })
+              : "Unknown time",
+          });
+        } else {
+          setItemData(null);
+        }
+
+        setLoading(false); // Stop loading
+      } catch (error) {
+        console.error("Error fetching item:", error);
+        setError("Failed to fetch data");
+        setLoading(false); // Stop loading on error
       }
+    };
 
-      setLoading(false); // Stop loading
-    } catch (error) {
-      console.error("Error fetching item:", error);
-      setError("Failed to fetch data");
-      setLoading(false); // Stop loading on error
-    }
-  };
-
-  fetchItem(); // Call the fetch function
-}, [id, callingFrom, db]); // Re-run if `id` changes
+    fetchItem(); // Call the fetch function
+  }, [id, callingFrom, db]); // Re-run if `id` changes
 
   if (loading) {
     return <p>Loading...</p>; // Display loading state
@@ -101,15 +131,11 @@ useEffect(() => {
   }
 
   const postedTime = itemData.createdAt?.toDate
-  ? itemData.createdAt.toDate()
-  : null;
-const timeAgo = postedTime
-  ? formatDistanceToNow(postedTime, { addSuffix: true })
-  : "Unknown time";
-
-
-
-
+    ? itemData.createdAt.toDate()
+    : null;
+  const timeAgo = postedTime
+    ? formatDistanceToNow(postedTime, { addSuffix: true })
+    : "Unknown time";
 
   const images = [
     itemData.img,
@@ -120,7 +146,8 @@ const timeAgo = postedTime
     itemData.img6,
   ].filter(
     (img) => img // Only include valid image URLs
-  );  const featuresData = [
+  );
+  const featuresData = [
     ["Ads", "Normal Condition", "Immobilizer Key", "Power Mirrors"],
     ["Ads", "Normal Condition", "Immobilizer Key", "Power Mirrors"],
     ["Ads", "Normal Condition", "Immobilizer Key", "Power Mirrors"],
@@ -257,8 +284,9 @@ const timeAgo = postedTime
 
           {/* More buttons */}
           <h1 className="fw-bold" style={{ marginBottom: "24px" }}>
-  {itemData?.title || "Default Title"} {/* Dynamically display the title */}
-</h1>
+            {itemData?.title || "Default Title"}{" "}
+            {/* Dynamically display the title */}
+          </h1>
 
           <div className="head2_wrapper">
             <div className="CategoryInfodiv_btn2container">
@@ -306,20 +334,19 @@ const timeAgo = postedTime
             {/*  */}
             <div className="col border border-primary container ">
               <div className="col border border-primary">
-              <div>
-                
-  <img
-    src={itemData?.img || img || "default-image.jpg"} // Fallback for undefined values
-    className="w-md-24 h-auto"
-    alt={itemData?.title || "Default Item"} // Optional descriptive alt text
-    style={{
-      width: "100%",
-      height: "29rem",
-      marginTop: "1rem",
-      borderRadius: "0.3rem",
-    }}
-  />
-</div>
+                <div>
+                  <img
+                    src={itemData?.img || img || "default-image.jpg"} // Fallback for undefined values
+                    className="w-md-24 h-auto"
+                    alt={itemData?.title || "Default Item"} // Optional descriptive alt text
+                    style={{
+                      width: "100%",
+                      height: "29rem",
+                      marginTop: "1rem",
+                      borderRadius: "0.3rem",
+                    }}
+                  />
+                </div>
 
                 <div className="multiplesimage-wrapper">
                   {images.map((img, index) => (
@@ -339,37 +366,62 @@ const timeAgo = postedTime
                         <tbody className="info_body">
                           <tr>
                             <th className="table_text">Seller Type:</th>
-                            <td className="table_text">{itemData?.sellerType || "Default Seller Type"}</td>
+                            <td className="table_text">
+                              {itemData?.sellerType || "Default Seller Type"}
+                            </td>
                             <th className="table_text">Registered City:</th>
-                            <td className="table_text">{itemData?.registeredCity || "Default Registered City"}</td>
+                            <td className="table_text">
+                              {itemData?.registeredCity ||
+                                "Default Registered City"}
+                            </td>
                           </tr>
                           <tr>
                             <th className="table_text">Assembly:</th>
-                            <td className="table_text">{itemData?.assembly || "Default Assembly"}</td>
+                            <td className="table_text">
+                              {itemData?.assembly || "Default Assembly"}
+                            </td>
                             <th className="table_text">Engine Capacity:</th>
-                            <td className="table_text">{itemData?.engineCapacity || "Default Engine Capacity"}</td>
+                            <td className="table_text">
+                              {itemData?.engineCapacity ||
+                                "Default Engine Capacity"}
+                            </td>
                           </tr>
                           <tr>
                             <th className="table_text">Body Type:</th>
-                            <td className="table_text">{itemData?.bodyType || "Default Body type"}</td>
+                            <td className="table_text">
+                              {itemData?.bodyType || "Default Body type"}
+                            </td>
                             <th className="table_text">Last Updated:</th>
-                            <td className="table_text">{itemData?.lastUpdated || "Default last updated"}</td>
+                            <td className="table_text">
+                              {itemData?.lastUpdated || "Default last updated"}
+                            </td>
                           </tr>
                           <tr>
                             <th className="table_text">Condition:</th>
-                            <td className="table_text">{itemData?.condition|| "Default Condition"}</td>
+                            <td className="table_text">
+                              {itemData?.condition || "Default Condition"}
+                            </td>
                             <th className="table_text">Exterior Color:</th>
-                            <td className="table_text">{itemData?.exteriorColor || "Default Exterior Color"}</td>
+                            <td className="table_text">
+                              {itemData?.exteriorColor ||
+                                "Default Exterior Color"}
+                            </td>
                           </tr>
                           <tr>
                             <th className="table_text">Purpose:</th>
-                            <td className="table_text">{itemData?.purpose|| "Default Purpose"}</td>
+                            <td className="table_text">
+                              {itemData?.purpose || "Default Purpose"}
+                            </td>
                             <th className="table_text">Model:</th>
-                            <td className="table_text">{itemData?.model|| "Default Model"}</td>
+                            <td className="table_text">
+                              {itemData?.model || "Default Model"}
+                            </td>
                           </tr>
                           <tr>
                             <th className="table_text">Color:</th>
-                            <td className="table_text">{itemData?.color|| "Default color"}</td>
+                            <td className="table_text">
+                              {itemData?.color || "Default color"}
+                            </td>
                           </tr>
                         </tbody>
                       </table>
@@ -431,9 +483,11 @@ const timeAgo = postedTime
 
             <div className="col-md-2 border border-primary leftCard responsive_card">
               <div className="profileInfo_div">
-              <h1 className="infodev_price">
-  {itemData?.price ? `$${itemData.price}` : 'Price not available'}
-</h1>
+                <h1 className="infodev_price">
+                  {itemData?.price
+                    ? `$${itemData.price}`
+                    : "Price not available"}
+                </h1>
 
                 <div className="profile_div1">
                   <h5>Safety Tips</h5>
@@ -508,22 +562,25 @@ const timeAgo = postedTime
                       </button>
 
                       <div style={{ cursor: "pointer" }}>
-  <a href={`https://wa.me/${itemData.whatsapp}`} target="_blank" rel="noopener noreferrer">
-    <button className="whatsapp-button">
-      <span>
-        <FaWhatsapp />
-      </span>
-      WhatsApp
-    </button>
-  </a>
-</div>
-
-
+                        <a
+                          href={`https://wa.me/${itemData.whatsapp}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <button className="whatsapp-button">
+                            <span>
+                              <FaWhatsapp />
+                            </span>
+                            WhatsApp
+                          </button>
+                        </a>
+                      </div>
 
                       <h5 className="mt-4 mb-4">Location </h5>
 
                       <button className="location_btn ">
-{itemData.location}                      </button>
+                        {itemData.location}{" "}
+                      </button>
                     </div>
                   </div>
                 </div>

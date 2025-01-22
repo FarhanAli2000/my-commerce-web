@@ -105,52 +105,92 @@ export default function Carousel() {
                   className="featured-slider grid-view"
                 >
                   {ads.map((item) => (
-                    <div key={item.id} className="card aos" data-aos="fade-up" style={{ height: "400px", display: "flex", flexDirection: "column", justifyContent: "space-between", overflow: "hidden" }}>
-                      <div className="blog-widget">
-                        <div className="blog-img" style={{ height: "200px", width: "100%", overflow: "hidden" }}>
-                          <Link to={`/routes/${item.id}`}>
+                    <Link to={`/routes/${item.id}`}>
+                      <div
+                        key={item.id}
+                        className="card aos"
+                        data-aos="fade-up"
+                        style={{
+                          height: "400px",
+                          display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "space-between",
+                          overflow: "hidden",
+                        }}
+                      >
+                        <div className="blog-widget">
+                          <div
+                            className="blog-img"
+                            style={{
+                              height: "200px",
+                              width: "100%",
+                              overflow: "hidden",
+                            }}
+                          >
                             <img
                               src={item.img}
                               className="img-fluid"
                               alt="blog-img"
-                              style={{ objectFit: "cover", width: "100%", height: "100%" }}
+                              style={{
+                                objectFit: "cover",
+                                width: "100%",
+                                height: "100%",
+                              }}
                             />
-                          </Link>
-                          {item.isFeatured && (
-                            <div className="fav-item">
-                              <span className="Featured-text">Featured</span>
-                            </div>
-                          )}
-                        </div>
-                        <div className="bloglist-content" style={{ flexGrow: 1, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-                          <div className="card-body">
-                            <h6>
-                              <Link to="/index">{item.title}</Link>
-                            </h6>
-                            <p
-                              style={{ fontSize: "0.7rem", lineHeight: "none" }}
-                            >
-                              Education | Education | Education
-                            </p>
-                            <div className="blog-location-details">
-                              <div className="location-info mt-2" style={{ fontFamily: "Inter" }}>
-                                {item.location}
+                            {item.isFeatured && (
+                              <div className="fav-item">
+                                <span className="Featured-text">Featured</span>
                               </div>
-                            </div>
-                            <div className="amount-details">
-                              <div className="amount">
-                                <span className="validrate" style={{ fontFamily: "Inter" }}>
-                                  ${item.price}
-                                </span>
+                            )}
+                          </div>
+                          <div
+                            className="bloglist-content"
+                            style={{
+                              flexGrow: 1,
+                              display: "flex",
+                              flexDirection: "column",
+                              justifyContent: "space-between",
+                            }}
+                          >
+                            <div className="card-body">
+                              <h6>
+                                <Link to="/index">{item.title}</Link>
+                              </h6>
+                              <p
+                                style={{
+                                  fontSize: "0.7rem",
+                                  lineHeight: "none",
+                                }}
+                              >
+                                Education | Education | Education
+                              </p>
+                              <div className="blog-location-details">
+                                <div
+                                  className="location-info mt-2"
+                                  style={{ fontFamily: "Inter" }}
+                                >
+                                  {item.location}
+                                </div>
                               </div>
-                              <div className="ratings">
-                                {timeAgo(item.timeAgo)} {/* Use timeAgo function */}
+                              <div className="amount-details">
+                                <div className="amount">
+                                  <span
+                                    className="validrate"
+                                    style={{ fontFamily: "Inter" }}
+                                  >
+                                    ${item.price}
+                                  </span>
+                                </div>
+                                <div className="ratings">
+                                  {timeAgo(item.timeAgo)}{" "}
+                                  {/* Use timeAgo function */}
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </Link>
                   ))}
                 </Slider>
               )}

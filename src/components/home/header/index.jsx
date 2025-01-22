@@ -67,7 +67,7 @@ const Header = ({ parms }) => {
                   <span></span>
                 </span>
               </Link>
-              <Link to="/index" className="navbar-brand logo">
+              <Link to="/" className="navbar-brand logo">
                 <img src={LogoSvg} className="img-fluid" alt="Logo" />
               </Link>
             </div>
@@ -76,7 +76,7 @@ const Header = ({ parms }) => {
               ref={menuRef} // Attach the reference here
             >
               <div className="menu-header">
-                <Link to="/index" className="menu-logo">
+                <Link to="/" className="menu-logo">
                   <img src={LogoSvg} className="img-fluid" alt="Logo" />
                 </Link>
                 <Link

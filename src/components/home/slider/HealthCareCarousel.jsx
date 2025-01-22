@@ -108,58 +108,60 @@ export default function AutomativeCarousel() {
                 className="featured-slider grid-view"
               >
                 {ads.map((ad) => (
-                  <div key={ad.id} className="card aos" data-aos="fade-up">
-                    <div className="blog-widget">
-                      <div className="blog-img">
-                        <Link
-                          // to={`/car-details/${ad.id}`}
-                          to={`/car-details?id=${ad.id}&callingFrom=HealthCare`}
-                        >
+                  <Link
+                    // to={`/car-details/${ad.id}`}
+                    to={`/car-details?id=${ad.id}&callingFrom=HealthCare`}
+                  >
+                    <div key={ad.id} className="card aos" data-aos="fade-up">
+                      <div className="blog-widget">
+                        <div className="blog-img">
                           <img
                             src={ad.img}
                             className="img-fluid"
                             alt={ad.name}
                             style={{ height: "200px", objectFit: "cover" }}
                           />
-                        </Link>
-                      </div>
-                      <div className="bloglist-content">
-                        <div className="card-body">
-                          <h6>
-                            <Link to={`/car-details/${ad.id}`}>{ad.title}</Link>
-                          </h6>
-                          <div className="location-info">
-                            <p style={{ fontSize: "0.7rem" }}>{ad.details}</p>
-                          </div>
-                          <div className="blog-location-details">
-                            <div
-                              className="location-info"
-                              style={{ marginTop: "1rem" }}
-                            >
-                              {ad.location}
+                        </div>
+                        <div className="bloglist-content">
+                          <div className="card-body">
+                            <h6>
+                              <Link to={`/car-details/${ad.id}`}>
+                                {ad.title}
+                              </Link>
+                            </h6>
+                            <div className="location-info">
+                              <p style={{ fontSize: "0.7rem" }}>{ad.details}</p>
                             </div>
-                          </div>
-                          <div className="amount-details">
-                            <div className="amount">
-                              <span
-                                className="validrate"
+                            <div className="blog-location-details">
+                              <div
+                                className="location-info"
+                                style={{ marginTop: "1rem" }}
+                              >
+                                {ad.location}
+                              </div>
+                            </div>
+                            <div className="amount-details">
+                              <div className="amount">
+                                <span
+                                  className="validrate"
+                                  style={{ fontFamily: "Inter" }}
+                                >
+                                  ${ad.price}
+                                </span>
+                              </div>
+                              <div
+                                className="ratings"
                                 style={{ fontFamily: "Inter" }}
                               >
-                                ${ad.price}
-                              </span>
-                            </div>
-                            <div
-                              className="ratings"
-                              style={{ fontFamily: "Inter" }}
-                            >
-                              {timeAgo(ad.postedAgo)}{" "}
-                              {/* Call timeAgo function here */}
+                                {timeAgo(ad.postedAgo)}{" "}
+                                {/* Call timeAgo function here */}
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </Slider>
             </div>

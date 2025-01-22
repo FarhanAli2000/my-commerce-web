@@ -12,10 +12,10 @@ const formatPostedTime = (timestamp) => {
   const now = new Date();
   const diffTime = Math.abs(now - date);
   const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)); // Convert time difference to days
-  
-  return diffDays === 0 
-    ? 'Today' 
-    : `${diffDays} day${diffDays > 1 ? 's' : ''} ago`; // Return formatted string
+
+  return diffDays === 0
+    ? "Today"
+    : `${diffDays} day${diffDays > 1 ? "s" : ""} ago`; // Return formatted string
 };
 
 export default function AutomativeCarousel() {
@@ -33,7 +33,7 @@ export default function AutomativeCarousel() {
           id: doc.id,
           ...doc.data(), // Spread the document data
         }));
-        console.log(adsList,'dtaa');
+        console.log(adsList, "dtaa");
         setAds(adsList); // Set the state with the ads data
         setLoading(false); // Stop loading when data is fetched
       } catch (error) {
@@ -108,47 +108,67 @@ export default function AutomativeCarousel() {
               {loading ? (
                 <div className="loading">Loading...</div> // Show loading message or spinner
               ) : (
-                <Slider ref={slider} {...settings} className="featured-slider grid-view">
+                <Slider
+                  ref={slider}
+                  {...settings}
+                  className="featured-slider grid-view"
+                >
                   {ads.map((ad) => (
-                    <div key={ad.id} className="card aos" data-aos="fade-up">
-                      <div className="blog-widget">
-                        <div className="blog-img">
-                        <Link to={`/car-details?id=${ad.id}&callingFrom=automotive`}>
-                        <img 
-                              src={ad.img} 
+                    <Link
+                      to={`/car-details?id=${ad.id}&callingFrom=automotive`}
+                    >
+                      <div key={ad.id} className="card aos" data-aos="fade-up">
+                        <div className="blog-widget">
+                          <div className="blog-img">
+                            <img
+                              src={ad.img}
                               className="img-fluid"
                               alt={ad.name}
                               style={{ height: "200px", objectFit: "cover" }} // Fixed height with aspect ratio preservation
                             />
-                          </Link>
-                        </div>
-                        <div className="bloglist-content">
-                          <div className="card-body">
-                            <h6>
-                              <Link to={`/car-details/${ad.id}`}>{ad.name}</Link>
-                            </h6>
-                            <div className="location-info">
-                              <p style={{ fontSize: "0.7rem" }}>{ad.description}</p>
-                            </div>
-                            <div className="blog-location-details">
-                              <div className="location-info" style={{ marginTop: "1rem" }}>
-                                {ad.location}
+                          </div>
+                          <div className="bloglist-content">
+                            <div className="card-body">
+                              <h6>
+                                <Link to={`/car-details/${ad.id}`}>
+                                  {ad.name}
+                                </Link>
+                              </h6>
+                              <div className="location-info">
+                                <p style={{ fontSize: "0.7rem" }}>
+                                  {ad.description}
+                                </p>
                               </div>
-                            </div>
-                            <div className="amount-details">
-                              <div className="amount">
-                                <span className="validrate" style={{ fontFamily: "Inter" }}>
-                                  ${ad.price}
-                                </span>
+                              <div className="blog-location-details">
+                                <div
+                                  className="location-info"
+                                  style={{ marginTop: "1rem" }}
+                                >
+                                  {ad.location}
+                                </div>
                               </div>
-                              <div className="ratings" style={{ fontFamily: "Inter" }}>
-                                {formatPostedTime(ad.time_ago)} {/* Format posted time */}
+                              <div className="amount-details">
+                                <div className="amount">
+                                  <span
+                                    className="validrate"
+                                    style={{ fontFamily: "Inter" }}
+                                  >
+                                    ${ad.price}
+                                  </span>
+                                </div>
+                                <div
+                                  className="ratings"
+                                  style={{ fontFamily: "Inter" }}
+                                >
+                                  {formatPostedTime(ad.time_ago)}{" "}
+                                  {/* Format posted time */}
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </Link>
                   ))}
                 </Slider>
               )}

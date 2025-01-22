@@ -1,9 +1,26 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 
 const HeaderLower = () => {
-  // Directly check window width on initial render
-  const isMobile = typeof window !== "undefined" && window.innerWidth <= 767;
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Function to update the `isMobile` state based on window width
+  const updateIsMobile = () => {
+    setIsMobile(window.innerWidth <= 767);
+  };
+
+  useEffect(() => {
+    // Set the initial value
+    updateIsMobile();
+
+    // Add event listener for window resize
+    window.addEventListener("resize", updateIsMobile);
+
+    // Clean up the event listener
+    return () => {
+      window.removeEventListener("resize", updateIsMobile);
+    };
+  }, []);
 
   if (isMobile) {
     return null; // Don't render the component on mobile
@@ -18,10 +35,10 @@ const HeaderLower = () => {
             isActive ? "nav-link active-link" : "nav-link"
           }
         >
-          Automotive  
+          Automotive
         </NavLink>
         <NavLink
-          to="/index"
+          to="/ElectronicComp"
           className={({ isActive }) =>
             isActive ? "nav-link active-link" : "nav-link"
           }
@@ -29,7 +46,7 @@ const HeaderLower = () => {
           Electronics
         </NavLink>
         <NavLink
-          to="/index"
+          to="/FashionStyle"
           className={({ isActive }) =>
             isActive ? "nav-link active-link" : "nav-link"
           }
@@ -37,7 +54,7 @@ const HeaderLower = () => {
           Fashion Style
         </NavLink>
         <NavLink
-          to="/index"
+          to="/HealthCareComp"
           className={({ isActive }) =>
             isActive ? "nav-link active-link" : "nav-link"
           }
@@ -45,7 +62,7 @@ const HeaderLower = () => {
           Health Care
         </NavLink>
         <NavLink
-          to="/index"
+          to="/JobBoard"
           className={({ isActive }) =>
             isActive ? "nav-link active-link" : "nav-link"
           }
@@ -53,7 +70,7 @@ const HeaderLower = () => {
           Job Board
         </NavLink>
         <NavLink
-          to="/index"
+          to="/Education"
           className={({ isActive }) =>
             isActive ? "nav-link active-link" : "nav-link"
           }
@@ -61,7 +78,7 @@ const HeaderLower = () => {
           Education
         </NavLink>
         <NavLink
-          to="/index"
+          to="/RealEstateComp"
           className={({ isActive }) =>
             isActive ? "nav-link active-link" : "nav-link"
           }
@@ -69,7 +86,7 @@ const HeaderLower = () => {
           Real Estate
         </NavLink>
         <NavLink
-          to="/index"
+          to="/TravelComp"
           className={({ isActive }) =>
             isActive ? "nav-link active-link" : "nav-link"
           }
@@ -77,7 +94,7 @@ const HeaderLower = () => {
           Travel
         </NavLink>
         <NavLink
-          to="/index"
+          to="/SportGamesComp"
           className={({ isActive }) =>
             isActive ? "nav-link active-link" : "nav-link"
           }
@@ -85,7 +102,7 @@ const HeaderLower = () => {
           Sport & Games
         </NavLink>
         <NavLink
-          to="/index"
+          to="/PetAnimalsComp"
           className={({ isActive }) =>
             isActive ? "nav-link active-link" : "nav-link"
           }

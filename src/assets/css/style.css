@@ -61,6 +61,16 @@ Version      : 1.0
   padding-top: 60px;
   padding-bottom: 60px;
 }
+.border-primary {
+  --bs-border-opacity: 1;
+  border-color: none !important;
+}
+.border {
+  border: none !important;
+}
+.border {
+  border: none !important;
+}
 
 .trendingProductsallname {
   border: 2px solid black;

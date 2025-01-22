@@ -8,10 +8,11 @@ module.exports = {
   mode: "production", // Set to production mode
   entry: path.join(__dirname, "src", "index.js"),
   output: {
-    filename: "js/[name].[contenthash].bundle.js", // Add content hash for caching
+    filename: "js/[name].[contenthash].bundle.js",
     path: path.resolve(__dirname, "dist"),
-    publicPath: "/", // Keep this as / or adjust if needed
+    publicPath: "/", // Ensure this is correct for your deployment environment
   },
+
   resolve: {
     extensions: [".tsx", ".ts", ".js", ".jsx"],
   },

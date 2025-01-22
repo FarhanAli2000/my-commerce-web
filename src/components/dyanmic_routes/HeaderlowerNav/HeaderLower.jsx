@@ -13,7 +13,7 @@ const HeaderLower = () => {
     <div className="header-lower container">
       <nav className="nav-links" style={{ fontFamily: "VIP Rawy Regular" }}>
         {[
-          "AutomotiveComp",
+          "Automotive",
           "Electronics",
           "Fashion Style",
           "Health Care",

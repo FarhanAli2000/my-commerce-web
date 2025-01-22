@@ -38,84 +38,83 @@ const Header = ({ parms }) => {
   return (
     <header className="header" onClick={(value) => toggleMobileMenu()}>
       <UpperHeader />
-      
-        <div className="containerWrapper">
+
+      <div className="containerWrapper">
         <div className="container">
-        <nav className="navbar navbar-expand-lg header-nav">
-          <div className="navbar-header">
-            <Link id="mobile_btn" to="#" onClick={() => onHandleMobileMenu()}>
-              <span className="bar-icon">
-                <span></span>
-                <span></span>
-                <span></span>
-              </span>
-            </Link>
-            <Link to="/index" className="navbar-brand logo">
-              <img src={LogoSvg} className="img-fluid" alt="Logo" />
-            </Link>
-          </div>
-          <div className="main-menu-wrapper">
-            <div className="menu-header">
-              <Link to="/index" className="menu-logo">
+          <nav className="navbar navbar-expand-lg header-nav">
+            <div className="navbar-header">
+              <Link id="mobile_btn" to="#" onClick={() => onHandleMobileMenu()}>
+                <span className="bar-icon">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </span>
+              </Link>
+              <Link to="/index" className="navbar-brand logo">
                 <img src={LogoSvg} className="img-fluid" alt="Logo" />
               </Link>
-              <Link
-                id="menu_close"
-                className="menu-close"
-                to="#"
-                onClick={() => onhandleCloseMenu()}
-              >
-                {" "}
-                <i className="fas fa-times"></i>
-              </Link>
             </div>
-            <ul className="main-nav">
-
-              <li>
-                <div className="search_container">
-                  <input
-                    type="text"
-                    placeholder="What are you looking for"
-                    className="search_nav"
-                  />
-                  <div className="searchlogo_container">
-                    <FaSearch className="searchlogo_nav" />
+            <div className="main-menu-wrapper">
+              <div className="menu-header">
+                <Link to="/index" className="menu-logo">
+                  <img src={LogoSvg} className="img-fluid" alt="Logo" />
+                </Link>
+                <Link
+                  id="menu_close"
+                  className="menu-close"
+                  to="#"
+                  onClick={() => onhandleCloseMenu()}
+                >
+                  {" "}
+                  <i className="fas fa-times"></i>
+                </Link>
+              </div>
+              <ul className="main-nav">
+                <li>
+                  <div className="search_container">
+                    <input
+                      type="text"
+                      placeholder="What are you looking for"
+                      className="search_nav"
+                    />
+                    <div className="searchlogo_container">
+                      <FaSearch className="searchlogo_nav" />
+                    </div>
                   </div>
-                </div>
+                </li>
+                <li className="login-link">
+                  <Link to="/signup">Sign Up</Link>
+                </li>
+                <li className="login-link">
+                  <Link to="/login">Sign In</Link>
+                </li>
+              </ul>
+            </div>
+            <ul className="nav header-navbar-rht">
+              <li className="nav-item">
+                <Link className="nav-link header-reg" to="/signup">
+                  Sign Up
+                </Link>
               </li>
-              <li className="login-link">
-                <Link to="/signup">Sign Up</Link>
+              <li className="nav-item">
+                <Link className="nav-link header-login" to="/login">
+                  {" "}
+                  Sign In
+                </Link>
               </li>
-              <li className="login-link">
-                <Link to="/login">Sign In</Link>
+              <li className="nav-item">
+                <Link
+                  className="nav-link header-login add-listing"
+                  to="/add-listing"
+                >
+                  <i className="fa-solid fa-plus"></i> Add Listing
+                </Link>
               </li>
             </ul>
-          </div>
-          <ul className="nav header-navbar-rht">
-            <li className="nav-item">
-              <Link className="nav-link header-reg" to="/signup">
-                Sign Up
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link header-login" to="/login">
-                {" "}
-                Sign In
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link
-                className="nav-link header-login add-listing"
-                to="/add-listing"
-              >
-                <i className="fa-solid fa-plus"></i> Add Listing
-              </Link>
-            </li>
-          </ul>
-        </nav>
-      </div>
+          </nav>
         </div>
-       <HeaderLower/>
+      </div>
+      <HeaderLower />
     </header>
   );
 };

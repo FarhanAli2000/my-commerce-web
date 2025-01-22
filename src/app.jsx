@@ -60,12 +60,23 @@ import ComercialsAds from "./components/admin/ComercialsAds/ComercialsAds";
 import AddBooks from "./components/admin/AddBooks/AddBooks";
 import AddCars from "./components/admin/AddCars/AddCars";
 import AutomotiveComp from "./components/admin/AutomotiveComp/AutomotiveComp";
+import ElectronicComp from "./components/admin/ElectronicComp/ElectronicComp";
+import FashionStyle from "./components/admin/FashionStyle/FashionStyle";
+import HealthCareComp from "./components/admin/HealthCareComp/HealthCareComp";
+import JobBoard from "./components/admin/JobBoard/JobBoard";
+import Education from "./components/admin/Education/Education";
+import RealEstateComp from "./components/admin/RealEstateComp/RealEstateComp";
+import TravelComp from "./components/admin/TravelComp/TravelComp";
+import SportGamesComp from "./components/admin/SportGamesComp/SportGamesComp";
+import PetAnimalsComp from "./components/admin/PetAnimalsComp/PetAnimalsComp";
+import Cars from "./components/admin/Cars/Cars";
+import Bikes from "./components/home/Bikes/Bikes";
 export const App = () => {
   return (
     <BrowserRouter basename={`${config.publicPath}`}>
       <Routes>
         {/* Home Routes */}
-        <Route path="/index" element={<Home />} />
+        <Route path="/" element={<Home />} />
         <Route path="/index-2" element={<Home2 />} />
         <Route path="/index-3" element={<Home3 />} />
         <Route path="/index-4" element={<Home4 />} />
@@ -78,10 +89,23 @@ export const App = () => {
         <Route path="/RealEstate" element={<RealEstate />} />
         <Route path="/Electronic" element={<Electronic />} />
         <Route path="/GamesSport" element={<GamesSport />} />
+        <Route path="/Cars" element={<Cars />} />
+        <Route path="/Bikes" element={<Bikes />} />
+
+
         <Route path="/ComercialsAds" element={<ComercialsAds />} />
         <Route path="/AddBooks" element={<AddBooks />} />
         <Route path="/AddCars" element={<AddCars />} />
         <Route path="/AutomotiveComp" element={<AutomotiveComp />} />
+        <Route path="/ElectronicComp" element={<ElectronicComp />} />
+        <Route path="/FashionStyle" element={<FashionStyle />} />
+        <Route path="/HealthCareComp" element={<HealthCareComp />} />
+        <Route path="/JobBoard" element={<JobBoard />} />
+        <Route path="/Education" element={<Education />} />
+        <Route path="/RealEstateComp" element={<RealEstateComp />} />
+        <Route path="/TravelComp" element={<TravelComp />} />
+        <Route path="/SportGamesComp" element={<SportGamesComp />} />
+        <Route path="/PetAnimalsComp" element={<PetAnimalsComp />} />
 
         <Route path="/listing-grid" element={<Listing_Grid />} />
         <Route path="/service-details" element={<ServiceDetails />} />

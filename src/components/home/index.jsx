@@ -103,13 +103,19 @@ const Home = () => {
       $(".progress-wrap").off("click");
     };
   }, []);
+  const [isVisible, setIsVisible] = useState(false);
 
-  const [isVisible, setIsVisible] = useState(true);
+  useEffect(() => {
+    const hasBeenVisible = sessionStorage.getItem("hasBeenVisible"); // Or localStorage
+    if (!hasBeenVisible) {
+      setIsVisible(true);
+      sessionStorage.setItem("hasBeenVisible", "true"); // Or localStorage
+    }
+  }, []);
 
   const handleClose = () => {
     setIsVisible(false);
   };
-
   return (
     <>
       <div className="main-wrapper">

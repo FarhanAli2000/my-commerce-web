@@ -14,12 +14,10 @@ module.exports = {
   entry: path.join(__dirname, "src", "index.js"),
   devServer: {
     static: {
-      directory: path.join(__dirname, "dist"), // Serve from the 'dist' folder
-      publicPath: "/", // Important: Keep this consistent
+      directory: path.join(__dirname, "public/"),
     },
     port: 3002,
     historyApiFallback: true,
-    open: true,
     onAfterSetupMiddleware: function () {
       // Open the browser after the dev server is up and running
       opn(`http://localhost:${this.port}`);
@@ -36,8 +34,8 @@ module.exports = {
   },
   output: {
     filename: "js/[name].bundle.js",
-    path: path.resolve(__dirname, "dist"),
-    publicPath: "/",
+    path: path.resolve(__dirname, "dist"), // base path where to send compiled assets
+    publicPath: publicPath, // base path where referenced files will be look for
   },
   resolve: {
     extensions: [".tsx", ".ts", ".js", ".jsx"],

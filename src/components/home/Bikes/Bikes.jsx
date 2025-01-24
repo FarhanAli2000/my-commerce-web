@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom"; // Import Link from react-router-dom
 import Header from "../../home/header"; // Ensure Header is correctly implemented and imported
 import Footer from "../../home/footer/Footer";
+// import { ChevronLeft, ChevronRight } from "lucide-react";
+import { MdKeyboardArrowRight } from "react-icons/md";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+
 import automative from "../../home/automative.png";
 import electronic from "../../home/electronic.png";
 import fashion from "../../home/fashion.png";
@@ -17,7 +21,7 @@ import iron from "../../home/iron.png";
 import image1 from "../../../assets/img/banner/bannerimage1.png";
 import image3 from "../../../assets/img/banner/bannerimage3.png";
 import image4 from "../../../assets/img/banner/bannerimage4.png";
-import LatestBlog from "../../blog/BlogList/LatestBlog/LatestBlog.jsx";
+// import LatestBlog from "../../blog/BlogList/LatestBlog/LatestBlog.jsx";
 import image2 from "../../../assets/img/banner/bannerimage2.png";
 import xIcon from "../../home/x.png";
 import insta from "../../home/insta.png";
@@ -31,6 +35,7 @@ import ElectronicCarousel from "../..//home/slider/ElectronicCarousel.jsx";
 import HealthCareCarousel from "../..//home/slider/HealthCareCarousel.jsx";
 import SportandgameCarouseCarousel from "../..//home/slider/SportandgameCarouseCarousel.jsx";
 import ComercialsAds from "../../home/ComercialsAds/ComercialsAds.jsx";
+import LatestBlog from "../../blog/BlogList/LatestBlog/LatestBlog.jsx";
 import popup from "../../home/popup_image.png";
 import { Accordion } from "react-bootstrap";
 import { IoLocationSharp } from "react-icons/io5";
@@ -45,21 +50,25 @@ import {
   Form,
   Card,
   Button,
+  ButtonGroup,
   Badge,
 } from "react-bootstrap";
 import Spinner from "react-bootstrap/Spinner";
 
 const Bikes = () => {
   const parms = useLocation().pathname;
-  const navigate = useNavigate();
-
   const [isVisible, setIsVisible] = useState(true);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const navigate = useNavigate();
 
   // Handle city selection
   const [carsData, setCars] = useState([]); // All cars data
   const [filteredCars, setFilteredCars] = useState([]); // Filtered cars based on search & city
   const [searchQuery, setSearchQuery] = useState(""); // Search query for title and city
+  const [currentPageCars, setCurrentPageCars] = useState([]); // Cars to display on the current page
+  console.log(filteredCars, "filteredCars_________");
+  const itemsPerPage = 3; // Number of items per page
+
   const [selectedCities, setSelectedCities] = useState([]); // Selected cities for filtering
   const [selectedEmirates, setSelectedEmirates] = useState([]); // Selected Emirates for filtering
   const [selectedCarsMake, setSelectedCarsMake] = useState([]);
@@ -97,6 +106,80 @@ const Bikes = () => {
   const [selectedOptionVideoAvailability, setSelectedOptionVideoAvailability] =
     useState("");
   const [selectedOptionisFeatured, setSelectedOptionisFeatured] = useState("");
+
+  const [selectedStates1, setSelectedStates1] = useState([]); // Selected states for filtering
+  const [fromValueMileage, setFromCCMileage] = useState("");
+  const [toValueMileage, setToCCMileage] = useState("");
+  const [SortBy, setSortBy] = useState(""); // Search query for title and city
+
+  const handleFromChangeMileage = (e) => {
+    setFromCCMileage(e.target.value);
+    console.log("From Date:__", e.target.value);
+  };
+
+  // Handle changes for "To" input
+  const handleToChangMileagee = (e) => {
+    setToCCMileage(e.target.value);
+    console.log("From Date:___To Date:", e.target.value);
+  };
+
+  const handleStateChange1 = (e, state) => {
+    if (e.target.checked) {
+      setSelectedStates1((prevStates) => {
+        const updatedStates = [...prevStates, state];
+        filterCars(searchQuery, updatedStates); // Apply the filter
+        return updatedStates;
+      });
+    } else {
+      setSelectedStates1((prevStates) => {
+        const updatedStates = prevStates.filter((item) => item !== state);
+        filterCars(searchQuery, updatedStates); // Apply the filter
+        return updatedStates;
+      });
+    }
+  };
+  const [activePage, setActivePage] = useState(1);
+  console.log(activePage, "activePage_________");
+  const handlePageClick = (page) => {
+    setActivePage(page);
+  };
+  const carsPerPage = 3;
+
+  const totalPages = Math.ceil(filteredCars.length / carsPerPage);
+  const renderPageNumbers = () => {
+    const pages = [];
+    for (let i = 1; i <= totalPages; i++) {
+      if (
+        i === 1 ||
+        i === totalPages ||
+        (i >= activePage - 1 && i <= activePage + 1)
+      ) {
+        pages.push(
+          <Button
+            key={i}
+            variant={i === activePage ? "primary" : "outline-primary"}
+            className="mx-1"
+            onClick={() => handlePageClick(i)}
+          >
+            {i}
+          </Button>
+        );
+      } else if (i === activePage - 2 || i === activePage + 2) {
+        pages.push(
+          <span key={`ellipsis-${i}`} className="mx-1">
+            ...
+          </span>
+        );
+      }
+    }
+    return pages;
+  };
+
+  const getPaginatedCars = () => {
+    const startIndex = (activePage - 1) * carsPerPage;
+    const endIndex = startIndex + carsPerPage;
+    return filteredCars.slice(startIndex, endIndex);
+  };
 
   const handleCheckboxChangeisFeatured = (event) => {
     const isChecked = event.target.checked;
@@ -322,18 +405,13 @@ const Bikes = () => {
   useEffect(() => {
     const fetchCars = async () => {
       try {
-        setLoading(true); // Show spinner
-        const carsCollectionRef = collection(db, "Cars");
+        const carsCollectionRef = collection(db, "Bikes");
         const querySnapshot = await getDocs(carsCollectionRef);
         const carsData = querySnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
         setCars(carsData);
-        setLoading(false);
-
-        console.log(carsData, "carsData_________");
-
         setFilteredCars(carsData); // Initially, show all cars
       } catch (error) {
         console.error("Error getting cars:", error);
@@ -342,6 +420,14 @@ const Bikes = () => {
 
     fetchCars();
   }, []);
+
+  useEffect(() => {
+    // Filter cars for the current page
+    const startIndex = (activePage - 1) * carsPerPage;
+    const endIndex = startIndex + carsPerPage;
+    setCurrentPageCars(filteredCars.slice(startIndex, endIndex));
+  }, [activePage, filteredCars]);
+
   const handleCityChange = (e, city) => {
     if (e.target.checked) {
       setSelectedCities((prevCities) => {
@@ -388,7 +474,11 @@ const Bikes = () => {
       selectedCheckboxSellerType,
       pictureAvailability,
       selectedOptionVideoAvailability,
-      selectedOptionisFeatured
+      selectedOptionisFeatured,
+      selectedStates1,
+      fromValueMileage,
+      toValueMileage,
+      SortBy
     );
   }, [
     selectedCities,
@@ -415,6 +505,10 @@ const Bikes = () => {
     pictureAvailability,
     selectedOptionVideoAvailability,
     selectedOptionisFeatured,
+    selectedStates1,
+    fromValueMileage,
+    toValueMileage,
+    SortBy,
   ]);
 
   // Handle search input change
@@ -447,7 +541,11 @@ const Bikes = () => {
       selectedCheckboxSellerType,
       pictureAvailability,
       selectedOptionVideoAvailability,
-      selectedOptionisFeatured
+      selectedOptionisFeatured,
+      selectedStates1,
+      fromValueMileage,
+      toValueMileage,
+      SortBy
     );
   };
   const filterCars = (
@@ -474,7 +572,11 @@ const Bikes = () => {
     selectedCheckboxSellerType,
     pictureAvailability,
     selectedOptionVideoAvailability,
-    selectedOptionisFeatured
+    selectedOptionisFeatured,
+    selectedStates1,
+    fromValueMileage,
+    toValueMileage,
+    SortBy
   ) => {
     let filtered = carsData;
 
@@ -486,7 +588,7 @@ const Bikes = () => {
           car.title?.toLowerCase().includes(lowercasedQuery) ||
           car.City?.toLowerCase().includes(lowercasedQuery) ||
           car.Emirates?.toLowerCase().includes(lowercasedQuery) ||
-          car.Make?.toLowerCase().includes(lowercasedQuery) ||
+          car.make?.toLowerCase().includes(lowercasedQuery) ||
           car.Registeredin?.toLowerCase().includes(lowercasedQuery) ||
           car.Color?.toLowerCase().includes(lowercasedQuery) ||
           car.Transmission?.toLowerCase().includes(lowercasedQuery) ||
@@ -500,6 +602,7 @@ const Bikes = () => {
           car.PictureAvailability?.toLowerCase().includes(lowercasedQuery) ||
           car.VideoAvailability?.toLowerCase().includes(lowercasedQuery) ||
           car.AdType?.toLowerCase().includes(lowercasedQuery) ||
+          car.States?.toLowerCase().includes(lowercasedQuery) ||
           car.TrustedCars?.toLowerCase().includes(lowercasedQuery)
       );
     }
@@ -510,6 +613,9 @@ const Bikes = () => {
       filtered = filtered.filter((car) =>
         selectedOptionVideoAvailability.includes(car.VideoAvailability)
       );
+    }
+    if (selectedStates1?.length > 0) {
+      filtered = filtered.filter((car) => selectedStates1.includes(car.States));
     }
     // Filter by selected cities
     if (selectedOptionisFeatured?.length > 0) {
@@ -584,7 +690,7 @@ const Bikes = () => {
 
     // Filter by selected car makes
     if (selectedCarsMake?.length > 0) {
-      filtered = filtered.filter((car) => selectedCarsMake.includes(car.Make));
+      filtered = filtered.filter((car) => selectedCarsMake.includes(car.make));
     }
 
     // Filter by price range
@@ -598,11 +704,42 @@ const Bikes = () => {
         return carPrice >= minPrice && carPrice <= maxPrice;
       });
     }
+    if (SortBy === "Price: Low to High") {
+      filtered.sort((a, b) => {
+        const priceA = parseFloat(a.price) || 0;
+        const priceB = parseFloat(b.price) || 0;
+        return priceB - priceA; // Ascending order (low to high)
+      });
+    }
+    if (SortBy === "Price: High to Low") {
+      filtered.sort((a, b) => {
+        const priceA = parseFloat(a.price) || 0;
+        const priceB = parseFloat(b.price) || 0;
+        return priceA - priceB; // Ascending order (low to high)
+      });
+    }
+    if (SortBy === "Sort by: Most Relevant") {
+      filtered.sort((a, b) => {
+        const dateA = new Date(a.timeAgo);
+        const dateB = new Date(b.timeAgo);
+        return dateB.getTime() - dateA.getTime(); // Descending order (latest first)
+      });
+    }
     if (fromCC || toCC) {
       filtered = filtered.filter((car) => {
         const EngineCapacity = parseFloat(car.EngineCapacity); // Assuming price is a number or string
         const minPrice = fromCC ? parseFloat(fromCC) : 0; // Default to 0 if no fromValue
         const maxPrice = toCC ? parseFloat(toCC) : Infinity; // Default to Infinity if no toValue
+
+        // Ensure that car's price is between minPrice and maxPrice
+        return EngineCapacity >= minPrice && EngineCapacity <= maxPrice;
+      });
+    }
+    if (fromValueMileage || toValueMileage) {
+      filtered = filtered.filter((car) => {
+        const EngineCapacity = parseFloat(car.mileage); // Assuming price is a number or string
+        const minPrice = fromValueMileage ? parseFloat(fromValueMileage) : 0; // Default to 0 if no fromValue
+        const maxPrice = toValueMileage ? parseFloat(toValueMileage) : Infinity; // Default to Infinity if no toValue
 
         // Ensure that car's price is between minPrice and maxPrice
         return EngineCapacity >= minPrice && EngineCapacity <= maxPrice;
@@ -630,8 +767,9 @@ const Bikes = () => {
         return manufactureYear >= minDate && manufactureYear <= maxDate;
       });
     }
-
+    console.log(filtered, "filtered________");
     setFilteredCars(filtered);
+    setActivePage(1);
   };
 
   const carListings = [
@@ -721,7 +859,7 @@ const Bikes = () => {
           {/* Banner Section */}
 
           {/* Trending Products */}
-          <div className="trendingprodct_wrapper container">
+          {/* <div className="trendingprodct_wrapper container">
             <h3 className="trendingproduct_heading"> Our Trending Product</h3>
             <div className="trendingproducts_container">
               <button className="trendingProductsallname">Iphone 16</button>
@@ -733,7 +871,6 @@ const Bikes = () => {
               >
                 Bikes
               </button>
-
               <button className="trendingProductsallname">Cricket Kit</button>
               <button className="trendingProductsallname">Bags</button>
               <button className="trendingProductsallname">Apparel</button>
@@ -742,11 +879,11 @@ const Bikes = () => {
               <button className="trendingProductsallname">Magazines</button>
               <button className="trendingProductsallname">Mens Hoodies</button>
             </div>
-          </div>
+          </div> */}
           {/* Trending Products */}
 
           {/* Category Section */}
-          <section className="category-section">
+          <section className="category-section" style={{ padding: "0px" }}>
             <div className="container">
               <div className="allMedia_Icons">
                 <div>
@@ -781,17 +918,246 @@ const Bikes = () => {
           {/* Footer */}
           {/* Footer */}
         </div>
+<Container className="parent-main" 
+ style={{
+  paddingLeft: "2px", // Padding on the left side
+  paddingRight: "2px", // Padding on the right side
+  color: 'black', // Text color
+  maxWidth: '1530px', // Optional: Add max-width to ensure padding is visible
+  margin: '0 auto', // Optional: Center the container if desired
+ 
+ 
+}}>
+        <div
+          className="adsCategory_head"
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "10px",
+            marginLeft: "4%",
+            marginTop: "40px",
+            alignItems: "center",
+          }}
+        >
+          <button
+            className="btn"
+            style={{
+              background: "#E9EEFF",
+              fontWeight: "500",
+             pointerEvents: "none",
+              padding: "10px 15px",
+            }}
+          >
+            Home
+          </button>
+          <span>
+          <MdKeyboardArrowRight />
+          </span>
 
-        <Container fluid>
+          <button
+            className="btn"
+            style={{
+              background: "#E9EEFF",
+              fontWeight: "500",
+             pointerEvents: "none",
+              padding: "10px 15px",
+            }}
+          >
+            Automotive
+          </button>
+          <span>
+          <MdKeyboardArrowRight />
+          </span>
+
+          <button
+            className="btn"
+            style={{
+              background: "#E9EEFF",
+              fontWeight: "500",
+            pointerEvents: "none",
+              padding: "10px 15px",
+            }}
+          >
+            All Cities
+          </button>
+          <span>
+          <MdKeyboardArrowRight />
+          </span>
+
+          <button
+            className="btn"
+            style={{
+              background: "#E9EEFF",
+              fontWeight: "500",
+            pointerEvents: "none",
+              padding: "10px 15px",
+            }}
+          >
+            Used Bike for Sale
+          </button>
+          <span>
+          <MdKeyboardArrowRight />
+          </span>
+
+          <button
+            className="btn"
+            style={{
+              background: "#E9EEFF",
+              fontWeight: "500",
+             pointerEvents: "none",
+              padding: "10px 15px",
+            }}
+          >
+            HarleyDavidson
+          </button>
+        
+          
+        </div>
+
+        <div>
+          <h1 style={{ marginLeft: "4%", marginTop: "20px", fontSize: "24px" }}>
+            Used Bikes for Sale
+          </h1>
+        </div>
+
+        <div
+          className="CategoryInfodiv_btn2container"
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "10px",
+            marginLeft: "4%",
+            marginBottom: "40px",
+            marginTop: "20px",
+          }}
+        >
+          <button
+            className="head2btn"
+            style={{
+              backgroundColor: "white",
+              border: "1px solid #2D4495",
+              padding: "10px 15px",
+              textAlign: "center",
+            }}
+          >
+            Cars
+          </button>
+          <button
+            className="head2btn"
+            style={{
+              backgroundColor: "white",
+              border: "1px solid #2D4495",
+              padding: "10px 15px",
+              textAlign: "center",
+            }}
+          >
+            Jobs
+          </button>
+          <button
+            className="head2btn"
+            style={{
+              backgroundColor: "white",
+              border: "1px solid #2D4495",
+              padding: "10px 15px",
+              textAlign: "center",
+            }}
+          >
+            Real Estate for Rent
+          </button>
+          <button
+            className="head2btn"
+            style={{
+              backgroundColor: "white",
+              border: "1px solid #2D4495",
+              padding: "10px 15px",
+              textAlign: "center",
+            }}
+          >
+            Home & Garden
+          </button>
+          <button
+            className="head2btn"
+            style={{
+              backgroundColor: "white",
+              border: "1px solid #2D4495",
+              padding: "10px 15px",
+              textAlign: "center",
+            }}
+          >
+            Electronics
+          </button>
+          <button
+            className="head2btn"
+            style={{
+              backgroundColor: "white",
+              border: "1px solid #2D4495",
+              padding: "10px 15px",
+              textAlign: "center",
+            }}
+          >
+            Electronics
+          </button>
+          <button
+            className="head2btn"
+            style={{
+              backgroundColor: "white",
+              border: "1px solid #2D4495",
+              padding: "10px 15px",
+              textAlign: "center",
+            }}
+          >
+            Electronics
+          </button>
+          <button
+            className="head2btn"
+            style={{
+              backgroundColor: "white",
+              border: "1px solid #2D4495",
+              padding: "10px 15px",
+              textAlign: "center",
+            }}
+          >
+            Electronics
+          </button>
+          <button
+            className="head2btn"
+            style={{
+              backgroundColor: "white",
+              border: "1px solid #2D4495",
+              padding: "10px 15px",
+              textAlign: "center",
+            }}
+          >
+            Electronics
+          </button>
+        </div>
+       
+        </Container>
+        <Container fluid style={{
+    paddingLeft: "1px", // Padding on the left side
+    paddingRight: "1px", // Padding on the right side
+    color: 'black', // Text color
+    maxWidth: '1420px', // Optional: Add max-width to ensure padding is visible
+    margin: '0 auto', // Optional: Center the container if desired
+  }}>
           <Row>
             {/* Sidebar */}
-            <Col md={3} className="bg-light p-3">
-              <h5 style={headingStyle}>Show Results by:</h5>
+            <Col md={3} className="bg-light p-3 style={{ height: '200px' }}">
+              <h5 style={{
+                  borderTopLeftRadius: "5px",
+                  borderTopRightRadius: "5px",
+                  backgroundColor: "#2D4495",
+                  color: "white",
+                  width: "auto",
+                  height: "49.66px",
+                  paddingLeft: "6px",
+                  paddingTop: "6px",
+                }}>Show Results by:</h5>
 
               <Form>
                 <Row className="my-3">
                   <Col>
-                    <Form.Label style={{ fontWeight: "bold" }}>
+                    <Form.Label style={{ fontWeight: "bold",color:'black',paddingLeft:"8px"}}>
                       Search by Keywords
                     </Form.Label>
                     <div className="position-relative">
@@ -817,35 +1183,31 @@ const Bikes = () => {
                     <Accordion.Body>
                       <Form.Group className="mb-3">
                         <div style={{ maxWidth: "300px", marginTop: "20px" }}>
-                          {[
-                            "New York",
-                            "Bogotá",
-                            "Dubai",
-                            "Tokyo",
-                            "Paris",
-                          ].map((city) => (
-                            <div
-                              key={city}
-                              style={{
-                                display: "flex",
-                                justifyContent: "space-between",
-                                alignItems: "center",
-                                padding: "8px 0",
-                              }}
-                            >
-                              <Form.Check
-                                type="checkbox"
-                                label={city}
-                                checked={selectedCities.includes(city)}
-                                onChange={(e) => handleCityChange(e, city)}
-                              />
-                              <span
-                                style={{ fontWeight: "bold", color: "#333" }}
+                          {["America", "Bogotá", "Dubai", "Tokyo", "Paris"].map(
+                            (city) => (
+                              <div
+                                key={city}
+                                style={{
+                                  display: "flex",
+                                  justifyContent: "space-between",
+                                  alignItems: "center",
+                                  padding: "8px 0",
+                                }}
                               >
-                                12345
-                              </span>
-                            </div>
-                          ))}
+                                <Form.Check
+                                  type="checkbox"
+                                  label={city}
+                                  checked={selectedCities.includes(city)}
+                                  onChange={(e) => handleCityChange(e, city)}
+                                />
+                                <span
+                                  style={{ fontWeight: "bold", color: "#333" }}
+                                >
+                                  12345
+                                </span>
+                              </div>
+                            )
+                          )}
                         </div>
                       </Form.Group>
                     </Accordion.Body>
@@ -868,19 +1230,19 @@ const Bikes = () => {
                 {/*      ----------               */}
                 <Accordion>
                   <Accordion.Item eventKey="0">
-                    <Accordion.Header>Select </Accordion.Header>
+                    <Accordion.Header>States </Accordion.Header>
                     <Accordion.Body>
                       <Form.Group className="mb-3">
                         <div style={{ maxWidth: "300px", marginTop: "20px" }}>
                           {[
-                            { label: "Downtown Dubai", city: "Downtown Dubai" },
-                            { label: "Dubai Marina", city: "Dubai Marina" },
-                            { label: "Jumeirah", city: "Jumeirah" },
-                            { label: "Deira", city: "Deira" },
-                            { label: "Business Bay", city: "Business Bay" },
-                          ].map(({ label, city }, index) => (
+                            "California",
+                            "Texas",
+                            "Florida",
+                            "New York",
+                            "Illinois",
+                          ].map((state) => (
                             <div
-                              key={index}
+                              key={state}
                               style={{
                                 display: "flex",
                                 justifyContent: "space-between",
@@ -890,9 +1252,9 @@ const Bikes = () => {
                             >
                               <Form.Check
                                 type="checkbox"
-                                label={label}
-                                checked={selectedEmirates.includes(city)}
-                                onChange={(e) => handleEmiratesChange(e, city)}
+                                label={state}
+                                checked={selectedStates1.includes(state)}
+                                onChange={(e) => handleStateChange1(e, state)}
                               />
                               <span
                                 style={{ fontWeight: "bold", color: "#333" }}
@@ -924,17 +1286,17 @@ const Bikes = () => {
 
                 <Accordion>
                   <Accordion.Item eventKey="0">
-                    <Accordion.Header>Select Car Make</Accordion.Header>
+                    <Accordion.Header>Make</Accordion.Header>
                     <Accordion.Body>
                       <Form.Group className="mb-3">
                         {/* Checkbox Selection */}
                         <div style={{ maxWidth: "300px", marginTop: "20px" }}>
                           {[
-                            "Toyota",
-                            "Mercedes-Benz",
-                            "Nissan",
-                            "BMW",
-                            "Lamborghini",
+                            "Trek Bicycle Corporation",
+                            "Specialized Bicycle",
+                            "Cannondale",
+                            "Santa Cruz",
+                            "Huffy Corporation",
                           ].map((car, index) => (
                             <div
                               key={index}
@@ -1062,6 +1424,47 @@ const Bikes = () => {
                     borderColor: "#000000", // Set border color to black
                   }}
                 />
+                <Accordion className="mt-3">
+                  <Accordion.Item eventKey="0">
+                    <Accordion.Header>Mileage</Accordion.Header>
+                    <Accordion.Body>
+                      <Form.Group className="mb-3">
+                        <Row>
+                          <Col>
+                            <Form.Control
+                              type="number"
+                              placeholder="From"
+                              value={fromValueMileage}
+                              onChange={handleFromChangeMileage}
+                            />
+                          </Col>
+                          <Col>
+                            <Form.Control
+                              type="number"
+                              placeholder="To"
+                              value={toValueMileage}
+                              onChange={handleToChangMileagee}
+                            />
+                          </Col>
+                        </Row>
+                      </Form.Group>
+                    </Accordion.Body>
+                  </Accordion.Item>
+                </Accordion>
+                <hr
+                  style={{
+                    width: "100%",
+                    height: "0px",
+                    top: "1310.01px",
+                    left: "239.88px",
+                    gap: "0px",
+                    borderTop: "1px solid #000000",
+                    opacity: "0.5", // Adjust opacity for visibility
+                    transform: "rotate(0deg)",
+                    margin: "20px 0",
+                    borderColor: "#000000", // Set border color to black
+                  }}
+                />
                 {/*   ------------------------------------------                            */}
                 <Accordion className="mt-3">
                   <Accordion.Item eventKey="0">
@@ -1082,9 +1485,9 @@ const Bikes = () => {
                             >
                               <Form.Check
                                 type="checkbox"
-                                label="Downtown Dubai"
+                                label="California"
                                 onChange={(e) =>
-                                  handleToyotaChange(e, "Downtown Dubai")
+                                  handleToyotaChange(e, "California")
                                 }
                               />
                               <span
@@ -1103,9 +1506,28 @@ const Bikes = () => {
                             >
                               <Form.Check
                                 type="checkbox"
-                                label="Dubai Marina"
+                                label="Texas"
+                                onChange={(e) => handleToyotaChange(e, "Texas")}
+                              />
+                              <span
+                                style={{ fontWeight: "bold", color: "#333" }}
+                              >
+                                12345
+                              </span>
+                            </div>
+                            <div
+                              style={{
+                                display: "flex",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                                padding: "8px 0",
+                              }}
+                            >
+                              <Form.Check
+                                type="checkbox"
+                                label="Newyork"
                                 onChange={(e) =>
-                                  handleToyotaChange(e, "Dubai Marina")
+                                  handleToyotaChange(e, "Newyork")
                                 }
                               />
                               <span
@@ -1124,10 +1546,9 @@ const Bikes = () => {
                             >
                               <Form.Check
                                 type="checkbox"
-                                label="Jumeirah"
-                                defaultChecked
+                                label="Florida"
                                 onChange={(e) =>
-                                  handleToyotaChange(e, "Jumeirah")
+                                  handleToyotaChange(e, "Florida")
                                 }
                               />
                               <span
@@ -1146,28 +1567,9 @@ const Bikes = () => {
                             >
                               <Form.Check
                                 type="checkbox"
-                                label="Deira"
-                                onChange={(e) => handleToyotaChange(e, "Deira")}
-                              />
-                              <span
-                                style={{ fontWeight: "bold", color: "#333" }}
-                              >
-                                12345
-                              </span>
-                            </div>
-                            <div
-                              style={{
-                                display: "flex",
-                                justifyContent: "space-between",
-                                alignItems: "center",
-                                padding: "8px 0",
-                              }}
-                            >
-                              <Form.Check
-                                type="checkbox"
-                                label="Business Bay"
+                                label="Illinios"
                                 onChange={(e) =>
-                                  handleToyotaChange(e, "Business Bay")
+                                  handleToyotaChange(e, "Illinios")
                                 }
                               />
                               <span
@@ -1182,266 +1584,6 @@ const Bikes = () => {
                     </Accordion.Body>
                   </Accordion.Item>
                 </Accordion>
-                <hr
-                  style={{
-                    width: "100%",
-                    height: "0px",
-                    top: "1310.01px",
-                    left: "239.88px",
-                    gap: "0px",
-                    borderTop: "1px solid #000000",
-                    opacity: "0.5", // Adjust opacity for visibility
-                    transform: "rotate(0deg)",
-                    margin: "20px 0",
-                    borderColor: "#000000", // Set border color to black
-                  }}
-                />
-                {/*-------------------------------------*/}
-                <Accordion className="mt-3">
-                  <Accordion.Item eventKey="0">
-                    <Accordion.Header>Trusted Car</Accordion.Header>
-                    <Accordion.Body>
-                      <div style={{ maxWidth: "300px", margin: "20px" }}>
-                        <Form.Group>
-                          {/* Hardcoded Car Data */}
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              alignItems: "center",
-                              padding: "8px 0",
-                            }}
-                          >
-                            <Form.Check
-                              type="checkbox"
-                              label="Toyota"
-                              onChange={(e) => handleCarChange(e, "Toyota")}
-                            />
-                            <span style={{ fontWeight: "bold", color: "#333" }}>
-                              12345
-                            </span>
-                          </div>
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              alignItems: "center",
-                              padding: "8px 0",
-                            }}
-                          >
-                            <Form.Check
-                              type="checkbox"
-                              label="Mercedes-Benz"
-                              onChange={(e) =>
-                                handleCarChange(e, "Mercedes-Benz")
-                              }
-                            />
-                            <span style={{ fontWeight: "bold", color: "#333" }}>
-                              12345
-                            </span>
-                          </div>
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              alignItems: "center",
-                              padding: "8px 0",
-                            }}
-                          >
-                            <Form.Check
-                              type="checkbox"
-                              label="Nissan"
-                              // defaultChecked
-                              onChange={(e) => handleCarChange(e, "Nissan")}
-                            />
-                            <span style={{ fontWeight: "bold", color: "#333" }}>
-                              12345
-                            </span>
-                          </div>
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              alignItems: "center",
-                              padding: "8px 0",
-                            }}
-                          >
-                            <Form.Check
-                              type="checkbox"
-                              label="BMW"
-                              onChange={(e) => handleCarChange(e, "BMW")}
-                            />
-                            <span style={{ fontWeight: "bold", color: "#333" }}>
-                              12345
-                            </span>
-                          </div>
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              alignItems: "center",
-                              padding: "8px 0",
-                            }}
-                          >
-                            <Form.Check
-                              type="checkbox"
-                              label="Lamborghini"
-                              onChange={(e) =>
-                                handleCarChange(e, "Lamborghini")
-                              }
-                            />
-                            <span style={{ fontWeight: "bold", color: "#333" }}>
-                              12345
-                            </span>
-                          </div>
-                        </Form.Group>
-                      </div>
-                    </Accordion.Body>
-                  </Accordion.Item>
-                </Accordion>
-                <hr
-                  style={{
-                    width: "100%",
-                    height: "0px",
-                    top: "1310.01px",
-                    left: "239.88px",
-                    gap: "0px",
-                    borderTop: "1px solid #000000",
-                    opacity: "0.5", // Adjust opacity for visibility
-                    transform: "rotate(0deg)",
-                    margin: "20px 0",
-                    borderColor: "#000000", // Set border color to black
-                  }}
-                />
-
-                <Accordion className="mt-3">
-                  <Accordion.Item eventKey="0">
-                    <Accordion.Header>Transmission</Accordion.Header>
-                    <Accordion.Body>
-                      <div style={{ maxWidth: "300px", margin: "20px" }}>
-                        <Form.Group>
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              alignItems: "center",
-                              padding: "8px 0",
-                            }}
-                          >
-                            <Form.Check
-                              type="checkbox"
-                              label="Manual"
-                              checked={selectedOptionTransmission === "Manual"}
-                              onChange={() =>
-                                handleCheckboxChangeTransmission("Manual")
-                              }
-                            />
-                            <span style={{ fontWeight: "bold", color: "#333" }}>
-                              12345
-                            </span>
-                          </div>
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              alignItems: "center",
-                              padding: "8px 0",
-                            }}
-                          >
-                            <Form.Check
-                              type="checkbox"
-                              label="Automatic"
-                              checked={
-                                selectedOptionTransmission === "Automatic"
-                              }
-                              onChange={() =>
-                                handleCheckboxChangeTransmission("Automatic")
-                              }
-                            />
-                            <span style={{ fontWeight: "bold", color: "#333" }}>
-                              12345
-                            </span>
-                          </div>
-                        </Form.Group>
-                      </div>
-                    </Accordion.Body>
-                  </Accordion.Item>
-                </Accordion>
-                <hr
-                  style={{
-                    width: "100%",
-                    height: "0px",
-                    top: "1310.01px",
-                    left: "239.88px",
-                    gap: "0px",
-                    borderTop: "1px solid #000000",
-                    opacity: "0.5", // Adjust opacity for visibility
-                    transform: "rotate(0deg)",
-                    margin: "20px 0",
-                    borderColor: "#000000", // Set border color to black
-                  }}
-                />
-
-                <div>
-                  {/* Accordion with Checkbox Selection for Color */}
-                  <Accordion className="mt-3">
-                    <Accordion.Item eventKey="0">
-                      <Accordion.Header>Color</Accordion.Header>
-                      <Accordion.Body>
-                        <div style={{ maxWidth: "300px", margin: "20px" }}>
-                          <Form.Group>
-                            {["White", "Black", "Grey", "Red", "Yellow"].map(
-                              (color) => (
-                                <div
-                                  key={color}
-                                  style={{
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                    alignItems: "center",
-                                    padding: "8px 0",
-                                  }}
-                                >
-                                  <Form.Check
-                                    type="checkbox"
-                                    label={color}
-                                    // defaultChecked={color === "Grey"}
-                                    onChange={() =>
-                                      handleCheckboxChangeColor(color)
-                                    }
-                                  />
-                                  <span
-                                    style={{
-                                      fontWeight: "bold",
-                                      color: "#333",
-                                    }}
-                                  >
-                                    12345
-                                  </span>
-                                </div>
-                              )
-                            )}
-                            <button
-                              type="button"
-                              onClick={logSelectedColor}
-                              style={{
-                                marginTop: "10px",
-                                padding: "5px 10px",
-                                backgroundColor: "#007bff",
-                                color: "#fff",
-                                border: "none",
-                                borderRadius: "5px",
-                              }}
-                            >
-                              Log Selected
-                            </button>
-                          </Form.Group>
-                        </div>
-                      </Accordion.Body>
-                    </Accordion.Item>
-                  </Accordion>
-
-                  <p style={{ color: "#2D4495" }}>More choices</p>
-                </div>
                 <hr
                   style={{
                     width: "100%",
@@ -1464,11 +1606,11 @@ const Bikes = () => {
                       <div style={{ maxWidth: "300px", margin: "20px" }}>
                         <Form.Group>
                           {[
-                            "Inline-4 (I4) Engine",
-                            "V6 Engine",
-                            "V8 Engine",
-                            "Inline-6 (I6) Engine",
-                            "V12 Engine",
+                            "Single-Cylinder Engine",
+                            "Parallel-Twin Engine",
+                            "V-Twin Engine",
+                            "Inline-Four Engine",
+                            "Boxer Engine",
                           ].map((engine, index) => (
                             <div
                               key={engine}
@@ -1495,12 +1637,11 @@ const Bikes = () => {
                             </div>
                           ))}
                         </Form.Group>
+                        <p style={{ color: "#2D4495" }}>More choices</p>
                       </div>
                     </Accordion.Body>
                   </Accordion.Item>
                 </Accordion>
-
-                <p style={{ color: "#2D4495" }}>More choices</p>
 
                 <hr
                   style={{
@@ -1516,6 +1657,8 @@ const Bikes = () => {
                     borderColor: "#000000", // Set border color to black
                   }}
                 />
+                {/*                    */}
+
                 <div>
                   {/* Accordion for Year Range */}
                   <Accordion className="mt-3">
@@ -1560,14 +1703,13 @@ const Bikes = () => {
                     borderColor: "#000000", // Set border color to black
                   }}
                 />
-
                 <Accordion className="mt-3">
                   <Accordion.Item eventKey="0">
-                    <Accordion.Header>Assembly</Accordion.Header>
+                    <Accordion.Header>Body Type</Accordion.Header>
                     <Accordion.Body>
                       <div style={{ maxWidth: "300px", margin: "20px" }}>
                         <Form.Group>
-                          {/* Local Checkbox */}
+                          {/* Coupe */}
                           <div
                             style={{
                               display: "flex",
@@ -1578,9 +1720,9 @@ const Bikes = () => {
                           >
                             <Form.Check
                               type="checkbox"
-                              label="Local"
+                              label="Cruiser"
                               onChange={() =>
-                                handleCheckboxChangeAssembly("Local")
+                                handleCheckboxChangeBodyType("Cruiser")
                               }
                             />
                             <span style={{ fontWeight: "bold", color: "#333" }}>
@@ -1588,7 +1730,7 @@ const Bikes = () => {
                             </span>
                           </div>
 
-                          {/* Imported Checkbox */}
+                          {/* Sedan (Saloon) */}
                           <div
                             style={{
                               display: "flex",
@@ -1599,9 +1741,74 @@ const Bikes = () => {
                           >
                             <Form.Check
                               type="checkbox"
-                              label="Imported"
+                              label="Sport Bike"
                               onChange={() =>
-                                handleCheckboxChangeAssembly("Imported")
+                                handleCheckboxChangeBodyType("Sport Bike")
+                              }
+                            />
+                            <span style={{ fontWeight: "bold", color: "#333" }}>
+                              12345
+                            </span>
+                          </div>
+
+                          {/* SUV */}
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                              alignItems: "center",
+                              padding: "8px 0",
+                            }}
+                          >
+                            <Form.Check
+                              type="checkbox"
+                              label="Touring Bike"
+                              onChange={() =>
+                                handleCheckboxChangeBodyType("Touring Bike")
+                              }
+                            />
+                            <span style={{ fontWeight: "bold", color: "#333" }}>
+                              12345
+                            </span>
+                          </div>
+
+                          {/* Hatchback */}
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                              alignItems: "center",
+                              padding: "8px 0",
+                            }}
+                          >
+                            <Form.Check
+                              type="checkbox"
+                              label="Dirt Bike"
+                              onChange={() =>
+                                handleCheckboxChangeBodyType("Dirt Bike")
+                              }
+                            />
+                            <span style={{ fontWeight: "bold", color: "#333" }}>
+                              12345
+                            </span>
+                          </div>
+
+                          {/* Convertible */}
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                              alignItems: "center",
+                              padding: "8px 0",
+                            }}
+                          >
+                            <Form.Check
+                              type="checkbox"
+                              label="Standard (Naked Bike)"
+                              onChange={() =>
+                                handleCheckboxChangeBodyType(
+                                  "Standard (Naked Bike)"
+                                )
                               }
                             />
                             <span style={{ fontWeight: "bold", color: "#333" }}>
@@ -1609,577 +1816,28 @@ const Bikes = () => {
                             </span>
                           </div>
                         </Form.Group>
+                        <p style={{ color: "#2D4495" }}>More choices</p>
                       </div>
                     </Accordion.Body>
                   </Accordion.Item>
                 </Accordion>
+
+                <hr
+                  style={{
+                    width: "100%",
+                    height: "0px",
+                    top: "1310.01px",
+                    left: "239.88px",
+                    gap: "0px",
+                    borderTop: "1px solid #000000",
+                    opacity: "0.5", // Adjust opacity for visibility
+                    transform: "rotate(0deg)",
+                    margin: "20px 0",
+                    borderColor: "#000000", // Set border color to black
+                  }}
+                />
+                {/*-------------------------------------*/}
               </Form>
-              <hr
-                style={{
-                  width: "100%",
-                  height: "0px",
-                  top: "1310.01px",
-                  left: "239.88px",
-                  gap: "0px",
-                  borderTop: "1px solid #000000",
-                  opacity: "0.5", // Adjust opacity for visibility
-                  transform: "rotate(0deg)",
-                  margin: "20px 0",
-                  borderColor: "#000000", // Set border color to black
-                }}
-              />
-
-              {/*                    */}
-              <Accordion className="mt-3">
-                <Accordion.Item eventKey="0">
-                  <Accordion.Header>Body Type</Accordion.Header>
-                  <Accordion.Body>
-                    <div style={{ maxWidth: "300px", margin: "20px" }}>
-                      <Form.Group>
-                        {/* Coupe */}
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            padding: "8px 0",
-                          }}
-                        >
-                          <Form.Check
-                            type="checkbox"
-                            label="Coupe"
-                            onChange={() =>
-                              handleCheckboxChangeBodyType("Coupe")
-                            }
-                          />
-                          <span style={{ fontWeight: "bold", color: "#333" }}>
-                            12345
-                          </span>
-                        </div>
-
-                        {/* Sedan (Saloon) */}
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            padding: "8px 0",
-                          }}
-                        >
-                          <Form.Check
-                            type="checkbox"
-                            label="Sedan (Saloon)"
-                            onChange={() =>
-                              handleCheckboxChangeBodyType("Sedan (Saloon)")
-                            }
-                          />
-                          <span style={{ fontWeight: "bold", color: "#333" }}>
-                            12345
-                          </span>
-                        </div>
-
-                        {/* SUV */}
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            padding: "8px 0",
-                          }}
-                        >
-                          <Form.Check
-                            type="checkbox"
-                            label="SUV"
-                            onChange={() => handleCheckboxChangeBodyType("SUV")}
-                          />
-                          <span style={{ fontWeight: "bold", color: "#333" }}>
-                            12345
-                          </span>
-                        </div>
-
-                        {/* Hatchback */}
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            padding: "8px 0",
-                          }}
-                        >
-                          <Form.Check
-                            type="checkbox"
-                            label="Hatchback"
-                            onChange={() =>
-                              handleCheckboxChangeBodyType("Hatchback")
-                            }
-                          />
-                          <span style={{ fontWeight: "bold", color: "#333" }}>
-                            12345
-                          </span>
-                        </div>
-
-                        {/* Convertible */}
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            padding: "8px 0",
-                          }}
-                        >
-                          <Form.Check
-                            type="checkbox"
-                            label="Convertible"
-                            onChange={() =>
-                              handleCheckboxChangeBodyType("Convertible")
-                            }
-                          />
-                          <span style={{ fontWeight: "bold", color: "#333" }}>
-                            12345
-                          </span>
-                        </div>
-                      </Form.Group>
-                    </div>
-                  </Accordion.Body>
-                </Accordion.Item>
-              </Accordion>
-
-              <p style={{ color: "#2D4495" }}>More choices</p>
-              <hr
-                style={{
-                  width: "100%",
-                  height: "0px",
-                  top: "1310.01px",
-                  left: "239.88px",
-                  gap: "0px",
-                  borderTop: "1px solid #000000",
-                  opacity: "0.5", // Adjust opacity for visibility
-                  transform: "rotate(0deg)",
-                  margin: "20px 0",
-                  borderColor: "#000000", // Set border color to black
-                }}
-              />
-
-              <Accordion className="mt-3">
-                <Accordion.Item eventKey="0">
-                  <Accordion.Header>Number of Doors</Accordion.Header>
-                  <Accordion.Body>
-                    <div style={{ maxWidth: "300px", margin: "20px" }}>
-                      <Form.Group>
-                        {/* Checkbox for 4 */}
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            padding: "8px 0",
-                          }}
-                        >
-                          <Form.Check
-                            type="checkbox"
-                            label="4"
-                            onChange={() =>
-                              handleCheckboxChangeNumberofDoors("4")
-                            }
-                          />
-                          <span style={{ fontWeight: "bold", color: "#333" }}>
-                            12345
-                          </span>
-                        </div>
-
-                        {/* Checkbox for 5 */}
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            padding: "8px 0",
-                          }}
-                        >
-                          <Form.Check
-                            type="checkbox"
-                            label="5"
-                            onChange={() =>
-                              handleCheckboxChangeNumberofDoors("5")
-                            }
-                          />
-                          <span style={{ fontWeight: "bold", color: "#333" }}>
-                            12345
-                          </span>
-                        </div>
-
-                        {/* Checkbox for 2 (defaultChecked) */}
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            padding: "8px 0",
-                          }}
-                        >
-                          <Form.Check
-                            type="checkbox"
-                            label="2"
-                            onChange={() =>
-                              handleCheckboxChangeNumberofDoors("2")
-                            }
-                          />
-                          <span style={{ fontWeight: "bold", color: "#333" }}>
-                            12345
-                          </span>
-                        </div>
-
-                        {/* Checkbox for 3 */}
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            padding: "8px 0",
-                          }}
-                        >
-                          <Form.Check
-                            type="checkbox"
-                            label="3"
-                            onChange={() =>
-                              handleCheckboxChangeNumberofDoors("3")
-                            }
-                          />
-                          <span style={{ fontWeight: "bold", color: "#333" }}>
-                            12345
-                          </span>
-                        </div>
-
-                        {/* Checkbox for 0 */}
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            padding: "8px 0",
-                          }}
-                        >
-                          <Form.Check
-                            type="checkbox"
-                            label="0"
-                            onChange={() =>
-                              handleCheckboxChangeNumberofDoors("0")
-                            }
-                          />
-                          <span style={{ fontWeight: "bold", color: "#333" }}>
-                            12345
-                          </span>
-                        </div>
-                      </Form.Group>
-                    </div>
-                  </Accordion.Body>
-                </Accordion.Item>
-              </Accordion>
-
-              <hr
-                style={{
-                  width: "100%",
-                  height: "0px",
-                  top: "1310.01px",
-                  left: "239.88px",
-                  gap: "0px",
-                  borderTop: "1px solid #000000",
-                  opacity: "0.5", // Adjust opacity for visibility
-                  transform: "rotate(0deg)",
-                  margin: "20px 0",
-                  borderColor: "#000000", // Set border color to black
-                }}
-              />
-
-              <Accordion className="mt-3">
-                <Accordion.Item eventKey="0">
-                  <Accordion.Header>Seat Capacity</Accordion.Header>
-                  <Accordion.Body>
-                    <div style={{ maxWidth: "300px", margin: "20px" }}>
-                      <Form.Group>
-                        {/* Checkbox for 4 */}
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            padding: "8px 0",
-                          }}
-                        >
-                          <Form.Check
-                            type="checkbox"
-                            label="4"
-                            onChange={() =>
-                              handleCheckboxChangeSeatCapacity("4")
-                            }
-                          />
-                          <span style={{ fontWeight: "bold", color: "#333" }}>
-                            12345
-                          </span>
-                        </div>
-
-                        {/* Checkbox for 5 */}
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            padding: "8px 0",
-                          }}
-                        >
-                          <Form.Check
-                            type="checkbox"
-                            label="5"
-                            onChange={() =>
-                              handleCheckboxChangeSeatCapacity("5")
-                            }
-                          />
-                          <span style={{ fontWeight: "bold", color: "#333" }}>
-                            12345
-                          </span>
-                        </div>
-
-                        {/* Checkbox for 2 (defaultChecked) */}
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            padding: "8px 0",
-                          }}
-                        >
-                          <Form.Check
-                            type="checkbox"
-                            label="2"
-                            onChange={() =>
-                              handleCheckboxChangeSeatCapacity("2")
-                            }
-                          />
-                          <span style={{ fontWeight: "bold", color: "#333" }}>
-                            12345
-                          </span>
-                        </div>
-
-                        {/* Checkbox for 3 */}
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            padding: "8px 0",
-                          }}
-                        >
-                          <Form.Check
-                            type="checkbox"
-                            label="3"
-                            onChange={() =>
-                              handleCheckboxChangeSeatCapacity("3")
-                            }
-                          />
-                          <span style={{ fontWeight: "bold", color: "#333" }}>
-                            12345
-                          </span>
-                        </div>
-
-                        {/* Checkbox for 0 */}
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            padding: "8px 0",
-                          }}
-                        >
-                          <Form.Check
-                            type="checkbox"
-                            label="0"
-                            onChange={() =>
-                              handleCheckboxChangeSeatCapacity("0")
-                            }
-                          />
-                          <span style={{ fontWeight: "bold", color: "#333" }}>
-                            12345
-                          </span>
-                        </div>
-                      </Form.Group>
-                    </div>
-                  </Accordion.Body>
-                </Accordion.Item>
-              </Accordion>
-              <hr
-                style={{
-                  width: "100%",
-                  height: "0px",
-                  top: "1310.01px",
-                  left: "239.88px",
-                  gap: "0px",
-                  borderTop: "1px solid #000000",
-                  opacity: "0.5", // Adjust opacity for visibility
-                  transform: "rotate(0deg)",
-                  margin: "20px 0",
-                  borderColor: "#000000", // Set border color to black
-                }}
-              />
-
-              <Accordion className="mt-3">
-                <Accordion.Item eventKey="0">
-                  <Accordion.Header>Model Category</Accordion.Header>
-                  <Accordion.Body>
-                    <div style={{ maxWidth: "300px", margin: "20px" }}>
-                      <Form.Group>
-                        {/* A-Class (Compact) */}
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            padding: "8px 0",
-                          }}
-                        >
-                          <Form.Check
-                            type="checkbox"
-                            label="A-Class (Compact)"
-                            onChange={() =>
-                              handleCheckboxChangeModelCategory(
-                                "A-Class (Compact)"
-                              )
-                            }
-                          />
-                          <span style={{ fontWeight: "bold", color: "#333" }}>
-                            12345
-                          </span>
-                        </div>
-
-                        {/* C-Class (Compact Exe) */}
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            padding: "8px 0",
-                          }}
-                        >
-                          <Form.Check
-                            type="checkbox"
-                            label="C-Class (Compact Exe)"
-                            onChange={() =>
-                              handleCheckboxChangeModelCategory(
-                                "C-Class (Compact Exe)"
-                              )
-                            }
-                          />
-                          <span style={{ fontWeight: "bold", color: "#333" }}>
-                            12345
-                          </span>
-                        </div>
-
-                        {/* E-Class (Executive) */}
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            padding: "8px 0",
-                          }}
-                        >
-                          <Form.Check
-                            type="checkbox"
-                            label="E-Class (Executive)"
-                            defaultChecked
-                            onChange={() =>
-                              handleCheckboxChangeModelCategory(
-                                "E-Class (Executive)"
-                              )
-                            }
-                          />
-                          <span style={{ fontWeight: "bold", color: "#333" }}>
-                            12345
-                          </span>
-                        </div>
-
-                        {/* S-Class */}
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            padding: "8px 0",
-                          }}
-                        >
-                          <Form.Check
-                            type="checkbox"
-                            label="S-Class"
-                            onChange={() =>
-                              handleCheckboxChangeModelCategory("S-Class")
-                            }
-                          />
-                          <span style={{ fontWeight: "bold", color: "#333" }}>
-                            12345
-                          </span>
-                        </div>
-
-                        {/* CLA (Compact Coupe) */}
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            padding: "8px 0",
-                          }}
-                        >
-                          <Form.Check
-                            type="checkbox"
-                            label="CLA (Compact Coupe)"
-                            onChange={() =>
-                              handleCheckboxChangeModelCategory(
-                                "CLA (Compact Coupe)"
-                              )
-                            }
-                          />
-                          <span style={{ fontWeight: "bold", color: "#333" }}>
-                            12345
-                          </span>
-                        </div>
-                        {/* CLA (Compact Coupe) */}
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            padding: "8px 0",
-                          }}
-                        >
-                          <Form.Check
-                            type="checkbox"
-                            label="B-Class"
-                            onChange={() =>
-                              handleCheckboxChangeModelCategory("B-Class")
-                            }
-                          />
-                          <span style={{ fontWeight: "bold", color: "#333" }}>
-                            12345
-                          </span>
-                        </div>
-                      </Form.Group>
-                    </div>
-                  </Accordion.Body>
-                </Accordion.Item>
-              </Accordion>
-              <p style={{ color: "#2D4495" }}>More choices</p>
-              <hr
-                style={{
-                  width: "100%",
-                  height: "0px",
-                  top: "1310.01px",
-                  left: "239.88px",
-                  gap: "0px",
-                  borderTop: "1px solid #000000",
-                  opacity: "0.5", // Adjust opacity for visibility
-                  transform: "rotate(0deg)",
-                  margin: "20px 0",
-                  borderColor: "#000000", // Set border color to black
-                }}
-              />
 
               <Accordion className="mt-3">
                 <Accordion.Item eventKey="0">
@@ -2386,8 +2044,14 @@ const Bikes = () => {
                 <Col>
                   <Form.Check type="checkbox" label="With Price" />
                 </Col>
-                <Col className="text-end">
-                  <Form.Select>
+                <Col xs={12} sm={6} md={4} className="text-end">
+                  <Form.Select
+                    aria-label="Sort options"
+                    onChange={(e) => {
+                      console.log(e.target.value);
+                      setSortBy(e.target.value);
+                    }}
+                  >
                     <option>Sort by: Most Relevant</option>
                     <option>Price: Low to High</option>
                     <option>Price: High to Low</option>
@@ -2405,24 +2069,75 @@ const Bikes = () => {
                     </Spinner>
                   </div>
                 ) : filteredCars.length > 0 ? (
-                  filteredCars.map((car, index) => (
+                  getPaginatedCars().map((car, index) => (
                     <Card key={index} className="mt-3">
                       <Row className="g-0">
-                        <Col md={4}>
+                        <Col md={4} style={{ position: "relative" }}>
+                          {/* Featured Label */}
+                          <div
+                            style={{
+                              position: "absolute",
+                              top: "10px",
+                              left: "10px",
+                              backgroundColor: "#36A680",
+                              color: "white",
+                              padding: "5px 10px",
+                              fontWeight: "bold",
+                              borderRadius: "5px",
+                              zIndex: 2, // Ensure it's above the image
+                            }}
+                          >
+                            Featured
+                          </div>
+
+                          {/* Heart Icon */}
+                          <div
+                            style={{
+                              position: "absolute",
+                              top: "11%",
+                              left: "90%", // Centering horizontally
+                              transform: "translate(-50%, -50%)", // Adjust to keep it centered
+                              borderRadius: "50%",
+                              padding: "10px",
+                              zIndex: 3, // Higher z-index to stay above everything
+                            }}
+                          >
+                            <i
+                              className="fas fa-heart"
+                              style={{ color: "white", fontSize: "30px" }}
+                            ></i>
+                          </div>
+
+                          {/* Image */}
                           <Card.Img
                             src={car.img || "https://via.placeholder.com/150"}
                             alt={car.title || "Car"}
                             style={{
-                              width: "284.3px",
+                              width: "100%", // Make the image responsive
                               height: "250px",
+                              borderTopLeftRadius: "20px",
+                              borderBottomLeftRadius: "20px",
                             }}
                           />
                         </Col>
+
                         <Col md={8}>
                           <Card.Body>
-                            <Card.Title>{car.title || "Car"}</Card.Title>
+                            <Card.Title style={{ color: "#2D4495" }}>
+                              {car.title || "Car"}
+                            </Card.Title>
                             <Card.Text>
-                              <small className="text-muted">
+                              <small
+                                className="text-muted"
+                                style={{ color: "black" }}
+                              >
+                                <i
+                                  className="fas fa-map-marker-alt"
+                                  style={{
+                                    marginRight: "5px",
+                                    color: "#6c757d",
+                                  }}
+                                ></i>
                                 {car.City || "Location"}
                               </small>
                               <br />
@@ -2435,26 +2150,281 @@ const Bikes = () => {
                               <br />
                               {car.description || "Description not available."}
                             </Card.Text>
-                            <Row>
-                              <Col>
-                                <Button variant="primary" className="w-100">
-                                  Call
-                                </Button>
-                              </Col>
-                              <Col>
-                                <Button
-                                  variant="outline-primary"
-                                  className="w-100"
+
+                            <Col
+                              className="align-items-center"
+                              style={{ position: "relative" }}
+                            >
+                              {/* Price displayed above the image */}
+                              <p
+                                style={{
+                                  position: "absolute",
+                                  top: "-140px", // Adjust the top margin to place the price higher
+                                  left: "550px",
+                                  fontWeight: "bold",
+                                  fontSize: "20px",
+                                  zIndex: 2, // Ensure the price text stays above the image
+                                  color: "#2D4495",
+                                }}
+                              >
+                                {car.price
+                                  ? `$${car.price}`
+                                  : "Price not available"}
+                              </p>
+
+                              {/* Small Image on the Right with Top Margin */}
+                              <Card.Img
+                                src={
+                                  car.img || "https://via.placeholder.com/150"
+                                }
+                                alt={car.title || "Car"}
+                                className="d-none d-sm-block" // Hide on small screens and show on sm and above
+                                style={{
+                                  position: "absolute", // Position image absolutely within the container
+                                  top: "-84px", // Adjust to ensure the image is placed after the price
+                                  right: "10px", // Adjust right margin
+                                  width: "160px", // Adjust size as needed
+                                  height: "80px",
+                                  objectFit: "cover",
+                                  borderRadius: "6px",
+                                }}
+                              />
+
+                              {/* Updated text at the bottom-right corner */}
+                              <p
+                                style={{
+                                  position: "absolute",
+                                  right: "5px",
+                                  // fontSize: '12px',
+                                  color: "black",
+                                  marginTop: "54px",
+                                }}
+                              >
+                                Updated about 1 hour ago
+                              </p>
+
+                              {/* Responsive layout for small screens */}
+                              <div
+                                className="d-block d-sm-none"
+                                style={{
+                                  position: "relative",
+                                  marginTop: "10px",
+                                }}
+                              >
+                                {/* Price for small screens */}
+                                <p
+                                  style={{
+                                    fontWeight: "bold",
+                                    fontSize: "16px",
+                                    marginBottom: "5px",
+                                  }}
                                 >
-                                  Message
-                                </Button>
-                              </Col>
-                              <Col>
-                                <Button variant="success" className="w-100">
-                                  WhatsApp
-                                </Button>
-                              </Col>
-                            </Row>
+                                  {car.price
+                                    ? `$${car.price}`
+                                    : "Price not available"}
+                                </p>
+
+                                {/* Small Image for small screens */}
+                                <Card.Img
+                                  src={
+                                    car.img || "https://via.placeholder.com/150"
+                                  }
+                                  alt={car.title || "Car"}
+                                  style={{
+                                    width: "120px", // Adjust size for small screens
+                                    height: "60px",
+                                    objectFit: "cover",
+                                    borderRadius: "6px",
+                                  }}
+                                />
+                              </div>
+                            </Col>
+
+                            {/* Responsive Grid for Small Screens */}
+                            <div>
+  <Row className="gx-2 gy-2 mt-4 mt-sm-5 text-center" style={{ margin: 0 }}>
+    {/* Call Button */}
+    <Col
+      xs={6}
+      sm={3}
+      lg={2}
+      className="p-0 d-flex align-items-center justify-content-center"
+    >
+      <button
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "5px",
+          padding: "12px 20px",
+          border: "none",
+          borderRadius: "20px",
+          backgroundColor: "#2d4fad",
+          color: "white",
+          fontSize: "13px",
+          cursor: "pointer",
+          width: "100%",
+          maxWidth: "150px",
+          margin: "5px",
+        }}
+      >
+        <i className="fas fa-phone"></i> Call
+      </button>
+    </Col>
+
+    {/* Message Button */}
+    <Col
+      xs={6}
+      sm={3}
+      lg={2}
+      className="p-0 d-flex align-items-center justify-content-center"
+    >
+      <button
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "5px",
+          padding: "12px 12px",
+          border: "1px solid #2d4fad",
+          borderRadius: "20px",
+          backgroundColor: "white",
+          color: "#2d4fad",
+          fontSize: "13px",
+          cursor: "pointer",
+          width: "100%",
+          maxWidth: "150px",
+          margin: "5px",
+        }}
+      >
+        <i className="fas fa-comment"></i> Message
+      </button>
+    </Col>
+
+    {/* WhatsApp Button */}
+    <Col
+      xs={6}
+      sm={3}
+      lg={2}
+      className="p-0 d-flex align-items-center justify-content-center"
+    >
+      <button
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "5px",
+          padding: "12px 10px",
+          border: "1px solid #2d4fad",
+          borderRadius: "20px",
+          backgroundColor: "white",
+          color: "#2d4fad",
+          fontSize: "13px",
+          cursor: "pointer",
+          width: "100%",
+          maxWidth: "150px",
+          margin: "5px",
+        }}
+      >
+        <i
+          className="fab fa-whatsapp"
+          style={{ color: "#2D4495" }}
+        ></i>{" "}
+        WhatsApp
+      </button>
+    </Col>
+
+    {/* Favorite Button */}
+    <Col
+      xs={6}
+      sm={3}
+      lg={2}
+      className="p-0 d-flex align-items-center justify-content-center position-relative"
+    >
+      <button
+        style={{
+          border: "1px solid #2D4495",
+          backgroundColor: "white",
+          borderRadius: "5px",
+          cursor: "pointer",
+          color: "#2D4495",
+          width: "fit-content",
+          height: "fit-content",
+          padding: "8px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          margin: "5px",
+          marginRight: "60px",
+        }}
+      >
+        <i
+          className="far fa-heart"
+          style={{
+            color: "#2D4495",
+            fontSize: "20px",
+          }}
+        ></i>
+      </button>
+    </Col>
+  </Row>
+</div>
+
+{/* Media Queries for Responsiveness */}
+<style jsx>{`
+  @media (max-width: 1024px) {
+    .text-center {
+      text-align: center;
+    }
+
+    .row {
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    .gx-2 {
+      gap: 15px;
+    }
+
+    .gy-2 {
+      gap: 10px;
+    }
+
+    .p-0 {
+      padding: 0;
+    }
+
+    .btn {
+      width: 100%;
+      max-width: 130px;
+      font-size: 12px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .btn {
+      font-size: 11px;
+      padding: 10px;
+    }
+
+    .col {
+      padding: 10px 0;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .col {
+      padding: 5px;
+    }
+
+    .btn {
+      font-size: 10px;
+      padding: 8px;
+      max-width: 120px;
+    }
+  }
+`}</style>
+
                           </Card.Body>
                         </Col>
                       </Row>
@@ -2464,10 +2434,142 @@ const Bikes = () => {
                   <p>No cars found for the selected criteria.</p>
                 )}
               </div>
+              <div className="d-flex align-items-center justify-content-center my-4">
+                <Button
+                  variant="outline-primary"
+                  className="d-flex align-items-center mx-2"
+                  disabled={activePage === 1}
+                  onClick={() => handlePageClick(activePage - 1)}
+                >
+                  <FaArrowLeft className="me-1" /> Previous
+                </Button>
+
+                <ButtonGroup>{renderPageNumbers()}</ButtonGroup>
+
+                <Button
+                  variant="outline-primary"
+                  className="d-flex align-items-center mx-2"
+                  disabled={activePage === totalPages}
+                  onClick={() => handlePageClick(activePage + 1)}
+                >
+                  Next <FaArrowRight className="ms-1" />
+                </Button>
+                <Container/>
+              </div>
             </Col>
           </Row>
         </Container>
+        <Container class="container-parent"   style={{
+    color: 'black',
+    maxWidth: '100%',  // Ensure content fits screen width
+    margin: '0 auto',
+    backgroundColor: '#E9EEFF',
+    height: 'auto',  // Allow height to adjust dynamically
+    paddingLeft: '13%',  // Adjusted padding for responsiveness
+    paddingRight: '13%',
+    paddingTop: '20px',
+    paddingBottom: '30px',
+  }}>
+        <div
+                className="cars data"
+                style={{ paddingLeft: "20px", paddingRight: "20px" }}
+              >
+                <h2>Bikes for Sale in Newyork</h2>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur. Lacus lacus est
+                  praesent gravida quam urna arcu integer. Semper vitae velit
+                  sed quisque felis sed in. Quis vulputate euismod consequat
+                  feugiat vulputate fames. Vitae arcu eu et non tristique diam
+                  viverra purus vel. Tortor amet tristique proin turpis massa
+                  potenti. Quisque nullam velit sem semper ultrices odio.
+                  Egestas feugiat nec id aenean.
+                </p>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur. Lacus lacus est
+                  praesent gravida quam urna arcu integer. Semper vitae velit
+                  sed quisque felis sed in. Quis vulputate euismod consequat
+                  feugiat vulputate fames. Vitae arcu eu et non tristique diam
+                  viverra purus vel. Tortor amet tristique proin turpis massa
+                  potenti. Quisque nullam velit sem semper ultrices odio.
+                  Egestas feugiat nec id aenean.
+                </p>
+                <h2>Used bikes for Sale in Newyork</h2>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur. Lacus lacus est
+                  praesent gravida quam urna arcu integer. Semper vitae velit
+                  sed quisque felis sed in. Quis vulputate euismod consequat
+                  feugiat vulputate fames. Vitae arcu eu et non tristique diam
+                  viverra purus vel. Tortor amet tristique proin turpis massa
+                  potenti. Quisque nullam velit sem semper ultrices odio.
+                  Egestas feugiat nec id aenean.
+                </p>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur. Lacus lacus est
+                  praesent gravida quam urna arcu integer. Semper vitae velit
+                  sed quisque felis sed in. Quis vulputate euismod consequat
+                  feugiat vulputate fames. Vitae arcu eu et non tristique diam
+                  viverra purus vel. Tortor amet tristique proin turpis massa
+                  potenti. Quisque nullam velit sem semper ultrices odio.
+                  Egestas feugiat nec id aenean.
+                </p>
+                <h2>Browse More Used Bikes</h2>
+                <p style={{ color: "#2d4fad" }}>View Bikes by Cities</p>
+                <Row className="responsive-row" style={{ color: "#2d4fad", margin: '0 auto' }}>
+                  <Col sm={3}>
+                    <div>Newyork(123456)</div>
+                    <div>Newyork(123456)</div>
+                    <div>Newyork(123456)</div>
+                    <div>Newyork(123456)</div>
+                  </Col>
+                  <Col sm={3}>
+                    <div>Newyork(123456)</div>
+                    <div>Newyork(123456)</div>
+                    <div>Newyork(123456)</div>
+                    <div>Newyork(123456)</div>
+                  </Col>
+                  <Col sm={3}>
+                    <div>Newyork(123456)</div>
+                    <div>Newyork(123456)</div>
+                    <div>Newyork(123456)</div>
+                    <div>Newyork(123456)</div>
+                  </Col>
+                  <Col sm={3}>
+                    <div>Newyork(123456)</div>
+                    <div>Newyork(123456)</div>
+                    <div>Newyork(123456)</div>
+                    <div>Newyork(123456)</div>
+                  </Col>
+                </Row>
+              </div>
+              </Container>
+              {/* Media Queries for Responsiveness */}
+<style jsx>{`
+  @media (max-width: 768px) {
+    .container-parent {
+      padding-left: 5%;  // Reduce padding on smaller screens
+      padding-right: 5%;
+    }
+    .responsive-row {
+      margin: 0 10px;
+    }
+  }
+  @media (max-width: 480px) {
+    .container-parent {
+      padding-left: 0%;  // No left padding on very small screens
+      padding-right: 0%; // No right padding on very small screens
+    }
+    .responsive-row {
+      margin: 0;
+    }
+    h2 {
+      font-size: 1.2rem; // Smaller font size for headings on mobile
+    }
+  }
+`}</style>
+        <ComercialsAds />
+        <LatestBlog />
       </div>
+
       <Footer />
     </>
   );

@@ -110,28 +110,31 @@ const Header = ({ parms }) => {
 
                 {/* side bar  */}
                 <li>
-                  <Link to={() => navigate(-1)}>Automative</Link>
+                  <Link to={"/AutomotiveComp"}>Automative</Link>
                 </li>
                 <li>
-                  <Link to={() => navigate(-1)}>Electronic</Link>
+                  <Link to="/ElectronicComp">Electronic</Link>
                 </li>
                 <li>
-                  <Link to={() => navigate(-1)}>Fashion Style</Link>
+                  <Link to={"/FashionStyle"}>Fashion Style</Link>
                 </li>
                 <li>
-                  <Link to={() => navigate(-1)}>Health Care</Link>
+                  <Link to="/HealthCareComp">Health Care</Link>
                 </li>
                 <li>
-                  <Link to={() => navigate(-1)}>Job Board</Link>
+                  <Link to="/JobBoard">Job Board</Link>
                 </li>
                 <li>
-                  <Link to={() => navigate(-1)}>Real Esate</Link>
+                  <Link to="/RealEstateComp">Real Esate</Link>
                 </li>
                 <li>
-                  <Link to={() => navigate(-1)}>Travel</Link>
+                  <Link to="/TravelComp">Travel</Link>
                 </li>
                 <li>
-                  <Link to={() => navigate(-1)}>Sport & Games</Link>
+                  <Link to="/SportGamesComp">Sport & Games</Link>
+                </li>
+                <li>
+                  <Link to="/PetAnimalsComp">Pet & AnimalsComp</Link>
                 </li>
               </ul>
             </div>

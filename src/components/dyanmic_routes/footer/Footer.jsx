@@ -154,7 +154,7 @@ const Footer = () => {
                   <div className="footer-content">
                     <p>
                       Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                      sed do eiusmod tempor incididunt et magna aliqua.{" "}
+                      sed do eiusmod tempor et magna aliqua.{" "}
                     </p>
                     <h3>Donwload Our App</h3>
                     <div

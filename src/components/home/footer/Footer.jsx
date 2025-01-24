@@ -134,7 +134,7 @@ const Footer = () => {
                     </p>
                   </div>
                   <div className="footer-content">
-                    <h3>Donwload Our App</h3>
+                    <h3>Download Our App</h3>
                     <div className="socialicons ">
                       <i className="footer_socialsIcons">
                         <img src={googlebutton} />
@@ -147,32 +147,34 @@ const Footer = () => {
                   </div>
                 </div>
               </div>
+
               <div className="col-lg-2 col-md-6  footer_ul">
                 <div className="footer-widget footer-menu">
                   <h2 className="footer-title">Categories</h2>
                   <ul>
                     <li>
-                      <Link to="/index">Our product</Link>
+                      <Link to="#">Automative</Link>
                     </li>
                     <li>
-                      <Link to="#"> </Link>
+                      <Link to="#">Electronics</Link>
                     </li>
                     <li>
-                      <Link to="/index">Electronic</Link>
+                      <Link to="#">Our Services</Link>
                     </li>
                     <li>
-                      <Link to="#">Animal</Link>
+                      <Link to="#">Animals</Link>
                     </li>
                     <li>
-                      <Link to="/index">Gift</Link>
+                      <Link to="#">Gifts</Link>
                     </li>
                   </ul>
                 </div>
               </div>
+
               <div className="col-lg-2 col-md-6  footer_ul">
                 <div className="footer-widget footer-menu">
-                  {/* <h2 className="footer-title">Quick links</h2> */}
-                  <ul className="col_2">
+                  <h2 className="footer-title">&nbsp;</h2>
+                  <ul>
                     <li>
                       <Link to="#">Property</Link>
                     </li>
@@ -186,29 +188,7 @@ const Footer = () => {
                       <Link to="#">Family</Link>
                     </li>
                     <li>
-                      <Link to="/index">Furniture</Link>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div className="col-lg-2 col-md-6  footer_ul">
-                <div className="footer-widget footer-menu">
-                  <h2 className="footer-title">My Account</h2>
-                  <ul>
-                    <li>
-                      <Link to="#">Account Infromation</Link>
-                    </li>
-                    <li>
-                      <Link to="#">My Listing</Link>
-                    </li>
-                    <li>
-                      <Link to="#">My Favourtite</Link>
-                    </li>
-                    <li>
-                      <Link to="#">My Payment</Link>
-                    </li>
-                    <li>
-                      <Link to="#">Followers</Link>
+                      <Link to="#">Furniture</Link>
                     </li>
                   </ul>
                 </div>
@@ -216,7 +196,29 @@ const Footer = () => {
 
               <div className="col-lg-2 col-md-6   footer_ul">
                 <div className="footer-widget footer-menu">
-                  <h2 className="footer-title">My Information</h2>
+                  <h2 className="footer-title">My Account</h2>
+                  <ul>
+                    <li>
+                      <Link to="#">Account Information</Link>
+                    </li>
+                    <li>
+                      <Link to="#">My listings</Link>
+                    </li>
+                    <li>
+                      <Link to="#">My Favorites</Link>
+                    </li>
+                    <li>
+                      <Link to="#">My Payments</Link>
+                    </li>
+                    <li>
+                      <Link to="#">Followers</Link>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div className="col-lg-2 col-md-6   footer_ul">
+                <div className="footer-widget footer-menu">
+                  <h2 className="footer-title">Information</h2>
                   <ul>
                     <li>
                       <Link to="#">About Us</Link>
@@ -231,7 +233,7 @@ const Footer = () => {
                       <Link to="#">Blog</Link>
                     </li>
                     <li>
-                      <Link to="#">Copy Rights</Link>
+                      <Link to="#">&nbsp;</Link>
                     </li>
                   </ul>
                 </div>

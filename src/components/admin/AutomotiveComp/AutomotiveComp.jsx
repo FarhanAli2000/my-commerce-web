@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom"; // Import Link from react-router-dom
 import Header from "../../home/header"; // Ensure Header is correctly implemented and imported
 import Footer from "../../home/footer/Footer";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { MdKeyboardArrowRight } from "react-icons/md";
+import { FaArrowRightLong } from "react-icons/fa6";
 import automative from "../../home/automative.png";
 import electronic from "../../home/electronic.png";
 import fashion from "../../home/fashion.png";
@@ -17,7 +20,7 @@ import iron from "../../home/iron.png";
 import image1 from "../../../assets/img/banner/bannerimage1.png";
 import image3 from "../../../assets/img/banner/bannerimage3.png";
 import image4 from "../../../assets/img/banner/bannerimage4.png";
-import LatestBlog from "../../blog/BlogList/LatestBlog/LatestBlog.jsx";
+// import LatestBlog from "../../blog/BlogList/LatestBlog/LatestBlog.jsx";
 import image2 from "../../../assets/img/banner/bannerimage2.png";
 import xIcon from "../../home/x.png";
 import insta from "../../home/insta.png";
@@ -31,6 +34,7 @@ import ElectronicCarousel from "../..//home/slider/ElectronicCarousel.jsx";
 import HealthCareCarousel from "../..//home/slider/HealthCareCarousel.jsx";
 import SportandgameCarouseCarousel from "../..//home/slider/SportandgameCarouseCarousel.jsx";
 import ComercialsAds from "../../home/ComercialsAds/ComercialsAds.jsx";
+import LatestBlog from "../../blog/BlogList/LatestBlog/LatestBlog.jsx";
 import popup from "../../home/popup_image.png";
 import { Accordion } from "react-bootstrap";
 import { IoLocationSharp } from "react-icons/io5";
@@ -45,6 +49,7 @@ import {
   Form,
   Card,
   Button,
+  ButtonGroup,
   Badge,
 } from "react-bootstrap";
 import Spinner from "react-bootstrap/Spinner";
@@ -59,11 +64,13 @@ const AutomotiveComp = () => {
   // Handle city selection
   const [carsData, setCars] = useState([]); // All cars data
   const [filteredCars, setFilteredCars] = useState([]); // Filtered cars based on search & city
-  const [searchQuery, setSearchQuery] = useState(""); // Search query for title and city
+  const [searchQuery, setSearchQuery] = useState("");
+  const [SortBy, setSortBy] = useState(""); // Search query for title and city
+  // Search query for title and city
   const [selectedCities, setSelectedCities] = useState([]); // Selected cities for filtering
   const [selectedEmirates, setSelectedEmirates] = useState([]); // Selected Emirates for filtering
   const [selectedCarsMake, setSelectedCarsMake] = useState([]);
-  console.log(selectedCarsMake, "selectedCarsMake______");
+  console.log(SortBy, "selectedCarsMake______");
   const [fromValue, setFromValue] = useState("");
   const [toValue, setToValue] = useState("");
   const [fromDate, setFromDate] = useState("");
@@ -98,6 +105,47 @@ const AutomotiveComp = () => {
     useState("");
   const [selectedOptionisFeatured, setSelectedOptionisFeatured] = useState("");
 
+  const [activePage, setActivePage] = useState(1);
+  console.log(activePage, "activePage_________");
+  const handlePageClick = (page) => {
+    setActivePage(page);
+  };
+  const carsPerPage = 3;
+  const totalPages = Math.ceil(filteredCars.length / carsPerPage);
+
+  const renderPageNumbers = () => {
+    const pages = [];
+    for (let i = 1; i <= totalPages; i++) {
+      if (
+        i === 1 ||
+        i === totalPages ||
+        (i >= activePage - 1 && i <= activePage + 1)
+      ) {
+        pages.push(
+          <Button
+            key={i}
+            variant={i === activePage ? "primary" : "outline-primary"}
+            className="mx-1"
+            onClick={() => handlePageClick(i)}
+          >
+            {i}
+          </Button>
+        );
+      } else if (i === activePage - 2 || i === activePage + 2) {
+        pages.push(
+          <span key={`ellipsis-${i}`} className="mx-1">
+            ...
+          </span>
+        );
+      }
+    }
+    return pages;
+  };
+  const getPaginatedCars = () => {
+    const startIndex = (activePage - 1) * carsPerPage;
+    const endIndex = startIndex + carsPerPage;
+    return filteredCars.slice(startIndex, endIndex);
+  };
   const handleCheckboxChangeisFeatured = (event) => {
     const isChecked = event.target.checked;
     const value = isChecked ? "Featured Ad" : "Not Featured Ad";
@@ -388,7 +436,8 @@ const AutomotiveComp = () => {
       selectedCheckboxSellerType,
       pictureAvailability,
       selectedOptionVideoAvailability,
-      selectedOptionisFeatured
+      selectedOptionisFeatured,
+      SortBy
     );
   }, [
     selectedCities,
@@ -415,6 +464,7 @@ const AutomotiveComp = () => {
     pictureAvailability,
     selectedOptionVideoAvailability,
     selectedOptionisFeatured,
+    SortBy,
   ]);
 
   // Handle search input change
@@ -447,7 +497,8 @@ const AutomotiveComp = () => {
       selectedCheckboxSellerType,
       pictureAvailability,
       selectedOptionVideoAvailability,
-      selectedOptionisFeatured
+      selectedOptionisFeatured,
+      SortBy
     );
   };
   const filterCars = (
@@ -474,33 +525,34 @@ const AutomotiveComp = () => {
     selectedCheckboxSellerType,
     pictureAvailability,
     selectedOptionVideoAvailability,
-    selectedOptionisFeatured
+    selectedOptionisFeatured,
+    SortBy
   ) => {
     let filtered = carsData;
 
     // Filter by search query
     if (query.trim() !== "") {
-      const lowercasedQuery = query.toLowerCase();
+      const lowercasedQuery = query?.toLowerCase();
       filtered = filtered.filter(
         (car) =>
-          car.title.toLowerCase().includes(lowercasedQuery) ||
-          car.City.toLowerCase().includes(lowercasedQuery) ||
-          car.Emirates.toLowerCase().includes(lowercasedQuery) ||
-          car.Make.toLowerCase().includes(lowercasedQuery) ||
-          car.Registeredin.toLowerCase().includes(lowercasedQuery) ||
-          car.Color.toLowerCase().includes(lowercasedQuery) ||
-          car.Transmission.toLowerCase().includes(lowercasedQuery) ||
-          car.EngineType.toLowerCase().includes(lowercasedQuery) ||
-          car.Assembly.toLowerCase().includes(lowercasedQuery) ||
-          car.BodyType.toLowerCase().includes(lowercasedQuery) ||
-          car.NumberOfDoors.toLowerCase().includes(lowercasedQuery) ||
-          car.SeatingCapacity.toLowerCase().includes(lowercasedQuery) ||
-          car.ModalCategory.toLowerCase().includes(lowercasedQuery) ||
-          car.SellerType.toLowerCase().includes(lowercasedQuery) ||
-          car.PictureAvailability.toLowerCase().includes(lowercasedQuery) ||
-          car.VideoAvailability.toLowerCase().includes(lowercasedQuery) ||
-          car.AdType.toLowerCase().includes(lowercasedQuery) ||
-          car.TrustedCars.toLowerCase().includes(lowercasedQuery)
+          car.title?.toLowerCase().includes(lowercasedQuery) ||
+          car.City?.toLowerCase().includes(lowercasedQuery) ||
+          car.Emirates?.toLowerCase().includes(lowercasedQuery) ||
+          car.Make?.toLowerCase().includes(lowercasedQuery) ||
+          car.Registeredin?.toLowerCase().includes(lowercasedQuery) ||
+          car.Color?.toLowerCase().includes(lowercasedQuery) ||
+          car.Transmission?.toLowerCase().includes(lowercasedQuery) ||
+          car.EngineType?.toLowerCase().includes(lowercasedQuery) ||
+          car.Assembly?.toLowerCase().includes(lowercasedQuery) ||
+          car.BodyType?.toLowerCase().includes(lowercasedQuery) ||
+          car.NumberOfDoors?.toLowerCase().includes(lowercasedQuery) ||
+          car.SeatingCapacity?.toLowerCase().includes(lowercasedQuery) ||
+          car.ModalCategory?.toLowerCase().includes(lowercasedQuery) ||
+          car.SellerType?.toLowerCase().includes(lowercasedQuery) ||
+          car.PictureAvailability?.toLowerCase().includes(lowercasedQuery) ||
+          car.VideoAvailability?.toLowerCase().includes(lowercasedQuery) ||
+          car.AdType?.toLowerCase().includes(lowercasedQuery) ||
+          car.TrustedCars?.toLowerCase().includes(lowercasedQuery)
       );
     }
     setLoading(false);
@@ -596,6 +648,27 @@ const AutomotiveComp = () => {
 
         // Ensure that car's price is between minPrice and maxPrice
         return carPrice >= minPrice && carPrice <= maxPrice;
+      });
+    }
+    if (SortBy === "Price: Low to High") {
+      filtered.sort((a, b) => {
+        const priceA = parseFloat(a.price) || 0;
+        const priceB = parseFloat(b.price) || 0;
+        return priceB - priceA; // Ascending order (low to high)
+      });
+    }
+    if (SortBy === "Price: High to Low") {
+      filtered.sort((a, b) => {
+        const priceA = parseFloat(a.price) || 0;
+        const priceB = parseFloat(b.price) || 0;
+        return priceA - priceB; // Ascending order (low to high)
+      });
+    }
+    if (SortBy === "Sort by: Most Relevant") {
+      filtered.sort((a, b) => {
+        const dateA = new Date(a.timeAgo);
+        const dateB = new Date(b.timeAgo);
+        return dateB.getTime() - dateA.getTime(); // Descending order (latest first)
       });
     }
     if (fromCC || toCC) {
@@ -721,19 +794,10 @@ const AutomotiveComp = () => {
           {/* Banner Section */}
 
           {/* Trending Products */}
-          <div className="trendingprodct_wrapper container">
+          {/* <div className="trendingprodct_wrapper container">
             <h3 className="trendingproduct_heading"> Our Trending Product</h3>
             <div className="trendingproducts_container">
               <button className="trendingProductsallname">Iphone 16</button>
-              <button
-                className="trendingProductsallname"
-                onClick={() => {
-                  navigate("/Bikes");
-                }}
-              >
-                Bikes
-              </button>
-
               <button className="trendingProductsallname">Cricket Kit</button>
               <button className="trendingProductsallname">Bags</button>
               <button className="trendingProductsallname">Apparel</button>
@@ -742,11 +806,12 @@ const AutomotiveComp = () => {
               <button className="trendingProductsallname">Magazines</button>
               <button className="trendingProductsallname">Mens Hoodies</button>
             </div>
-          </div>
+            
+          </div> */}
           {/* Trending Products */}
 
           {/* Category Section */}
-          <section className="category-section">
+          <section className="category-section" style={{ padding: "0px" }}>
             <div className="container">
               <div className="allMedia_Icons">
                 <div>
@@ -782,16 +847,249 @@ const AutomotiveComp = () => {
           {/* Footer */}
         </div>
 
-        <Container fluid>
+<Container className="parent-main" 
+ style={{
+  paddingLeft: "2px", // Padding on the left side
+  paddingRight: "2px", // Padding on the right side
+  color: 'black', // Text color
+  maxWidth: '1530px', // Optional: Add max-width to ensure padding is visible
+  margin: '0 auto', // Optional: Center the container if desired
+ 
+ 
+}}>
+        <div
+          className="adsCategory_head"
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "10px",
+            marginLeft: "4%",
+            marginTop: "40px",
+            alignItems: "center",
+          }}
+        >
+          <button
+            className="btn"
+            style={{
+              background: "#E9EEFF",
+              fontWeight: "500",
+             pointerEvents: "none",
+              padding: "10px 15px",
+            }}
+          >
+            Home
+          </button>
+          <span>
+          <MdKeyboardArrowRight />
+          </span>
+
+          <button
+            className="btn"
+            style={{
+              background: "#E9EEFF",
+              fontWeight: "500",
+             pointerEvents: "none",
+              padding: "10px 15px",
+            }}
+          >
+            Automotive
+          </button>
+          <span>
+          <MdKeyboardArrowRight />
+          </span>
+
+          <button
+            className="btn"
+            style={{
+              background: "#E9EEFF",
+              fontWeight: "500",
+            pointerEvents: "none",
+              padding: "10px 15px",
+            }}
+          >
+            All Cities
+          </button>
+          <span>
+          <MdKeyboardArrowRight />
+          </span>
+
+          <button
+            className="btn"
+            style={{
+              background: "#E9EEFF",
+              fontWeight: "500",
+            pointerEvents: "none",
+              padding: "10px 15px",
+            }}
+          >
+            Used Car for Sale
+          </button>
+          <span>
+          <MdKeyboardArrowRight />
+          </span>
+
+          <button
+            className="btn"
+            style={{
+              background: "#E9EEFF",
+              fontWeight: "500",
+             pointerEvents: "none",
+              padding: "10px 15px",
+            }}
+          >
+            Mercedez Benz
+          </button>
+        
+          
+        </div>
+
+        <div>
+          <h1 style={{ marginLeft: "4%", marginTop: "20px", fontSize: "24px" }}>
+            Used Cars for Sale
+          </h1>
+        </div>
+
+        <div
+          className="CategoryInfodiv_btn2container"
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "10px",
+            marginLeft: "4%",
+            marginBottom: "40px",
+            marginTop: "20px",
+          }}
+        >
+          <button
+            className="head2btn"
+            style={{
+              backgroundColor: "white",
+              border: "1px solid #2D4495",
+              padding: "10px 15px",
+              textAlign: "center",
+            }}
+          >
+            Cars
+          </button>
+          <button
+            className="head2btn"
+            style={{
+              backgroundColor: "white",
+              border: "1px solid #2D4495",
+              padding: "10px 15px",
+              textAlign: "center",
+            }}
+          >
+            Jobs
+          </button>
+          <button
+            className="head2btn"
+            style={{
+              backgroundColor: "white",
+              border: "1px solid #2D4495",
+              padding: "10px 15px",
+              textAlign: "center",
+            }}
+          >
+            Real Estate for Rent
+          </button>
+          <button
+            className="head2btn"
+            style={{
+              backgroundColor: "white",
+              border: "1px solid #2D4495",
+              padding: "10px 15px",
+              textAlign: "center",
+            }}
+          >
+            Home & Garden
+          </button>
+          <button
+            className="head2btn"
+            style={{
+              backgroundColor: "white",
+              border: "1px solid #2D4495",
+              padding: "10px 15px",
+              textAlign: "center",
+            }}
+          >
+            Electronics
+          </button>
+          <button
+            className="head2btn"
+            style={{
+              backgroundColor: "white",
+              border: "1px solid #2D4495",
+              padding: "10px 15px",
+              textAlign: "center",
+            }}
+          >
+            Electronics
+          </button>
+          <button
+            className="head2btn"
+            style={{
+              backgroundColor: "white",
+              border: "1px solid #2D4495",
+              padding: "10px 15px",
+              textAlign: "center",
+            }}
+          >
+            Electronics
+          </button>
+          <button
+            className="head2btn"
+            style={{
+              backgroundColor: "white",
+              border: "1px solid #2D4495",
+              padding: "10px 15px",
+              textAlign: "center",
+            }}
+          >
+            Electronics
+          </button>
+          <button
+            className="head2btn"
+            style={{
+              backgroundColor: "white",
+              border: "1px solid #2D4495",
+              padding: "10px 15px",
+              textAlign: "center",
+            }}
+          >
+            Electronics
+          </button>
+        </div>
+       </Container>
+        <Container fluid   style={{
+    paddingLeft: "1px", // Padding on the left side
+    paddingRight: "1px", // Padding on the right side
+    color: 'black', // Text color
+    maxWidth: '1420px', // Optional: Add max-width to ensure padding is visible
+    margin: '0 auto', // Optional: Center the container if desired
+  }}>
           <Row>
             {/* Sidebar */}
-            <Col md={3} className="bg-light p-3">
-              <h5 style={headingStyle}>Show Results by:</h5>
+            <Col md={3} className="bg-light p-3 style={{ height: '200px' }}">
+              <h5
+                style={{
+                  borderTopLeftRadius: "5px",
+                  borderTopRightRadius: "5px",
+                  backgroundColor: "#2D4495",
+                  color: "white",
+                  width: "auto",
+                  height: "49.66px",
+                  paddingLeft: "6px",
+                  paddingTop: "6px",
+                }}
+              >
+                Show Results by:
+              </h5>
 
               <Form>
                 <Row className="my-3">
                   <Col>
-                    <Form.Label style={{ fontWeight: "bold" }}>
+                  <Form.Label style={{ fontWeight: "bold",color:'black',paddingLeft:"8px"}}>
                       Search by Keywords
                     </Form.Label>
                     <div className="position-relative">
@@ -811,6 +1109,13 @@ const AutomotiveComp = () => {
                   </Col>
                 </Row>
                 {/*  -------------                          */}
+                  
+                  <style>{`
+    .form-check-input:checked {
+      background-color: #2D4495 !important; 
+      border-color: black !important; 
+    }
+  `}</style>    
                 <Accordion>
                   <Accordion.Item eventKey="0">
                     <Accordion.Header>Select City</Accordion.Header>
@@ -1420,27 +1725,17 @@ const AutomotiveComp = () => {
                                 </div>
                               )
                             )}
-                            <button
-                              type="button"
-                              onClick={logSelectedColor}
-                              style={{
-                                marginTop: "10px",
-                                padding: "5px 10px",
-                                backgroundColor: "#007bff",
-                                color: "#fff",
-                                border: "none",
-                                borderRadius: "5px",
-                              }}
-                            >
-                              Log Selected
-                            </button>
                           </Form.Group>
+                          <p
+                            style={{ color: "#2D4495", cursor: "pointer" }}
+                            onClick={() => handleMoreChoicesToggle()}
+                          >
+                            More choices
+                          </p>
                         </div>
                       </Accordion.Body>
                     </Accordion.Item>
                   </Accordion>
-
-                  <p style={{ color: "#2D4495" }}>More choices</p>
                 </div>
                 <hr
                   style={{
@@ -1495,12 +1790,11 @@ const AutomotiveComp = () => {
                             </div>
                           ))}
                         </Form.Group>
+                        <p style={{ color: "#2D4495" }}>More choices</p>
                       </div>
                     </Accordion.Body>
                   </Accordion.Item>
                 </Accordion>
-
-                <p style={{ color: "#2D4495" }}>More choices</p>
 
                 <hr
                   style={{
@@ -1739,12 +2033,12 @@ const AutomotiveComp = () => {
                           </span>
                         </div>
                       </Form.Group>
+                      <p style={{ color: "#2D4495" }}>More choices</p>
                     </div>
                   </Accordion.Body>
                 </Accordion.Item>
               </Accordion>
 
-              <p style={{ color: "#2D4495" }}>More choices</p>
               <hr
                 style={{
                   width: "100%",
@@ -2161,11 +2455,12 @@ const AutomotiveComp = () => {
                           </span>
                         </div>
                       </Form.Group>
+                      <p style={{ color: "#2D4495" }}>More choices</p>
                     </div>
                   </Accordion.Body>
                 </Accordion.Item>
               </Accordion>
-              <p style={{ color: "#2D4495" }}>More choices</p>
+
               <hr
                 style={{
                   width: "100%",
@@ -2379,6 +2674,54 @@ const AutomotiveComp = () => {
             </Col>
 
             <Col md={9} className="p-3">
+              {/* <div className="adsCategory_head">
+      <button
+        className="btn border me-2 mb-2 mb-sm-0"
+        style={{ background: "#E9EEFF", fontWeight: "500" }}
+      >
+        Home
+      </button>
+      <span>
+        <img src={arrow} alt="arrow" />
+      </span>
+
+      <button
+        className="btn border me-2 mb-2 mb-sm-0"
+        style={{ background: "#E9EEFF", fontWeight: "500" }}
+      >
+        Automotive
+      </button>
+      <span>
+        <img src={arrow} alt="arrow" />
+      </span>
+
+      <button
+        className="btn border me-2 mb-2 mb-sm-0"
+        style={{ background: "#E9EEFF", fontWeight: "500" }}
+      >
+        All Cities
+      </button>
+      <span>
+        <img src={arrow} alt="arrow" />
+      </span>
+
+      <button
+        className="btn border mb-sm-0"
+        style={{ background: "#E9EEFF", fontWeight: "500" }}
+      >
+        Used Car for Sale
+      </button>
+      <span>
+        <img src={arrow} alt="arrow" />
+      </span>
+
+      <button
+        className="btn border mb-2 mb-sm-0"
+        style={{ background: "#E9EEFF", fontWeight: "500" }}
+      >
+        Mercedez Benz
+      </button>
+    </div> */}
               <Row className="mb-3">
                 <Col>
                   <Form.Check type="checkbox" label="With Photos" />
@@ -2386,8 +2729,14 @@ const AutomotiveComp = () => {
                 <Col>
                   <Form.Check type="checkbox" label="With Price" />
                 </Col>
-                <Col className="text-end">
-                  <Form.Select>
+                <Col xs={12} sm={6} md={4} className="text-end">
+                  <Form.Select
+                    aria-label="Sort options"
+                    onChange={(e) => {
+                      console.log(e.target.value);
+                      setSortBy(e.target.value);
+                    }}
+                  >
                     <option>Sort by: Most Relevant</option>
                     <option>Price: Low to High</option>
                     <option>Price: High to Low</option>
@@ -2405,56 +2754,307 @@ const AutomotiveComp = () => {
                     </Spinner>
                   </div>
                 ) : filteredCars.length > 0 ? (
-                  filteredCars.map((car, index) => (
+                  getPaginatedCars().map((car, index) => (
                     <Card key={index} className="mt-3">
                       <Row className="g-0">
-                        <Col md={4}>
+                        <Col md={4} style={{ position: "relative" }}>
+                          {/* Featured Label */}
+                          <div
+                            style={{
+                              position: "absolute",
+                              top: "10px",
+                              left: "10px",
+                              backgroundColor: "#36A680",
+                              color: "white",
+                              padding: "5px 10px",
+                              fontWeight: "bold",
+                              borderRadius: "5px",
+                              zIndex: 2, // Ensure it's above the image
+                            }}
+                          >
+                            Featured
+                          </div>
+
+                          {/* Heart Icon */}
+                          <div
+                            style={{
+                              position: "absolute",
+                              top: "11%",
+                              left: "90%", // Centering horizontally
+                              transform: "translate(-50%, -50%)", // Adjust to keep it centered
+                              borderRadius: "50%",
+                              padding: "10px",
+                              zIndex: 3, // Higher z-index to stay above everything
+                            }}
+                          >
+                            <i
+                              className="fas fa-heart"
+                              style={{ color: "white", fontSize: "30px" }}
+                            ></i>
+                          </div>
+
+                          {/* Image */}
                           <Card.Img
                             src={car.img || "https://via.placeholder.com/150"}
                             alt={car.title || "Car"}
                             style={{
-                              width: "284.3px",
+                              width: "100%", // Make the image responsive
                               height: "250px",
+                              borderTopLeftRadius: "20px",
+                              borderBottomLeftRadius: "20px",
                             }}
                           />
                         </Col>
+
                         <Col md={8}>
                           <Card.Body>
-                            <Card.Title>{car.title || "Car"}</Card.Title>
-                            <Card.Text>
-                              <small className="text-muted">
-                                {car.City || "Location"}
-                              </small>
+                            <Card.Title style={{ color: "#2D4495" }}>
+                              {car.title || "Car"}
+                            </Card.Title>
+                            <Card.Text style={{ color: "black" }}>
+                            <small className="text-muted">
+  <i
+    className="fas fa-map-marker-alt"
+    style={{ marginRight: "5px", color: "#6c757d" }}
+  ></i>
+  <span style={{ color: "black" }}>{car.City || "Location"}</span>
+</small>
+
                               <br />
-                              <small className="text-muted">
-                                {car.ManufactureYear || "Year"} |{" "}
-                                {car.DrivenKm || "0"} Km |{" "}
-                                {car.EngineType || "Engine Type"} |{" "}
-                                {car.Transmission || "Transmission"}
-                              </small>
+                              <small style={{ color: "black" }}>
+  {car.ManufactureYear  ||  "Year"} |{" "}
+  {car.DrivenKm || "0"} Km |{" "}
+  {car.EngineType || "Engine Type"} |{" "}
+  {car.Transmission || "Transmission"}
+</small>
+
+
                               <br />
                               {car.description || "Description not available."}
                             </Card.Text>
-                            <Row>
-                              <Col>
-                                <Button variant="primary" className="w-100">
-                                  Call
-                                </Button>
-                              </Col>
-                              <Col>
-                                <Button
-                                  variant="outline-primary"
-                                  className="w-100"
+
+                            <Col
+                              className="align-items-center"
+                              style={{ position: "relative" }}
+                            >
+                              {/* Price displayed above the image */}
+                              <p
+                                style={{
+                                  position: "absolute",
+                                  top: "-140px", // Adjust the top margin to place the price higher
+                                  left: "550px",
+                                  fontWeight: "bold",
+                                  fontSize: "20px",
+                                  zIndex: 2, // Ensure the price text stays above the image
+                                  color: "#2D4495",
+                                }}
+                              >
+                                {car.price
+                                  ? `$${car.price}`
+                                  : "Price not available"}
+                              </p>
+
+                              {/* Small Image on the Right with Top Margin */}
+                              <Card.Img
+                                src={
+                                  car.img || "https://via.placeholder.com/150"
+                                }
+                                alt={car.title || "Car"}
+                                className="d-none d-sm-block" // Hide on small screens and show on sm and above
+                                style={{
+                                  position: "absolute", // Position image absolutely within the container
+                                  top: "-84px", // Adjust to ensure the image is placed after the price
+                                  right: "10px", // Adjust right margin
+                                  width: "160px", // Adjust size as needed
+                                  height: "80px",
+                                  objectFit: "fill",
+                                  borderRadius: "6px",
+                                }}
+                              />
+
+                              {/* Updated text at the bottom-right corner */}
+                              <p
+    style={{
+      position: 'absolute',
+      right: '5px',
+      // fontSize: '12px',
+      color: '#6c757d',
+      marginTop:'54px',
+      color: "black",
+    }}
+  >
+    Updated about 1 hour ago
+  </p>
+
+                              {/* Responsive layout for small screens */}
+                              <div
+                                className="d-block d-sm-none"
+                                style={{
+                                  position: "relative",
+                                  marginTop: "10px",
+                                }}
+                              >
+                                {/* Price for small screens */}
+                                <p
+                                  style={{
+                                    fontWeight: "bold",
+                                    fontSize: "16px",
+                                    marginBottom: "5px",
+                                  }}
                                 >
-                                  Message
-                                </Button>
-                              </Col>
-                              <Col>
-                                <Button variant="success" className="w-100">
-                                  WhatsApp
-                                </Button>
-                              </Col>
-                            </Row>
+                                  {car.price
+                                    ? `$${car.price}`
+                                    : "Price not available"}
+                                </p>
+
+                                {/* Small Image for small screens */}
+                                <Card.Img
+                                  src={
+                                    car.img || "https://via.placeholder.com/150"
+                                  }
+                                  alt={car.title || "Car"}
+                                  style={{
+                                    width: "120px", // Adjust size for small screens
+                                    height: "60px",
+                                    objectFit: "fill",
+                                    borderRadius: "6px",
+                                  }}
+                                />
+                              </div>
+                            </Col>
+
+                            {/* Responsive Grid for Small Screens */}
+                            <div>
+                              <Row
+                                className="gx-2 gy-2 mt-4 mt-sm-5 text-center"
+                                style={{ margin: 0 }}
+                              >
+                                {/* Call Button */}
+                                <Col
+                                  xs={6}
+                                  sm={3}
+                                  lg={2}
+                                  className="p-0 d-flex align-items-center justify-content-center"
+                                >
+                                  <button
+                                    style={{
+                                      display: "flex",
+                                      alignItems: "center",
+                                      justifyContent: "center",
+                                      gap: "5px",
+                                      padding: "12px 20px",
+                                      border: "none",
+                                      borderRadius: "20px",
+                                      backgroundColor: "#2d4fad",
+                                      color: "white",
+                                      fontSize: "13px",
+                                      cursor: "pointer",
+                                      width: "100%",
+                                      maxWidth: "150px",
+                                      margin: "5px",
+                                    }}
+                                  >
+                                    <i className="fas fa-phone"></i> Call
+                                  </button>
+                                </Col>
+
+                                {/* Message Button */}
+                                <Col
+                                  xs={6}
+                                  sm={3}
+                                  lg={2}
+                                  className="p-0 d-flex align-items-center justify-content-center"
+                                >
+                                  <button
+                                    style={{
+                                      display: "flex",
+                                      alignItems: "center",
+                                      justifyContent: "center",
+                                      gap: "5px",
+                                      padding: "12px 12px",
+                                      border: "1px solid #2d4fad",
+                                      borderRadius: "20px",
+                                      backgroundColor: "white",
+                                      color: "#2d4fad",
+                                      fontSize: "13px",
+                                      cursor: "pointer",
+                                      width: "100%",
+                                      maxWidth: "150px",
+                                      margin: "5px",
+                                    }}
+                                  >
+                                    <i className="fas fa-comment"></i> Message
+                                  </button>
+                                </Col>
+
+                                {/* WhatsApp Button */}
+                                <Col
+                                  xs={6}
+                                  sm={3}
+                                  lg={2}
+                                  className="p-0 d-flex align-items-center justify-content-center"
+                                >
+                                  <button
+                                    style={{
+                                      display: "flex",
+                                      alignItems: "center",
+                                      justifyContent: "center",
+                                      gap: "5px",
+                                      padding: "12px 10px",
+                                      border: "1px solid #2d4fad",
+                                      borderRadius: "20px",
+                                      backgroundColor: "white",
+                                      color: "#2d4fad",
+                                      fontSize: "13px",
+                                      cursor: "pointer",
+                                      width: "100%",
+                                      maxWidth: "150px",
+                                      margin: "5px",
+                                    }}
+                                  >
+                                    <i
+                                      className="fab fa-whatsapp"
+                                      style={{ color: "#2D4495" }}
+                                    ></i>{" "}
+                                    WhatsApp
+                                  </button>
+                                </Col>
+
+                                {/* Favorite Button */}
+                                <Col
+                                  xs={6}
+                                  sm={3}
+                                  lg={2}
+                                  className="p-0 d-flex align-items-center justify-content-center position-relative"
+                                >
+                                  <button
+                                    style={{
+                                      border: "1px solid #2D4495",
+                                      backgroundColor: "white",
+                                      borderRadius: "5px",
+                                      cursor: "pointer",
+                                      color: "#2D4495",
+                                      width: "fit-content",
+                                      height: "fit-content",
+                                      padding: "8px",
+                                      display: "flex",
+                                      alignItems: "center",
+                                      justifyContent: "center",
+                                      margin: "5px",
+                                      marginRight: "60px",
+                                    }}
+                                  >
+                                    <i
+                                      className="far fa-heart"
+                                      style={{
+                                        color: "#2D4495",
+                                        fontSize: "20px",
+                                      }}
+                                    ></i>
+                                  </button>
+                                </Col>
+                              </Row>
+                            </div>
                           </Card.Body>
                         </Col>
                       </Row>
@@ -2464,10 +3064,129 @@ const AutomotiveComp = () => {
                   <p>No cars found for the selected criteria.</p>
                 )}
               </div>
+              <div className="d-flex align-items-center justify-content-center my-4">
+                <Button
+                  variant="outline-primary"
+                  className="d-flex align-items-center mx-2"
+                  disabled={activePage === 1}
+                  onClick={() => handlePageClick(activePage - 1)}
+                >
+                  <FaArrowLeft className="me-1" /> Previous
+                </Button>
+
+                <ButtonGroup>{renderPageNumbers()}</ButtonGroup>
+
+                <Button
+                  variant="outline-primary"
+                  className="d-flex align-items-center mx-2"
+                  disabled={activePage === totalPages}
+                  onClick={() => handlePageClick(activePage + 1)}
+                >
+                  Next <FaArrowRight className="ms-1" />
+                </Button>
+              </div>
+              
+{/*           parent div end here                                    */}
+
+
+             
             </Col>
           </Row>
         </Container>
+
       </div>
+      <div
+  className="container-parent"
+  style={{
+    color: 'black',
+    maxWidth: '100%',  // Ensure content fits screen width
+    margin: '0 auto',
+    backgroundColor: '#E9EEFF',
+    height: 'auto',  // Allow height to adjust dynamically
+    paddingLeft: '13%',  // Adjusted padding for responsiveness
+    paddingRight: '5%',
+    paddingTop: '20px',
+    paddingBottom: '30px',
+  }}
+>
+  <div className="cars data">
+    <h2>Cars for Sale in Dubai</h2>
+    <p>
+      Lorem ipsum dolor sit amet consectetur. Lacus lacus est praesent gravida quam urna arcu integer. 
+    </p>
+    <p>
+      Lorem ipsum dolor sit amet consectetur. Lacus lacus est praesent gravida quam urna arcu integer. 
+    </p>
+
+    <h2>Used Cars for Sale in Dubai</h2>
+    <p>
+      Lorem ipsum dolor sit amet consectetur. Lacus lacus est praesent gravida quam urna arcu integer.
+    </p>
+    <p>
+      Lorem ipsum dolor sit amet consectetur. Lacus lacus est praesent gravida quam urna arcu integer.
+    </p>
+
+    <h2>Browse More Used Cars</h2>
+    <p style={{ color: "#2d4fad" }}>View Cars by Cities</p>
+
+    <Row className="responsive-row" style={{ color: "#2d4fad", margin: '0 auto' }}>
+      <Col xs={12} sm={6} md={4} lg={3}>
+        <div>Downtown Dubai (123456)</div>
+        <div>Downtown Dubai (123456)</div>
+        <div>Downtown Dubai (123456)</div>
+        <div>Downtown Dubai (123456)</div>
+      </Col>
+      <Col xs={12} sm={6} md={4} lg={3}>
+        <div>Downtown Dubai (123456)</div>
+        <div>Downtown Dubai (123456)</div>
+        <div>Downtown Dubai (123456)</div>
+        <div>Downtown Dubai (123456)</div>
+      </Col>
+      <Col xs={12} sm={6} md={4} lg={3}>
+        <div>Downtown Dubai (123456)</div>
+        <div>Downtown Dubai (123456)</div>
+        <div>Downtown Dubai (123456)</div>
+        <div>Downtown Dubai (123456)</div>
+      </Col>
+      <Col xs={12} sm={6} md={4} lg={3}>
+        <div>Downtown Dubai (123456)</div>
+        <div>Downtown Dubai (123456)</div>
+        <div>Downtown Dubai (123456)</div>
+        <div>Downtown Dubai (123456)</div>
+      </Col>
+    </Row>
+  </div>
+</div>
+
+{/* Media Queries for Responsiveness */}
+<style jsx>{`
+  @media (max-width: 768px) {
+    .container-parent {
+      padding-left: 5%;  // Reduce padding on smaller screens
+      padding-right: 5%;
+    }
+    .responsive-row {
+      margin: 0 10px;
+    }
+  }
+  @media (max-width: 480px) {
+    .container-parent {
+      padding-left: 0%;  // No left padding on very small screens
+      padding-right: 0%; // No right padding on very small screens
+    }
+    .responsive-row {
+      margin: 0;
+    }
+    h2 {
+      font-size: 1.2rem; // Smaller font size for headings on mobile
+    }
+  }
+`}</style>
+
+
+
+<ComercialsAds />
+<LatestBlog />
       <Footer />
     </>
   );

@@ -794,7 +794,7 @@ const AutomotiveComp = () => {
           {/* Banner Section */}
 
           {/* Trending Products */}
-          {/* <div className="trendingprodct_wrapper container">
+           {/* <div className="trendingprodct_wrapper container">
             <h3 className="trendingproduct_heading"> Our Trending Product</h3>
             <div className="trendingproducts_container">
               <button className="trendingProductsallname">Iphone 16</button>
@@ -807,7 +807,7 @@ const AutomotiveComp = () => {
               <button className="trendingProductsallname">Mens Hoodies</button>
             </div>
             
-          </div> */}
+          </div>  */}
           {/* Trending Products */}
 
           {/* Category Section */}

@@ -71,6 +71,7 @@ import SportGamesComp from "./components/admin/SportGamesComp/SportGamesComp";
 import PetAnimalsComp from "./components/admin/PetAnimalsComp/PetAnimalsComp";
 import Cars from "./components/admin/Cars/Cars";
 import Bikes from "./components/home/Bikes/Bikes";
+import MAGAZINESCOMP from "./components/admin/MAGAZINESCOMP/MAGAZINESCOMP";
 export const App = () => {
   return (
     <BrowserRouter basename={`${config.publicPath}`}>
@@ -106,6 +107,8 @@ export const App = () => {
         <Route path="/TravelComp" element={<TravelComp />} />
         <Route path="/SportGamesComp" element={<SportGamesComp />} />
         <Route path="/PetAnimalsComp" element={<PetAnimalsComp />} />
+        <Route path="/MAGAZINESCOMP" element={<MAGAZINESCOMP />} />
+
 
         <Route path="/listing-grid" element={<Listing_Grid />} />
         <Route path="/service-details" element={<ServiceDetails />} />

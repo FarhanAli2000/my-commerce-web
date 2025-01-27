@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom"; // Import Link from react-router-dom
-import Header from "../../home/header"; // Ensure Header is correctly implemented and imported
-import Footer from "../../home/footer/Footer";
+import Header from "../../home/header/index.jsx"; // Ensure Header is correctly implemented and imported
+import Footer from "../../home/footer/Footer.jsx";
 // import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-
+import { MdKeyboardArrowRight } from "react-icons/md";
 import automative from "../../home/automative.png";
 import electronic from "../../home/electronic.png";
 import fashion from "../../home/fashion.png";
@@ -21,7 +21,6 @@ import iron from "../../home/iron.png";
 import image1 from "../../../assets/img/banner/bannerimage1.png";
 import image3 from "../../../assets/img/banner/bannerimage3.png";
 import image4 from "../../../assets/img/banner/bannerimage4.png";
-import { MdKeyboardArrowRight } from "react-icons/md";
 // import LatestBlog from "../../blog/BlogList/LatestBlog/LatestBlog.jsx";
 import image2 from "../../../assets/img/banner/bannerimage2.png";
 import xIcon from "../../home/x.png";
@@ -29,12 +28,12 @@ import insta from "../../home/insta.png";
 import fb from "../../home/fb.png";
 import tiktok from "../../home/tiktoc.png";
 import whatapp from "../../home/whatapp (3).png";
-import Carousel from "../../home/slider/Carousel";
-import AutomativeCarosuel from "../..//home/slider/AutomativeCarousel.jsx";
-import RealEstateCarousel from "../..//home/slider/RealEstateCarousel.jsx";
-import ElectronicCarousel from "../..//home/slider/ElectronicCarousel.jsx";
-import HealthCareCarousel from "../..//home/slider/HealthCareCarousel.jsx";
-import SportandgameCarouseCarousel from "../..//home/slider/SportandgameCarouseCarousel.jsx";
+import Carousel from "../../home/slider/Carousel.jsx";
+import AutomativeCarosuel from "../../home/slider/AutomativeCarousel.jsx";
+import RealEstateCarousel from "../../home/slider/RealEstateCarousel.jsx";
+import ElectronicCarousel from "../../home/slider/ElectronicCarousel.jsx";
+import HealthCareCarousel from "../../home/slider/HealthCareCarousel.jsx";
+import SportandgameCarouseCarousel from "../../home/slider/SportandgameCarouseCarousel.jsx";
 import ComercialsAds from "../../home/ComercialsAds/ComercialsAds.jsx";
 import LatestBlog from "../../blog/BlogList/LatestBlog/LatestBlog.jsx";
 import popup from "../../home/popup_image.png";
@@ -42,7 +41,7 @@ import { Accordion } from "react-bootstrap";
 import { IoLocationSharp } from "react-icons/io5";
 import { BsChat } from "react-icons/bs";
 import { addDoc, collection, getDocs, doc } from "firebase/firestore";
-import { db } from "./../../Firebase/FirebaseConfig.jsx";
+import { db } from "../../Firebase/FirebaseConfig.jsx";
 import { FaHeart, FaPhone, FaSearch, FaWhatsapp } from "react-icons/fa";
 import {
   Container,
@@ -56,7 +55,7 @@ import {
 } from "react-bootstrap";
 import Spinner from "react-bootstrap/Spinner";
 
-const RealEstateComp = () => {
+const MAGAZINESCOMP = () => {
   const parms = useLocation().pathname;
   const [isVisible, setIsVisible] = useState(true);
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -127,356 +126,238 @@ const RealEstateComp = () => {
   const [DisplayQuality, setDisplayQuality] = useState("");
   const [Connectivity, setConnectivity] = useState(""); // Search query for title and city
   const [SpecialFeatures, setSpecialFeatures] = useState(""); // Search query for title and city
-  const [Gender, setGender] = useState("");
-  const [Size, setSize] = useState("");
-  const [Fit, setFit] = useState("");
-  const [Material, setMaterial] = useState("");
-  const [Color, setColor] = useState("");
-  const [StyleDesign, setStyleDesign] = useState("");
-  const [ClosureType, setClosureType] = useState("");
-  const [CollarType, setCollarType] = useState("");
-  const [SleeveLength, setSleeveLength] = useState("");
-  const [WashType, setWashType] = useState("");
-  const [Features, setFeatures] = useState("");
-  const [Season, setSeason] = useState("");
-  const [Type, setType] = useState("");
-  const [MeasurementRange, setMeasurementRange] = useState("");
-  const [Accuracy, setAccuracy] = useState("");
-  const [CuffSize, setCuffSize] = useState("");
-  const [DisplayType, setDisplayType] = useState("");
-  const [BatteryType, setBatteryType] = useState("");
-  const [Compatibility, setCompatibility] = useState("");
-  const [StorageCapacity, setStorageCapacity] = useState("");
-  const [MeasurementUnits, setMeasurementUnits] = useState("");
-  const [SpeedofMeasurement, setSpeedofMeasurement] = useState("");
-  const [SellerType, setSellerType] = useState("");
-  const [PropertyType, setPropertyType] = useState("");
-  const [Amenities, setAmenities] = useState([]);
-  const [PropertyFeatures, setPropertyFeatures] = useState([]);
-  const [BuildingType, setBuildingType] = useState([]);
-  const [Accessibility, setAccessibility] = useState([]);
-  const handleCheckboxChangeAccessibility = (event) => {
-    const carLabel = event.target.name; // Use the name attribute to identify the checkbox
-    if (event.target.checked) {
-      // Add the selected checkbox to the array
-      setAccessibility((prevAmenities) => [...prevAmenities, carLabel]);
-    } else {
-      // Remove the unchecked checkbox from the array
-      setAccessibility((prevAmenities) =>
-        prevAmenities.filter((item) => item !== carLabel)
-      );
-    }
-  };
-  const handleCheckboxChangeBuildingType = (event) => {
-    const carLabel = event.target.name; // Use the name attribute to identify the checkbox
-    if (event.target.checked) {
-      // Add the selected checkbox to the array
-      setBuildingType((prevAmenities) => [...prevAmenities, carLabel]);
-    } else {
-      // Remove the unchecked checkbox from the array
-      setBuildingType((prevAmenities) =>
-        prevAmenities.filter((item) => item !== carLabel)
-      );
-    }
-  };
-  const handleCheckboxChangePropertyFeatures = (event) => {
-    const carLabel = event.target.name; // Use the name attribute to identify the checkbox
-    if (event.target.checked) {
-      // Add the selected checkbox to the array
-      setPropertyFeatures((prevAmenities) => [...prevAmenities, carLabel]);
-    } else {
-      // Remove the unchecked checkbox from the array
-      setPropertyFeatures((prevAmenities) =>
-        prevAmenities.filter((item) => item !== carLabel)
-      );
-    }
-  };
-  const handleCheckboxChangeAmenities = (event) => {
-    const carLabel = event.target.name; // Use the name attribute to identify the checkbox
-    if (event.target.checked) {
-      // Add the selected checkbox to the array
-      setAmenities((prevAmenities) => [...prevAmenities, carLabel]);
-    } else {
-      // Remove the unchecked checkbox from the array
-      setAmenities((prevAmenities) =>
-        prevAmenities.filter((item) => item !== carLabel)
-      );
-    }
-  };
-
-  const handleCheckboxChangeSize = (event) => {
-    const carLabel = event.target.name; // Use the name attribute to identify the checkbox
-    if (event.target.checked) {
-      // Only allow one checkbox to be checked
-      setSize([carLabel]);
-    } else {
-      // If unchecked, clear the state
-      setSize([]);
-    }
-  };
-
-  const handleCheckboxChangePropertyType = (event) => {
+  const [SubjectCategories, setSubjectCategories] = useState(""); // Search query for title and city
+  const [SkillLevel, setSkillLevel] = useState(""); // Search query for title and city
+  const [ContentType, setContentType] = useState(""); // Search query for title and city
+  const [Language, setLanguage] = useState(""); // Search query for title and city
+  const [Duration, setDuration] = useState(""); // Search query for title and city
+  const [Category, setCategory] = useState(""); // Search query for title and city
+  const [Size, setSize] = useState(""); // Search query for title and city
+  const [Material, setMaterial] = useState(""); // Search query for title and city
+  const [Features, setFeatures] = useState(""); // Search query for title and city
+  const [Availability, setAvailability] = useState(""); // Search query for title and city
+  const [ColorOptions, setColorOptions] = useState(""); // Search query for title and city
+  const [SellerType, setSellerType] = useState(""); // Search query for title and city
+  const [Breed, setBreed] = useState(""); // Search query for title and city
+  const [Age, setAge] = useState(""); // Search query for title and city
+  const [Gender, setGender] = useState(""); // Search query for title and city
+  const [Color, setColor] = useState(""); // Search query for title and city
+  const [Temperament, setTemperament] = useState(""); // Search query for title and city
+  const [HealthStatus, setHealthStatus] = useState(""); // Search query for title and city
+  const [TrainingLevel, setTrainingLevel] = useState(""); // Search query for title and city
+  const [DietaryPreferences, setDietaryPreferences] = useState(""); // Search query for title and city
+  const handleCheckboxChangeOrganicFood = (event) => {
     const carLabel = event.target.name; // Use the name attribute to identify the checkbox
     if (event.target.checked) {
       // Add the label to the state if checked
-      setPropertyType((prev) => [...prev, carLabel]);
+      setDietaryPreferences((prev) => [...prev, carLabel]);
     } else {
       // Remove the label from the state if unchecked
-      setPropertyType((prev) => prev.filter((car) => car !== carLabel));
+      setDietaryPreferences((prev) => prev.filter((car) => car !== carLabel));
     }
   };
-  const handleCheckboxChangeSellerType = (label) => {
-    setSellerType((prevSelected) => {
-      if (prevSelected.includes(label)) {
-        // Remove the label if already selected
-        return prevSelected.filter((item) => item !== label);
-      } else {
-        // Add the label to the selected array
-        return [...prevSelected, label];
-      }
-    });
+  const handleCheckboxChangeTrainingLevel = (event) => {
+    const carLabel = event.target.name; // Use the name attribute to identify the checkbox
+    if (event.target.checked) {
+      // Add the label to the state if checked
+      setTrainingLevel((prev) => [...prev, carLabel]);
+    } else {
+      // Remove the label from the state if unchecked
+      setTrainingLevel((prev) => prev.filter((car) => car !== carLabel));
+    }
   };
-  const handleCheckboxChangeSpeedofMeasurement = (label) => {
-    setSpeedofMeasurement((prevSelected) => {
-      if (prevSelected.includes(label)) {
-        // Remove the label if already selected
-        return prevSelected.filter((item) => item !== label);
-      } else {
-        // Add the label to the selected array
-        return [...prevSelected, label];
-      }
-    });
+  const handleCheckboxChangeHealthStatus = (event) => {
+    const carLabel = event.target.name; // Use the name attribute to identify the checkbox
+    if (event.target.checked) {
+      // Add the label to the state if checked
+      setHealthStatus((prev) => [...prev, carLabel]);
+    } else {
+      // Remove the label from the state if unchecked
+      setHealthStatus((prev) => prev.filter((car) => car !== carLabel));
+    }
   };
-
-  const handleCheckboxChangeMeasurementUnits = (label) => {
-    setMeasurementUnits((prevSelected) => {
-      if (prevSelected.includes(label)) {
-        // Remove the label if already selected
-        return prevSelected.filter((item) => item !== label);
-      } else {
-        // Add the label to the selected array
-        return [...prevSelected, label];
-      }
-    });
+  const handleCheckboxChangeTemperament = (event) => {
+    const carLabel = event.target.name; // Use the name attribute to identify the checkbox
+    if (event.target.checked) {
+      // Add the label to the state if checked
+      setTemperament((prev) => [...prev, carLabel]);
+    } else {
+      // Remove the label from the state if unchecked
+      setTemperament((prev) => prev.filter((car) => car !== carLabel));
+    }
   };
-
-  const handleCheckboxChangeStorageCapacity = (label) => {
-    setStorageCapacity((prevSelected) => {
-      if (prevSelected.includes(label)) {
-        // Remove the label if already selected
-        return prevSelected.filter((item) => item !== label);
-      } else {
-        // Add the label to the selected array
-        return [...prevSelected, label];
-      }
-    });
+  const handleCheckboxChangeColor = (event) => {
+    const carLabel = event.target.name; // Use the name attribute to identify the checkbox
+    if (event.target.checked) {
+      // Add the label to the state if checked
+      setColor((prev) => [...prev, carLabel]);
+    } else {
+      // Remove the label from the state if unchecked
+      setColor((prev) => prev.filter((car) => car !== carLabel));
+    }
   };
-  // Search query for title and city
-  // Search query for title and city
-  // Search query for title and city
-  // Search query for title and city
-  // Search query for title and city
-  // Search query for title and city
-  // Search query for title and city
-  const handleCheckboxChangeCompatibility = (label) => {
-    setCompatibility((prevSelected) => {
-      if (prevSelected.includes(label)) {
-        // Remove the label if already selected
-        return prevSelected.filter((item) => item !== label);
-      } else {
-        // Add the label to the selected array
-        return [...prevSelected, label];
-      }
-    });
+  const handleCheckboxChangeGender = (event) => {
+    const carLabel = event.target.name; // Use the name attribute to identify the checkbox
+    if (event.target.checked) {
+      // Add the label to the state if checked
+      setGender((prev) => [...prev, carLabel]);
+    } else {
+      // Remove the label from the state if unchecked
+      setGender((prev) => prev.filter((car) => car !== carLabel));
+    }
   };
-  const handleCheckboxChangeBatteryType = (label) => {
-    setBatteryType((prevSelected) => {
-      if (prevSelected.includes(label)) {
-        // Remove the label if already selected
-        return prevSelected.filter((item) => item !== label);
-      } else {
-        // Add the label to the selected array
-        return [...prevSelected, label];
-      }
-    });
+  const handleCheckboxChangeAge = (event) => {
+    const carLabel = event.target.name; // Use the name attribute to identify the checkbox
+    if (event.target.checked) {
+      // Add the label to the state if checked
+      setAge((prev) => [...prev, carLabel]);
+    } else {
+      // Remove the label from the state if unchecked
+      setAge((prev) => prev.filter((car) => car !== carLabel));
+    }
   };
-  const handleCheckboxChangeDisplayType = (label) => {
-    setDisplayType((prevSelected) => {
-      if (prevSelected.includes(label)) {
-        // Remove the label if already selected
-        return prevSelected.filter((item) => item !== label);
-      } else {
-        // Add the label to the selected array
-        return [...prevSelected, label];
-      }
-    });
-  };
-  const handleCheckboxChangeCuffSize = (label) => {
-    setCuffSize((prevSelected) => {
-      if (prevSelected.includes(label)) {
-        // Remove the label if already selected
-        return prevSelected.filter((item) => item !== label);
-      } else {
-        // Add the label to the selected array
-        return [...prevSelected, label];
-      }
-    });
-  };
-  const handleCheckboxChangeFeatures = (label) => {
-    setFeatures((prevSelected) => {
-      if (prevSelected.includes(label)) {
-        // Remove the label if already selected
-        return prevSelected.filter((item) => item !== label);
-      } else {
-        // Add the label to the selected array
-        return [...prevSelected, label];
-      }
-    });
-  };
-  const handleCheckboxChangeAccuracy = (label) => {
-    setAccuracy((prevSelected) => {
-      if (prevSelected.includes(label)) {
-        // Remove the label if already selected
-        return prevSelected.filter((item) => item !== label);
-      } else {
-        // Add the label to the selected array
-        return [...prevSelected, label];
-      }
-    });
-  };
-  const handleCheckboxChangeMeasurementRange = (label) => {
-    setMeasurementRange((prevSelected) => {
-      if (prevSelected.includes(label)) {
-        // Remove the label if already selected
-        return prevSelected.filter((item) => item !== label);
-      } else {
-        // Add the label to the selected array
-        return [...prevSelected, label];
-      }
-    });
-  };
-  const handleCheckboxChangeType = (label) => {
-    setType((prevSelected) => {
-      if (prevSelected.includes(label)) {
-        // Remove the label if already selected
-        return prevSelected.filter((item) => item !== label);
-      } else {
-        // Add the label to the selected array
-        return [...prevSelected, label];
-      }
-    });
-  };
-  const handleCheckboxChangeSeason = (label) => {
-    setSeason((prevSelected) => {
-      if (prevSelected.includes(label)) {
-        // Remove the label if already selected
-        return prevSelected.filter((item) => item !== label);
-      } else {
-        // Add the label to the selected array
-        return [...prevSelected, label];
-      }
-    });
+  const handleCheckboxChangeBreed = (event) => {
+    const carLabel = event.target.name; // Use the name attribute to identify the checkbox
+    if (event.target.checked) {
+      // Add the label to the state if checked
+      setBreed((prev) => [...prev, carLabel]);
+    } else {
+      // Remove the label from the state if unchecked
+      setBreed((prev) => prev.filter((car) => car !== carLabel));
+    }
   };
 
-  const handleCheckboxChangeWashType = (label) => {
-    setWashType((prevSelected) => {
-      if (prevSelected.includes(label)) {
-        // Remove the label if already selected
-        return prevSelected.filter((item) => item !== label);
-      } else {
-        // Add the label to the selected array
-        return [...prevSelected, label];
-      }
-    });
-  };
-  const handleCheckboxChangeSleeveLength = (label) => {
-    setSleeveLength((prevSelected) => {
-      if (prevSelected.includes(label)) {
-        // Remove the label if already selected
-        return prevSelected.filter((item) => item !== label);
-      } else {
-        // Add the label to the selected array
-        return [...prevSelected, label];
-      }
-    });
-  };
-  const handleCheckboxChangStyleClosureCollarType = (label) => {
-    setCollarType((prevSelected) => {
-      if (prevSelected.includes(label)) {
-        // Remove the label if already selected
-        return prevSelected.filter((item) => item !== label);
-      } else {
-        // Add the label to the selected array
-        return [...prevSelected, label];
-      }
-    });
-  };
-  const handleCheckboxChangStyleClosureType = (label) => {
-    setClosureType((prevSelected) => {
-      if (prevSelected.includes(label)) {
-        // Remove the label if already selected
-        return prevSelected.filter((item) => item !== label);
-      } else {
-        // Add the label to the selected array
-        return [...prevSelected, label];
-      }
-    });
-  };
-  const handleCheckboxChangStyleDesign = (label) => {
-    setStyleDesign((prevSelected) => {
-      if (prevSelected.includes(label)) {
-        // Remove the label if already selected
-        return prevSelected.filter((item) => item !== label);
-      } else {
-        // Add the label to the selected array
-        return [...prevSelected, label];
-      }
-    });
-  };
-  const handleCheckboxChangColor = (label) => {
-    setColor((prevSelected) => {
-      if (prevSelected.includes(label)) {
-        // Remove the label if already selected
-        return prevSelected.filter((item) => item !== label);
-      } else {
-        // Add the label to the selected array
-        return [...prevSelected, label];
-      }
-    });
-  };
-  const handleCheckboxChangMaterial = (label) => {
-    setMaterial((prevSelected) => {
-      if (prevSelected.includes(label)) {
-        // Remove the label if already selected
-        return prevSelected.filter((item) => item !== label);
-      } else {
-        // Add the label to the selected array
-        return [...prevSelected, label];
-      }
-    });
-  };
-  const handleCheckboxChangFit = (label) => {
-    setFit((prevSelected) => {
-      if (prevSelected.includes(label)) {
-        // Remove the label if already selected
-        return prevSelected.filter((item) => item !== label);
-      } else {
-        // Add the label to the selected array
-        return [...prevSelected, label];
-      }
-    });
+  const handleCheckboxChangeColorOptions1 = (event) => {
+    const carLabel = event.target.name; // Use the name attribute to identify the checkbox
+    if (event.target.checked) {
+      // Add the label to the state if checked
+      setSellerType((prev) => [...prev, carLabel]);
+    } else {
+      // Remove the label from the state if unchecked
+      setSellerType((prev) => prev.filter((car) => car !== carLabel));
+    }
   };
 
-  const handleCheckboxChangeGender = (label) => {
-    setGender((prevSelected) => {
-      if (prevSelected.includes(label)) {
-        // Remove the label if already selected
-        return prevSelected.filter((item) => item !== label);
-      } else {
-        // Add the label to the selected array
-        return [...prevSelected, label];
-      }
-    });
+  const handleCheckboxChangeColorOptions = (event) => {
+    const carLabel = event.target.name; // Use the name attribute to identify the checkbox
+    if (event.target.checked) {
+      // Add the label to the state if checked
+      setColorOptions((prev) => [...prev, carLabel]);
+    } else {
+      // Remove the label from the state if unchecked
+      setColorOptions((prev) => prev.filter((car) => car !== carLabel));
+    }
+  };
+  const handleCheckboxChangeAvailability = (event) => {
+    const carLabel = event.target.name; // Use the name attribute to identify the checkbox
+    if (event.target.checked) {
+      // Add the label to the state if checked
+      setAvailability((prev) => [...prev, carLabel]);
+    } else {
+      // Remove the label from the state if unchecked
+      setAvailability((prev) => prev.filter((car) => car !== carLabel));
+    }
+  };
+  const handleCheckboxChangeFeatures = (event) => {
+    const carLabel = event.target.name; // Use the name attribute to identify the checkbox
+    if (event.target.checked) {
+      // Add the label to the state if checked
+      setFeatures((prev) => [...prev, carLabel]);
+    } else {
+      // Remove the label from the state if unchecked
+      setFeatures((prev) => prev.filter((car) => car !== carLabel));
+    }
+  };
+
+  const handleCheckboxChangeMaterial = (event) => {
+    const carLabel = event.target.name; // Use the name attribute to identify the checkbox
+    if (event.target.checked) {
+      // Add the label to the state if checked
+      setMaterial((prev) => [...prev, carLabel]);
+    } else {
+      // Remove the label from the state if unchecked
+      setMaterial((prev) => prev.filter((car) => car !== carLabel));
+    }
+  };
+  const handleCheckboxChangeSize = (event) => {
+    const carLabel = event.target.name; // Use the name attribute to identify the checkbox
+    if (event.target.checked) {
+      // Add the label to the state if checked
+      setSize((prev) => [...prev, carLabel]);
+    } else {
+      // Remove the label from the state if unchecked
+      setSize((prev) => prev.filter((car) => car !== carLabel));
+    }
+  };
+  const handleCheckboxChangeCategory = (event) => {
+    const carLabel = event.target.name; // Use the name attribute to identify the checkbox
+    if (event.target.checked) {
+      // Add the label to the state if checked
+      setCategory((prev) => [...prev, carLabel]);
+    } else {
+      // Remove the label from the state if unchecked
+      setCategory((prev) => prev.filter((car) => car !== carLabel));
+    }
+  };
+  const handleCheckboxChangeBrand = (event) => {
+    const carLabel = event.target.name; // Use the name attribute to identify the checkbox
+    if (event.target.checked) {
+      // Add the label to the state if checked
+      setBrand((prev) => [...prev, carLabel]);
+    } else {
+      // Remove the label from the state if unchecked
+      setBrand((prev) => prev.filter((car) => car !== carLabel));
+    }
+  };
+  const handleCheckboxChangeDuration = (event) => {
+    const carLabel = event.target.name; // Use the name attribute to identify the checkbox
+    if (event.target.checked) {
+      // Add the label to the state if checked
+      setDuration((prev) => [...prev, carLabel]);
+    } else {
+      // Remove the label from the state if unchecked
+      setDuration((prev) => prev.filter((car) => car !== carLabel));
+    }
+  };
+  const handleCheckboxChangeLanguage = (event) => {
+    const carLabel = event.target.name; // Use the name attribute to identify the checkbox
+    if (event.target.checked) {
+      // Add the label to the state if checked
+      setLanguage((prev) => [...prev, carLabel]);
+    } else {
+      // Remove the label from the state if unchecked
+      setLanguage((prev) => prev.filter((car) => car !== carLabel));
+    }
+  };
+  const handleCheckboxChangeContentType = (event) => {
+    const carLabel = event.target.name; // Use the name attribute to identify the checkbox
+    if (event.target.checked) {
+      // Add the label to the state if checked
+      setContentType((prev) => [...prev, carLabel]);
+    } else {
+      // Remove the label from the state if unchecked
+      setContentType((prev) => prev.filter((car) => car !== carLabel));
+    }
+  };
+  const handleCheckboxChangeSkillLevel = (event) => {
+    const carLabel = event.target.name; // Use the name attribute to identify the checkbox
+    if (event.target.checked) {
+      // Add the label to the state if checked
+      setSkillLevel((prev) => [...prev, carLabel]);
+    } else {
+      // Remove the label from the state if unchecked
+      setSkillLevel((prev) => prev.filter((car) => car !== carLabel));
+    }
+  };
+  const handleCheckboxChangeSubjectCategories = (event) => {
+    const carLabel = event.target.name; // Use the name attribute to identify the checkbox
+    if (event.target.checked) {
+      // Add the label to the state if checked
+      setSubjectCategories((prev) => [...prev, carLabel]);
+    } else {
+      // Remove the label from the state if unchecked
+      setSubjectCategories((prev) => prev.filter((car) => car !== carLabel));
+    }
   };
   // Search query for title and city
   // Search query for title and city
@@ -680,6 +561,12 @@ const RealEstateComp = () => {
     console.log(`PictureAvailability: ${value}`);
   };
 
+  const handleCheckboxChangeSellerType = (event, label) => {
+    const isChecked = event.target.checked;
+    const selectedLabel = isChecked ? label : "";
+    // setSellerType(selectedLabel);
+    console.log(`Selected: ${selectedLabel}`);
+  };
   const handleCheckboxChangeModelCategory = (label) => {
     setSelectedClassesModelCategory((prevSelected) => {
       const isChecked = prevSelected.includes(label);
@@ -773,18 +660,6 @@ const RealEstateComp = () => {
 
   console.log("Selected Engines:", selectedEngines);
 
-  const handleCheckboxChangeColor = (label) => {
-    setlogSelectedColor((prevSelected) => {
-      if (prevSelected.includes(label)) {
-        // Remove the label if already selected
-        return prevSelected.filter((item) => item !== label);
-      } else {
-        // Add the label to the selected array
-        return [...prevSelected, label];
-      }
-    });
-  };
-
   console.log("Selected Items:", logSelectedColor);
   const handleCheckboxChangeTransmission = (label) => {
     setSelectedOptionTransmission(label);
@@ -854,16 +729,6 @@ const RealEstateComp = () => {
     setToValue(e.target.value);
   };
 
-  const handleCheckboxChangeBrand = (event) => {
-    const carLabel = event.target.name; // Use the name attribute to identify the checkbox
-    if (event.target.checked) {
-      // Add the label to the state if checked
-      setBrand((prev) => [...prev, carLabel]);
-    } else {
-      // Remove the label from the state if unchecked
-      setBrand((prev) => prev.filter((car) => car !== carLabel));
-    }
-  };
   const handleCheckboxChange = (event) => {
     const carLabel = event.target.name; // Use the name attribute to identify the checkbox
     if (event.target.checked) {
@@ -899,7 +764,7 @@ const RealEstateComp = () => {
   useEffect(() => {
     const fetchCars = async () => {
       try {
-        const carsCollectionRef = collection(db, "REALESTATECOMP");
+        const carsCollectionRef = collection(db, "MAGAZINESCOMP");
         const querySnapshot = await getDocs(carsCollectionRef);
         const carsData = querySnapshot.docs.map((doc) => ({
           id: doc.id,
@@ -985,35 +850,26 @@ const RealEstateComp = () => {
       DisplayQuality,
       Connectivity,
       SpecialFeatures,
-      Gender,
-
-      Fit,
-      Material,
-      Color,
-      StyleDesign,
-      ClosureType,
-      CollarType,
-      SleeveLength,
-      WashType,
-      Features,
-      Season,
-      Type,
-      MeasurementRange,
-      Accuracy,
-      CuffSize,
-      DisplayType,
-      BatteryType,
-      Compatibility,
-      StorageCapacity,
-      MeasurementUnits,
-      SpeedofMeasurement,
-      SellerType,
-      PropertyType,
+      SubjectCategories,
+      SkillLevel,
+      ContentType,
+      Language,
+      Duration,
+      Category,
       Size,
-      Amenities,
-      PropertyFeatures,
-      BuildingType,
-      Accessibility
+      Material,
+      Gender,
+      Features,
+      Availability,
+      ColorOptions,
+      SellerType,
+      Breed,
+      Age,
+      Color,
+      Temperament,
+      HealthStatus,
+      TrainingLevel,
+      DietaryPreferences
     );
   }, [
     selectedCities,
@@ -1056,35 +912,26 @@ const RealEstateComp = () => {
     DisplayQuality,
     Connectivity,
     SpecialFeatures,
-    Gender,
-
-    Fit,
-    Material,
-    Color,
-    StyleDesign,
-    ClosureType,
-    CollarType,
-    SleeveLength,
-    WashType,
-    Features,
-    Season,
-    Type,
-    MeasurementRange,
-    Accuracy,
-    CuffSize,
-    DisplayType,
-    BatteryType,
-    Compatibility,
-    StorageCapacity,
-    MeasurementUnits,
-    SpeedofMeasurement,
-    SellerType,
-    PropertyType,
+    SubjectCategories,
+    SkillLevel,
+    ContentType,
+    Language,
+    Duration,
+    Category,
     Size,
-    Amenities,
-    PropertyFeatures,
-    BuildingType,
-    Accessibility,
+    Material,
+    Gender,
+    Features,
+    Availability,
+    ColorOptions,
+    SellerType,
+    Breed,
+    Age,
+    Color,
+    Temperament,
+    HealthStatus,
+    TrainingLevel,
+    DietaryPreferences,
   ]);
 
   // Handle search input change
@@ -1134,35 +981,26 @@ const RealEstateComp = () => {
       DisplayQuality,
       Connectivity,
       SpecialFeatures,
-      Gender,
-
-      Fit,
-      Material,
-      Color,
-      StyleDesign,
-      ClosureType,
-      CollarType,
-      SleeveLength,
-      WashType,
-      Features,
-      Season,
-      Type,
-      MeasurementRange,
-      Accuracy,
-      CuffSize,
-      DisplayType,
-      BatteryType,
-      Compatibility,
-      StorageCapacity,
-      MeasurementUnits,
-      SpeedofMeasurement,
-      SellerType,
-      PropertyType,
+      SubjectCategories,
+      SkillLevel,
+      ContentType,
+      Language,
+      Duration,
+      Category,
       Size,
-      Amenities,
-      PropertyFeatures,
-      BuildingType,
-      Accessibility
+      Material,
+      Gender,
+      Features,
+      Availability,
+      ColorOptions,
+      SellerType,
+      Breed,
+      Age,
+      Color,
+      Temperament,
+      HealthStatus,
+      TrainingLevel,
+      DietaryPreferences
     );
   };
   const filterCars = (
@@ -1206,35 +1044,26 @@ const RealEstateComp = () => {
     DisplayQuality,
     Connectivity,
     SpecialFeatures,
-    Gender,
-
-    Fit,
-    Material,
-    Color,
-    StyleDesign,
-    ClosureType,
-    CollarType,
-    SleeveLength,
-    WashType,
-    Features,
-    Season,
-    Type,
-    MeasurementRange,
-    Accuracy,
-    CuffSize,
-    DisplayType,
-    BatteryType,
-    Compatibility,
-    StorageCapacity,
-    MeasurementUnits,
-    SpeedofMeasurement,
-    SellerType,
-    PropertyType,
+    SubjectCategories,
+    SkillLevel,
+    ContentType,
+    Language,
+    Duration,
+    Category,
     Size,
-    Amenities,
-    PropertyFeatures,
-    BuildingType,
-    Accessibility
+    Material,
+    Gender,
+    Features,
+    Availability,
+    ColorOptions,
+    SellerType,
+    Breed,
+    Age,
+    Color,
+    Temperament,
+    HealthStatus,
+    TrainingLevel,
+    DietaryPreferences
   ) => {
     let filtered = carsData;
 
@@ -1273,151 +1102,108 @@ const RealEstateComp = () => {
           car.DisplayQuality?.toLowerCase().includes(lowercasedQuery) ||
           car.Connectivity?.toLowerCase().includes(lowercasedQuery) ||
           car.SpecialFeatures?.toLowerCase().includes(lowercasedQuery) ||
-          car.Gender?.toLowerCase().includes(lowercasedQuery) ||
+          car.SubjectCategories?.toLowerCase().includes(lowercasedQuery) ||
+          car.SkillLevel?.toLowerCase().includes(lowercasedQuery) ||
+          car.ContentType?.toLowerCase().includes(lowercasedQuery) ||
+          car.Language?.toLowerCase().includes(lowercasedQuery) ||
+          car.Duration?.toLowerCase().includes(lowercasedQuery) ||
+          car.Category?.toLowerCase().includes(lowercasedQuery) ||
           car.Size?.toLowerCase().includes(lowercasedQuery) ||
-          car.Fit?.toLowerCase().includes(lowercasedQuery) ||
           car.Material?.toLowerCase().includes(lowercasedQuery) ||
-          car.Color?.toLowerCase().includes(lowercasedQuery) ||
-          car.StyleDesign?.toLowerCase().includes(lowercasedQuery) ||
-          car.ClosureType?.toLowerCase().includes(lowercasedQuery) ||
-          car.CollarType?.toLowerCase().includes(lowercasedQuery) ||
-          car.SleeveLength?.toLowerCase().includes(lowercasedQuery) ||
-          car.WashType?.toLowerCase().includes(lowercasedQuery) ||
+          car.Gender?.toLowerCase().includes(lowercasedQuery) ||
           car.Features?.toLowerCase().includes(lowercasedQuery) ||
-          car.Season?.toLowerCase().includes(lowercasedQuery) ||
-          car.Type?.toLowerCase().includes(lowercasedQuery) ||
-          car.MeasurementRange?.toLowerCase().includes(lowercasedQuery) ||
-          car.Accuracy?.toLowerCase().includes(lowercasedQuery) ||
-          car.CuffSize?.toLowerCase().includes(lowercasedQuery) ||
-          car.DisplayType?.toLowerCase().includes(lowercasedQuery) ||
-          car.BatteryType?.toLowerCase().includes(lowercasedQuery) ||
-          car.Compatibility?.toLowerCase().includes(lowercasedQuery) ||
-          car.StorageCapacity?.toLowerCase().includes(lowercasedQuery) ||
-          car.MeasurementUnits?.toLowerCase().includes(lowercasedQuery) ||
-          car.SpeedofMeasurement?.toLowerCase().includes(lowercasedQuery) ||
-          car.PropertyType?.toLowerCase().includes(lowercasedQuery) ||
-          car.Amenities?.toLowerCase().includes(lowercasedQuery) ||
-          car.PropertyFeatures?.toLowerCase().includes(lowercasedQuery) ||
-          car.BuildingType?.toLowerCase().includes(lowercasedQuery) ||
-          car.Accessibility?.toLowerCase().includes(lowercasedQuery) ||
+          car.Availability?.toLowerCase().includes(lowercasedQuery) ||
+          car.ColorOptions?.toLowerCase().includes(lowercasedQuery) ||
+          car.SellerType?.toLowerCase().includes(lowercasedQuery) ||
+          car.Breed?.toLowerCase().includes(lowercasedQuery) ||
+          car.Age?.toLowerCase().includes(lowercasedQuery) ||
+          car.Color?.toLowerCase().includes(lowercasedQuery) ||
+          car.Temperament?.toLowerCase().includes(lowercasedQuery) ||
+          car.HealthStatus?.toLowerCase().includes(lowercasedQuery) ||
+          car.TrainingLevel?.toLowerCase().includes(lowercasedQuery) ||
+          car.DietaryPreferences?.toLowerCase().includes(lowercasedQuery) ||
           car.TrustedCars?.toLowerCase().includes(lowercasedQuery)
       );
     }
     setLoading(false);
-    if (BuildingType?.length > 0) {
+    if (Duration?.length > 0) {
+      filtered = filtered.filter((car) => Duration.includes(car.Duration));
+    }
+    if (DietaryPreferences?.length > 0) {
       filtered = filtered.filter((car) =>
-        BuildingType.includes(car.BuildingType)
+        DietaryPreferences.includes(car.DietaryPreferences)
       );
     }
-    if (Accessibility?.length > 0) {
+    if (TrainingLevel?.length > 0) {
       filtered = filtered.filter((car) =>
-        Accessibility.includes(car.Accessibility)
+        TrainingLevel.includes(car.TrainingLevel)
       );
     }
-    if (ScreenSize?.length > 0) {
-      filtered = filtered.filter((car) => ScreenSize.includes(car.ScreenSize));
-    }
-    if (PropertyFeatures?.length > 0) {
+    if (HealthStatus?.length > 0) {
       filtered = filtered.filter((car) =>
-        PropertyFeatures.includes(car.PropertyFeatures)
+        HealthStatus.includes(car.HealthStatus)
       );
     }
-    if (Amenities?.length > 0) {
-      filtered = filtered.filter((car) => Amenities.includes(car.Amenities));
-    }
-    if (PropertyType?.length > 0) {
+    if (Temperament?.length > 0) {
       filtered = filtered.filter((car) =>
-        PropertyType.includes(car.PropertyType)
-      );
-    }
-    if (SellerType?.length > 0) {
-      filtered = filtered.filter((car) => SellerType.includes(car.SellerType));
-    }
-    if (SpeedofMeasurement?.length > 0) {
-      filtered = filtered.filter((car) =>
-        SpeedofMeasurement.includes(car.SpeedofMeasurement)
-      );
-    }
-    if (MeasurementUnits?.length > 0) {
-      filtered = filtered.filter((car) =>
-        MeasurementUnits.includes(car.MeasurementUnits)
-      );
-    }
-    if (StorageCapacity?.length > 0) {
-      filtered = filtered.filter((car) =>
-        StorageCapacity.includes(car.StorageCapacity)
-      );
-    }
-    if (Compatibility?.length > 0) {
-      filtered = filtered.filter((car) =>
-        Compatibility.includes(car.Compatibility)
-      );
-    }
-    if (BatteryType?.length > 0) {
-      filtered = filtered.filter((car) =>
-        BatteryType.includes(car.BatteryType)
-      );
-    }
-    if (DisplayType?.length > 0) {
-      filtered = filtered.filter((car) =>
-        DisplayType.includes(car.DisplayType)
-      );
-    }
-    if (CuffSize?.length > 0) {
-      filtered = filtered.filter((car) => CuffSize.includes(car.CuffSize));
-    }
-    if (Accuracy?.length > 0) {
-      filtered = filtered.filter((car) => Accuracy.includes(car.Accuracy));
-    }
-    if (MeasurementRange?.length > 0) {
-      filtered = filtered.filter((car) =>
-        MeasurementRange.includes(car.MeasurementRange)
-      );
-    }
-    if (Type?.length > 0) {
-      filtered = filtered.filter((car) => Type.includes(car.Type));
-    }
-    if (Season?.length > 0) {
-      filtered = filtered.filter((car) => Season.includes(car.Season));
-    }
-    if (Features?.length > 0) {
-      filtered = filtered.filter((car) => Features.includes(car.Features));
-    }
-    if (WashType?.length > 0) {
-      filtered = filtered.filter((car) => WashType.includes(car.WashType));
-    }
-    if (SleeveLength?.length > 0) {
-      filtered = filtered.filter((car) =>
-        SleeveLength.includes(car.SleeveLength)
-      );
-    }
-    if (CollarType?.length > 0) {
-      filtered = filtered.filter((car) => CollarType.includes(car.CollarType));
-    }
-    if (ClosureType?.length > 0) {
-      filtered = filtered.filter((car) =>
-        ClosureType.includes(car.ClosureType)
-      );
-    }
-    if (StyleDesign?.length > 0) {
-      filtered = filtered.filter((car) =>
-        StyleDesign.includes(car.StyleDesign)
+        Temperament.includes(car.Temperament)
       );
     }
     if (Color?.length > 0) {
       filtered = filtered.filter((car) => Color.includes(car.Color));
     }
+    if (Age?.length > 0) {
+      filtered = filtered.filter((car) => Age.includes(car.Age));
+    }
+    if (Breed?.length > 0) {
+      filtered = filtered.filter((car) => Breed.includes(car.Breed));
+    }
+    if (SellerType?.length > 0) {
+      filtered = filtered.filter((car) => SellerType.includes(car.SellerType));
+    }
+    if (ColorOptions?.length > 0) {
+      filtered = filtered.filter((car) =>
+        ColorOptions.includes(car.ColorOptions)
+      );
+    }
+    if (Availability?.length > 0) {
+      filtered = filtered.filter((car) =>
+        Availability.includes(car.Availability)
+      );
+    }
+    if (Features?.length > 0) {
+      filtered = filtered.filter((car) => Features.includes(car.Features));
+    }
+    if (Gender?.length > 0) {
+      filtered = filtered.filter((car) => Gender.includes(car.Gender));
+    }
     if (Material?.length > 0) {
       filtered = filtered.filter((car) => Material.includes(car.Material));
-    }
-    if (Fit?.length > 0) {
-      filtered = filtered.filter((car) => Fit.includes(car.Fit));
     }
     if (Size?.length > 0) {
       filtered = filtered.filter((car) => Size.includes(car.Size));
     }
-    if (Gender?.length > 0) {
-      filtered = filtered.filter((car) => Gender.includes(car.Gender));
+    if (Category?.length > 0) {
+      filtered = filtered.filter((car) => Category.includes(car.Category));
+    }
+    if (ScreenSize?.length > 0) {
+      filtered = filtered.filter((car) => ScreenSize.includes(car.ScreenSize));
+    }
+    if (Language?.length > 0) {
+      filtered = filtered.filter((car) => Language.includes(car.Language));
+    }
+    if (ContentType?.length > 0) {
+      filtered = filtered.filter((car) =>
+        ContentType.includes(car.ContentType)
+      );
+    }
+    if (SkillLevel?.length > 0) {
+      filtered = filtered.filter((car) => SkillLevel.includes(car.SkillLevel));
+    }
+    if (SubjectCategories?.length > 0) {
+      filtered = filtered.filter((car) =>
+        SubjectCategories.includes(car.SubjectCategories)
+      );
     }
     if (SpecialFeatures?.length > 0) {
       filtered = filtered.filter((car) =>
@@ -1628,7 +1414,7 @@ const RealEstateComp = () => {
         return manufactureYear >= minDate && manufactureYear <= maxDate;
       });
     }
-    console.log(filtered, "REAL ESTATE");
+    console.log(filtered, "filtered________");
     setFilteredCars(filtered);
     setActivePage(1);
   };
@@ -1720,7 +1506,34 @@ const RealEstateComp = () => {
           {/* Banner Section */}
 
           {/* Trending Products */}
-         
+          {/* <div className="trendingprodct_wrapper container">
+            <h3 className="trendingproduct_heading"> Our Trending Product</h3>
+            <div className="trendingproducts_container">
+              <button className="trendingProductsallname">Iphone 16</button>
+              <button
+                className="trendingProductsallname"
+                onClick={() => {
+                  navigate("/Bikes");
+                }}
+              >
+                Bikes
+              </button>
+              <button
+                className="trendingProductsallname"
+                onClick={() => {
+                  navigate("/SportGamesComp");
+                }}
+              >
+                Cricket Kit
+              </button>
+              <button className="trendingProductsallname">Bags</button>
+              <button className="trendingProductsallname">Apparel</button>
+              <button className="trendingProductsallname">Mens Hoodies</button>
+              <button className="trendingProductsallname">Apparel</button>
+              <button className="trendingProductsallname">Magazines</button>
+              <button className="trendingProductsallname">Mens Hoodies</button>
+            </div>
+          </div> */}
           {/* Trending Products */}
 
           {/* Category Section */}
@@ -1804,7 +1617,7 @@ const RealEstateComp = () => {
               padding: "10px 15px",
             }}
           >
-           Apartment
+           Magazine
           </button>
           <span>
           <MdKeyboardArrowRight />
@@ -1834,7 +1647,7 @@ const RealEstateComp = () => {
               padding: "10px 15px",
             }}
           >
-          Used Apartment for Sale
+            Used Laptops for Sale
           </button>
           <span>
           <MdKeyboardArrowRight />
@@ -1849,7 +1662,7 @@ const RealEstateComp = () => {
               padding: "10px 15px",
             }}
           >
-        Modern Apartment in Downtown
+            Apple Macbook Air M3   
           </button>
         
           
@@ -1857,7 +1670,7 @@ const RealEstateComp = () => {
 
         <div>
           <h1 style={{ marginLeft: "4%", marginTop: "20px", fontSize: "24px" }}>
-          Used Blood Pressure Monitor for Sale
+          National Geographic Magazine
           </h1>
         </div>
 
@@ -1973,18 +1786,17 @@ const RealEstateComp = () => {
           </button>
         </div>
        </Container>
-        <Container fluid  style={{
-                  paddingLeft: "1px", // Padding on the left side
-                  paddingRight: "1px", // Padding on the right side
-                  color: 'black', // Text color
-                  maxWidth: '1420px', // Optional: Add max-width to ensure padding is visible
-                  margin: '0 auto', // Optional: Center the container if desired
-                }}>
+        <Container fluid   style={{
+                   paddingLeft: "1px", // Padding on the left side
+                   paddingRight: "1px", // Padding on the right side
+                   color: 'black', // Text color
+                   maxWidth: '1420px', // Optional: Add max-width to ensure padding is visible
+                   margin: '0 auto', // Optional: Center the container if desired
+                 }}>
           <Row>
             {/* Sidebar */}
             <Col md={3} className="bg-light p-3 style={{ height: '200px' }}">
-            <h5
-                style={{
+            <h5  style={{
                   borderTopLeftRadius: "5px",
                   borderTopRightRadius: "5px",
                   backgroundColor: "#2D4495",
@@ -1993,8 +1805,7 @@ const RealEstateComp = () => {
                   height: "49.66px",
                   paddingLeft: "6px",
                   paddingTop: "6px",
-                }}
-              >
+                }}>
                 Show Results by:</h5>
 
               <Form>
@@ -2006,7 +1817,7 @@ const RealEstateComp = () => {
                     <div className="position-relative">
                       <input
                         type="search"
-                        placeholder="E.g. Apartment in America"
+                        placeholder="E.g. MacBook in Dubai"
                         className="form-control rounded-pill pe-5"
                         id="example-search-input"
                         value={searchQuery} // Bind value to searchQuery state
@@ -2025,7 +1836,7 @@ const RealEstateComp = () => {
       background-color: #2D4495 !important; 
       border-color: black !important; 
     }
-  `}</style>  
+  `}</style>      
                 <Accordion>
                   <Accordion.Item eventKey="0">
                     <Accordion.Header>Select City</Accordion.Header>
@@ -2135,17 +1946,16 @@ const RealEstateComp = () => {
 
                 <Accordion>
                   <Accordion.Item eventKey="0">
-                    <Accordion.Header>Property Type</Accordion.Header>
+                    <Accordion.Header>Breed</Accordion.Header>
                     <Accordion.Body>
                       <Form.Group className="mb-3">
                         {/* Checkbox Selection */}
                         <div style={{ maxWidth: "300px", marginTop: "20px" }}>
                           {[
-                            "House",
-                            "Apartment",
-                            "Townhouse",
-                            "Condo",
-                            "Studio",
+                            "German Shepherd",
+                            "Labrador Retriever",
+                            "Golden Retriever",
+                            "Beagle",
                           ].map((car, index) => (
                             <div
                               key={index}
@@ -2160,7 +1970,7 @@ const RealEstateComp = () => {
                                 type="checkbox"
                                 label={car}
                                 name={car} // Use the name attribute for identification
-                                onChange={handleCheckboxChangePropertyType}
+                                onChange={handleCheckboxChangeBreed}
                                 // defaultChecked={car === "Nissan"} // Pre-check Nissan
                               />
                               <span
@@ -2175,6 +1985,7 @@ const RealEstateComp = () => {
                     </Accordion.Body>
                   </Accordion.Item>
                 </Accordion>
+
                 <hr
                   style={{
                     width: "100%",
@@ -2189,8 +2000,6 @@ const RealEstateComp = () => {
                     borderColor: "#000000", // Set border color to black
                   }}
                 />
-
-                {/*                  */}
 
                 <Accordion className="mt-3">
                   <Accordion.Item eventKey="0">
@@ -2219,6 +2028,7 @@ const RealEstateComp = () => {
                     </Accordion.Body>
                   </Accordion.Item>
                 </Accordion>
+
                 <hr
                   style={{
                     width: "100%",
@@ -2234,19 +2044,20 @@ const RealEstateComp = () => {
                   }}
                 />
 
-                <Accordion className="mt-3">
+                <Accordion>
                   <Accordion.Item eventKey="0">
-                    <Accordion.Header>Type</Accordion.Header>
+                    <Accordion.Header>Age</Accordion.Header>
                     <Accordion.Body>
-                      <div style={{ maxWidth: "300px", margin: "20px" }}>
-                        <Form.Group>
+                      <Form.Group className="mb-3">
+                        {/* Checkbox Selection */}
+                        <div style={{ maxWidth: "300px", marginTop: "20px" }}>
                           {[
-                            "Upper arm monitor",
-                            "Wrist monitor",
-                            "Finger monitor",
-                          ].map((engine, index) => (
+                            "Puppy (0–1 year)",
+                            "Young (1–3 years)",
+                            "Adult (3–6 years)",
+                          ].map((car, index) => (
                             <div
-                              key={engine}
+                              key={index}
                               style={{
                                 display: "flex",
                                 justifyContent: "space-between",
@@ -2256,11 +2067,10 @@ const RealEstateComp = () => {
                             >
                               <Form.Check
                                 type="checkbox"
-                                label={engine}
-                                // defaultChecked={engine === "V8 Engine"}
-                                onChange={() =>
-                                  handleCheckboxChangeType(engine)
-                                }
+                                label={car}
+                                name={car} // Use the name attribute for identification
+                                onChange={handleCheckboxChangeAge}
+                                // defaultChecked={car === "Nissan"} // Pre-check Nissan
                               />
                               <span
                                 style={{ fontWeight: "bold", color: "#333" }}
@@ -2269,9 +2079,8 @@ const RealEstateComp = () => {
                               </span>
                             </div>
                           ))}
-                        </Form.Group>
-                        <p style={{ color: "#2D4495" }}>More choices</p>
-                      </div>
+                        </div>
+                      </Form.Group>
                     </Accordion.Body>
                   </Accordion.Item>
                 </Accordion>
@@ -2289,17 +2098,67 @@ const RealEstateComp = () => {
                     borderColor: "#000000", // Set border color to black
                   }}
                 />
-
-                <Accordion className="mt-3">
+                <Accordion>
                   <Accordion.Item eventKey="0">
-                    <Accordion.Header> Size</Accordion.Header>
+                    <Accordion.Header>Gender</Accordion.Header>
                     <Accordion.Body>
-                      <div style={{ maxWidth: "300px", margin: "20px" }}>
-                        <Form.Group>
-                          {["500–1,500 sq. ft.", "1,500–3,000 sq. ft."].map(
-                            (engine) => (
+                      <Form.Group className="mb-3">
+                        {/* Checkbox Selection */}
+                        <div style={{ maxWidth: "300px", marginTop: "20px" }}>
+                          {["Male", "Female"].map((car, index) => (
+                            <div
+                              key={index}
+                              style={{
+                                display: "flex",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                                padding: "8px 0",
+                              }}
+                            >
+                              <Form.Check
+                                type="checkbox"
+                                label={car}
+                                name={car} // Use the name attribute for identification
+                                onChange={handleCheckboxChangeGender}
+                                // defaultChecked={car === "Nissan"} // Pre-check Nissan
+                              />
+                              <span
+                                style={{ fontWeight: "bold", color: "#333" }}
+                              >
+                                12345
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      </Form.Group>
+                    </Accordion.Body>
+                  </Accordion.Item>
+                </Accordion>
+                <hr
+                  style={{
+                    width: "100%",
+                    height: "0px",
+                    top: "1310.01px",
+                    left: "239.88px",
+                    gap: "0px",
+                    borderTop: "1px solid #000000",
+                    opacity: "0.5", // Adjust opacity for visibility
+                    transform: "rotate(0deg)",
+                    margin: "20px 0",
+                    borderColor: "#000000", // Set border color to black
+                  }}
+                />
+                <Accordion>
+                  <Accordion.Item eventKey="0">
+                    <Accordion.Header>Color</Accordion.Header>
+                    <Accordion.Body>
+                      <Form.Group className="mb-3">
+                        {/* Checkbox Selection */}
+                        <div style={{ maxWidth: "300px", marginTop: "20px" }}>
+                          {["Yellow", "Female", "Chocolate"].map(
+                            (car, index) => (
                               <div
-                                key={engine}
+                                key={index}
                                 style={{
                                   display: "flex",
                                   justifyContent: "space-between",
@@ -2309,10 +2168,10 @@ const RealEstateComp = () => {
                               >
                                 <Form.Check
                                   type="checkbox"
-                                  label={engine}
-                                  name={engine} // Set the name attribute
-                                  checked={Size.includes(engine)} // Control the checked state
-                                  onChange={handleCheckboxChangeSize} // Pass the event object
+                                  label={car}
+                                  name={car} // Use the name attribute for identification
+                                  onChange={handleCheckboxChangeColor}
+                                  // defaultChecked={car === "Nissan"} // Pre-check Nissan
                                 />
                                 <span
                                   style={{ fontWeight: "bold", color: "#333" }}
@@ -2322,132 +2181,8 @@ const RealEstateComp = () => {
                               </div>
                             )
                           )}
-                        </Form.Group>
-                        <p style={{ color: "#2D4495" }}>More choices</p>
-                      </div>
-                      ;
-                    </Accordion.Body>
-                  </Accordion.Item>
-                </Accordion>
-                <hr
-                  style={{
-                    width: "100%",
-                    height: "0px",
-                    top: "1310.01px",
-                    left: "239.88px",
-                    gap: "0px",
-                    borderTop: "1px solid #000000",
-                    opacity: "0.5", // Adjust opacity for visibility
-                    transform: "rotate(0deg)",
-                    margin: "20px 0",
-                    borderColor: "#000000", // Set border color to black
-                  }}
-                />
-
-                <Accordion className="mt-3">
-                  <Accordion.Item eventKey="0">
-                    <Accordion.Header> Amenities</Accordion.Header>
-                    <Accordion.Body>
-                      <div style={{ maxWidth: "300px", margin: "20px" }}>
-                        <Form.Group>
-                          {[
-                            "Parking space",
-                            "Gym",
-                            "Swimming pool",
-                            "Pet-friendly",
-                            "Balcony or terrace",
-                          ].map((engine) => (
-                            <div
-                              key={engine}
-                              style={{
-                                display: "flex",
-                                justifyContent: "space-between",
-                                alignItems: "center",
-                                padding: "8px 0",
-                              }}
-                            >
-                              <Form.Check
-                                type="checkbox"
-                                label={engine}
-                                name={engine} // Set the name attribute
-                                checked={Amenities.includes(engine)} // Control the checked state
-                                onChange={handleCheckboxChangeAmenities} // Pass the event object
-                              />
-                              <span
-                                style={{ fontWeight: "bold", color: "#333" }}
-                              >
-                                12345
-                              </span>
-                            </div>
-                          ))}
-                        </Form.Group>
-                        <p style={{ color: "#2D4495" }}>More choices</p>
-                        <div>
-                          <strong>Selected Amenities:</strong>{" "}
-                          {Amenities.join(", ")}
                         </div>
-                      </div>
-                    </Accordion.Body>
-                  </Accordion.Item>
-                </Accordion>
-
-                <hr
-                  style={{
-                    width: "100%",
-                    height: "0px",
-                    top: "1310.01px",
-                    left: "239.88px",
-                    gap: "0px",
-                    borderTop: "1px solid #000000",
-                    opacity: "0.5", // Adjust opacity for visibility
-                    transform: "rotate(0deg)",
-                    margin: "20px 0",
-                    borderColor: "#000000", // Set border color to black
-                  }}
-                />
-
-                <Accordion className="mt-3">
-                  <Accordion.Item eventKey="0">
-                    <Accordion.Header> Property Features</Accordion.Header>
-                    <Accordion.Body>
-                      <div style={{ maxWidth: "300px", margin: "20px" }}>
-                        <Form.Group>
-                          {[
-                            "Year built",
-                            "Unfurnished",
-                            "Furnished",
-                            "Smart home",
-                          ].map((engine) => (
-                            <div
-                              key={engine}
-                              style={{
-                                display: "flex",
-                                justifyContent: "space-between",
-                                alignItems: "center",
-                                padding: "8px 0",
-                              }}
-                            >
-                              <Form.Check
-                                type="checkbox"
-                                label={engine}
-                                name={engine} // Set the name attribute
-                                checked={PropertyFeatures.includes(engine)} // Control the checked state
-                                onChange={handleCheckboxChangePropertyFeatures} // Pass the event object
-                              />
-                              <span
-                                style={{ fontWeight: "bold", color: "#333" }}
-                              >
-                                12345
-                              </span>
-                            </div>
-                          ))}
-                        </Form.Group>
-                        <p style={{ color: "#2D4495" }}>More choices</p>
-                        <div>
-                          <strong>Selected Amenities:</strong>{" "}
-                          {Amenities.join(", ")}
-                        </div>
-                      </div>
+                      </Form.Group>
                     </Accordion.Body>
                   </Accordion.Item>
                 </Accordion>
@@ -2465,77 +2200,17 @@ const RealEstateComp = () => {
                     borderColor: "#000000", // Set border color to black
                   }}
                 />
-
-                <Accordion className="mt-3">
+                <Accordion>
                   <Accordion.Item eventKey="0">
-                    <Accordion.Header> Building Type</Accordion.Header>
+                    <Accordion.Header>Size</Accordion.Header>
                     <Accordion.Body>
-                      <div style={{ maxWidth: "300px", margin: "20px" }}>
-                        <Form.Group>
-                          {[
-                            "Single-family",
-                            "Multi-family",
-                            "High-rise",
-                            "Low Rise",
-                          ].map((engine) => (
-                            <div
-                              key={engine}
-                              style={{
-                                display: "flex",
-                                justifyContent: "space-between",
-                                alignItems: "center",
-                                padding: "8px 0",
-                              }}
-                            >
-                              <Form.Check
-                                type="checkbox"
-                                label={engine}
-                                name={engine} // Set the name attribute
-                                checked={BuildingType.includes(engine)} // Control the checked state
-                                onChange={handleCheckboxChangeBuildingType} // Pass the event object
-                              />
-                              <span
-                                style={{ fontWeight: "bold", color: "#333" }}
-                              >
-                                12345
-                              </span>
-                            </div>
-                          ))}
-                        </Form.Group>
-                        <p style={{ color: "#2D4495" }}>More choices</p>
-                        <div>
-                          <strong>Selected Amenities:</strong>{" "}
-                          {Amenities.join(", ")}
-                        </div>
-                      </div>
-                    </Accordion.Body>
-                  </Accordion.Item>
-                </Accordion>
-                <hr
-                  style={{
-                    width: "100%",
-                    height: "0px",
-                    top: "1310.01px",
-                    left: "239.88px",
-                    gap: "0px",
-                    borderTop: "1px solid #000000",
-                    opacity: "0.5", // Adjust opacity for visibility
-                    transform: "rotate(0deg)",
-                    margin: "20px 0",
-                    borderColor: "#000000", // Set border color to black
-                  }}
-                />
-
-                <Accordion className="mt-3">
-                  <Accordion.Item eventKey="0">
-                    <Accordion.Header> Accessibility</Accordion.Header>
-                    <Accordion.Body>
-                      <div style={{ maxWidth: "300px", margin: "20px" }}>
-                        <Form.Group>
-                          {["Elevator availability", "Wheelchair access"].map(
-                            (engine) => (
+                      <Form.Group className="mb-3">
+                        {/* Checkbox Selection */}
+                        <div style={{ maxWidth: "300px", marginTop: "20px" }}>
+                          {["Men: 6–15 (US)", "Women: 5–12 (US)"].map(
+                            (car, index) => (
                               <div
-                                key={engine}
+                                key={index}
                                 style={{
                                   display: "flex",
                                   justifyContent: "space-between",
@@ -2545,10 +2220,10 @@ const RealEstateComp = () => {
                               >
                                 <Form.Check
                                   type="checkbox"
-                                  label={engine}
-                                  name={engine} // Set the name attribute
-                                  checked={Accessibility.includes(engine)} // Control the checked state
-                                  onChange={handleCheckboxChangeAccessibility} // Pass the event object
+                                  label={car}
+                                  name={car} // Use the name attribute for identification
+                                  onChange={handleCheckboxChangeSize}
+                                  // defaultChecked={car === "Nissan"} // Pre-check Nissan
                                 />
                                 <span
                                   style={{ fontWeight: "bold", color: "#333" }}
@@ -2558,13 +2233,8 @@ const RealEstateComp = () => {
                               </div>
                             )
                           )}
-                        </Form.Group>
-                        <p style={{ color: "#2D4495" }}>More choices</p>
-                        <div>
-                          <strong>Selected Amenities:</strong>{" "}
-                          {Amenities.join(", ")}
                         </div>
-                      </div>
+                      </Form.Group>
                     </Accordion.Body>
                   </Accordion.Item>
                 </Accordion>
@@ -2584,21 +2254,231 @@ const RealEstateComp = () => {
                   }}
                 />
 
-                <Accordion className="mt-3">
+                <Accordion>
                   <Accordion.Item eventKey="0">
-                    <Accordion.Header> Seller Type</Accordion.Header>
+                    <Accordion.Header>Temperament</Accordion.Header>
                     <Accordion.Body>
-                      <div style={{ maxWidth: "300px", margin: "20px" }}>
-                        <Form.Group>
+                      <Form.Group className="mb-3">
+                        {/* Checkbox Selection */}
+                        <div style={{ maxWidth: "300px", marginTop: "20px" }}>
+                          {["Friendly", "Protective", "Playful"].map(
+                            (car, index) => (
+                              <div
+                                key={index}
+                                style={{
+                                  display: "flex",
+                                  justifyContent: "space-between",
+                                  alignItems: "center",
+                                  padding: "8px 0",
+                                }}
+                              >
+                                <Form.Check
+                                  type="checkbox"
+                                  label={car}
+                                  name={car} // Use the name attribute for identification
+                                  onChange={handleCheckboxChangeTemperament}
+                                  // defaultChecked={car === "Nissan"} // Pre-check Nissan
+                                />
+                                <span
+                                  style={{ fontWeight: "bold", color: "#333" }}
+                                >
+                                  12345
+                                </span>
+                              </div>
+                            )
+                          )}
+                        </div>
+                      </Form.Group>
+                    </Accordion.Body>
+                  </Accordion.Item>
+                </Accordion>
+                <hr
+                  style={{
+                    width: "100%",
+                    height: "0px",
+                    top: "1310.01px",
+                    left: "239.88px",
+                    gap: "0px",
+                    borderTop: "1px solid #000000",
+                    opacity: "0.5", // Adjust opacity for visibility
+                    transform: "rotate(0deg)",
+                    margin: "20px 0",
+                    borderColor: "#000000", // Set border color to black
+                  }}
+                />
+                <Accordion>
+                  <Accordion.Item eventKey="0">
+                    <Accordion.Header>Health Status</Accordion.Header>
+                    <Accordion.Body>
+                      <Form.Group className="mb-3">
+                        {/* Checkbox Selection */}
+                        <div style={{ maxWidth: "300px", marginTop: "20px" }}>
+                          {["Spayed/Neutered", "Vaccinated", "Dewormed"].map(
+                            (car, index) => (
+                              <div
+                                key={index}
+                                style={{
+                                  display: "flex",
+                                  justifyContent: "space-between",
+                                  alignItems: "center",
+                                  padding: "8px 0",
+                                }}
+                              >
+                                <Form.Check
+                                  type="checkbox"
+                                  label={car}
+                                  name={car} // Use the name attribute for identification
+                                  onChange={handleCheckboxChangeHealthStatus}
+                                  // defaultChecked={car === "Nissan"} // Pre-check Nissan
+                                />
+                                <span
+                                  style={{ fontWeight: "bold", color: "#333" }}
+                                >
+                                  12345
+                                </span>
+                              </div>
+                            )
+                          )}
+                        </div>
+                      </Form.Group>
+                    </Accordion.Body>
+                  </Accordion.Item>
+                </Accordion>
+                <hr
+                  style={{
+                    width: "100%",
+                    height: "0px",
+                    top: "1310.01px",
+                    left: "239.88px",
+                    gap: "0px",
+                    borderTop: "1px solid #000000",
+                    opacity: "0.5", // Adjust opacity for visibility
+                    transform: "rotate(0deg)",
+                    margin: "20px 0",
+                    borderColor: "#000000", // Set border color to black
+                  }}
+                />
+                <Accordion>
+                  <Accordion.Item eventKey="0">
+                    <Accordion.Header>Training Level</Accordion.Header>
+                    <Accordion.Body>
+                      <Form.Group className="mb-3">
+                        {/* Checkbox Selection */}
+                        <div style={{ maxWidth: "300px", marginTop: "20px" }}>
+                          {["Untrained", "Basic Commands", "Fully Trained"].map(
+                            (car, index) => (
+                              <div
+                                key={index}
+                                style={{
+                                  display: "flex",
+                                  justifyContent: "space-between",
+                                  alignItems: "center",
+                                  padding: "8px 0",
+                                }}
+                              >
+                                <Form.Check
+                                  type="checkbox"
+                                  label={car}
+                                  name={car} // Use the name attribute for identification
+                                  onChange={handleCheckboxChangeTrainingLevel}
+                                  // defaultChecked={car === "Nissan"} // Pre-check Nissan
+                                />
+                                <span
+                                  style={{ fontWeight: "bold", color: "#333" }}
+                                >
+                                  12345
+                                </span>
+                              </div>
+                            )
+                          )}
+                        </div>
+                      </Form.Group>
+                    </Accordion.Body>
+                  </Accordion.Item>
+                </Accordion>
+                <hr
+                  style={{
+                    width: "100%",
+                    height: "0px",
+                    top: "1310.01px",
+                    left: "239.88px",
+                    gap: "0px",
+                    borderTop: "1px solid #000000",
+                    opacity: "0.5", // Adjust opacity for visibility
+                    transform: "rotate(0deg)",
+                    margin: "20px 0",
+                    borderColor: "#000000", // Set border color to black
+                  }}
+                />
+                <Accordion>
+                  <Accordion.Item eventKey="0">
+                    <Accordion.Header>Dietary Preferences</Accordion.Header>
+                    <Accordion.Body>
+                      <Form.Group className="mb-3">
+                        {/* Checkbox Selection */}
+                        <div style={{ maxWidth: "300px", marginTop: "20px" }}>
                           {[
-                            "Direct owner",
-                            "Real estate agent",
-                            "Developer",
-
+                            "Grain-Free Diet",
+                            "Standard Dog Food",
+                            "Organic Food",
+                          ].map((car, index) => (
+                            <div
+                              key={index}
+                              style={{
+                                display: "flex",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                                padding: "8px 0",
+                              }}
+                            >
+                              <Form.Check
+                                type="checkbox"
+                                label={car}
+                                name={car} // Use the name attribute for identification
+                                onChange={handleCheckboxChangeOrganicFood}
+                                // defaultChecked={car === "Nissan"} // Pre-check Nissan
+                              />
+                              <span
+                                style={{ fontWeight: "bold", color: "#333" }}
+                              >
+                                12345
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      </Form.Group>
+                    </Accordion.Body>
+                  </Accordion.Item>
+                </Accordion>
+                <hr
+                  style={{
+                    width: "100%",
+                    height: "0px",
+                    top: "1310.01px",
+                    left: "239.88px",
+                    gap: "0px",
+                    borderTop: "1px solid #000000",
+                    opacity: "0.5", // Adjust opacity for visibility
+                    transform: "rotate(0deg)",
+                    margin: "20px 0",
+                    borderColor: "#000000", // Set border color to black
+                  }}
+                />
+                <Accordion>
+                  <Accordion.Item eventKey="0">
+                    <Accordion.Header>Seller Type</Accordion.Header>
+                    <Accordion.Body>
+                      <Form.Group className="mb-3">
+                        {/* Checkbox Selection */}
+                        <div style={{ maxWidth: "300px", marginTop: "20px" }}>
+                          {[
+                            "Brand Seller",
+                            "Individuals",
+                            "Retailer",
                             "Marketplace",
-                          ].map((engine, index) => (
+                          ].map((car, index) => (
                             <div
-                              key={engine}
+                              key={index}
                               style={{
                                 display: "flex",
                                 justifyContent: "space-between",
@@ -2608,11 +2488,10 @@ const RealEstateComp = () => {
                             >
                               <Form.Check
                                 type="checkbox"
-                                label={engine}
-                                // defaultChecked={engine === "V8 Engine"}
-                                onChange={() =>
-                                  handleCheckboxChangeSellerType(engine)
-                                }
+                                label={car}
+                                name={car} // Use the name attribute for identification
+                                onChange={handleCheckboxChangeColorOptions1}
+                                // defaultChecked={car === "Nissan"} // Pre-check Nissan
                               />
                               <span
                                 style={{ fontWeight: "bold", color: "#333" }}
@@ -2621,13 +2500,11 @@ const RealEstateComp = () => {
                               </span>
                             </div>
                           ))}
-                        </Form.Group>
-                        <p style={{ color: "#2D4495" }}>More choices</p>
-                      </div>
+                        </div>
+                      </Form.Group>
                     </Accordion.Body>
                   </Accordion.Item>
                 </Accordion>
-
                 <hr
                   style={{
                     width: "100%",
@@ -2642,18 +2519,6 @@ const RealEstateComp = () => {
                     borderColor: "#000000", // Set border color to black
                   }}
                 />
-
-                <hr
-                  style={{
-                    width: "100%",
-                    height: "1px",
-                    borderTop: "1px solid #000000",
-                    opacity: "0.5", // Adjust opacity for visibility
-                    margin: "20px 0",
-                    borderColor: "#000000", // Set border color to black
-                  }}
-                />
-
                 <Accordion className="mt-3">
                   <Accordion.Item eventKey="0">
                     <Accordion.Header>Picture Availability</Accordion.Header>
@@ -2684,6 +2549,7 @@ const RealEstateComp = () => {
                     </Accordion.Body>
                   </Accordion.Item>
                 </Accordion>
+
                 <hr
                   style={{
                     width: "100%",
@@ -2727,6 +2593,7 @@ const RealEstateComp = () => {
                     </Accordion.Body>
                   </Accordion.Item>
                 </Accordion>
+
                 <hr
                   style={{
                     width: "100%",
@@ -2738,40 +2605,52 @@ const RealEstateComp = () => {
                   }}
                 />
 
-                <Accordion className="mt-3">
-                  <Accordion.Item eventKey="0">
-                    <Accordion.Header>Ad Type</Accordion.Header>
-                    <Accordion.Body>
-                      <div style={{ maxWidth: "300px", margin: "20px" }}>
-                        <Form.Group>
-                          {/* Local Checkbox */}
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              alignItems: "center",
-                              padding: "8px 0",
-                            }}
-                          >
-                            <Form.Check
-                              type="checkbox"
-                              label="Featured Ad"
-                              onChange={handleCheckboxChangeisFeatured}
-                              checked={
-                                selectedOptionisFeatured === "Featured Ad"
-                              }
-                            />
-                            <span style={{ fontWeight: "bold", color: "#333" }}>
-                              12345
-                            </span>
-                          </div>
-                        </Form.Group>
-                      </div>
-                    </Accordion.Body>
-                  </Accordion.Item>
-                </Accordion>
+                {/*                  */}
+
                 {/*-------------------------------------*/}
               </Form>
+
+              <Accordion className="mt-3">
+                <Accordion.Item eventKey="0">
+                  <Accordion.Header>Ad Type</Accordion.Header>
+                  <Accordion.Body>
+                    <div style={{ maxWidth: "300px", margin: "20px" }}>
+                      <Form.Group>
+                        {/* Local Checkbox */}
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            padding: "8px 0",
+                          }}
+                        >
+                          <Form.Check
+                            type="checkbox"
+                            label="Featured Ad"
+                            onChange={handleCheckboxChangeisFeatured}
+                            checked={selectedOptionisFeatured === "Featured Ad"}
+                          />
+                          <span style={{ fontWeight: "bold", color: "#333" }}>
+                            12345
+                          </span>
+                        </div>
+                      </Form.Group>
+                    </div>
+                  </Accordion.Body>
+                </Accordion.Item>
+              </Accordion>
+
+              <hr
+                style={{
+                  width: "100%",
+                  height: "1px",
+                  borderTop: "1px solid #000000",
+                  opacity: "0.5", // Adjust opacity for visibility
+                  margin: "20px 0",
+                  borderColor: "#000000", // Set border color to black
+                }}
+              />
             </Col>
 
             <Col md={9} className="p-3">
@@ -2865,26 +2744,23 @@ const RealEstateComp = () => {
                               {car.title || "Car"}
                             </Card.Title>
                             <Card.Text>
-                            <small
-                                className="text-muted"
-                                style={{ color: "black" }}
-                              >
-                                <i
-                                  className="fas fa-map-marker-alt"
-                                  style={{
-                                    marginRight: "5px",
-                                    color: "#6c757d",
-                                  }}
-                                ></i>
-                               <span style={{ color: "black" }}>{car.City || "Location"}</span>
-                              </small>
+                            <small className="text-muted">
+  <i
+    className="fas fa-map-marker-alt"
+    style={{
+      marginRight: "5px",
+      color: "#6c757d",
+    }}
+  ></i>
+  <span style={{ color: "black" }}>{car.City || "Location"}</span>
+</small>
                               <br />
                               <small style={{ color: "black" }}>
-                                {car.BuildingType|| "BuildingType"} |{" "}
-                                {car.PropertyFeatures|| "PropertyFeatures"} |{" "}
-                                {car.PropertyType|| "PropertyType"} |{" "}
-                                {car.Size|| "Size"}
-                              </small>
+    {car.ManufactureYear || "Year"} |{" "}
+    {car.DrivenKm || "0"} Km |{" "}
+    {car.EngineType || "Engine Type"} |{" "}
+    {car.Transmission || "Transmission"}
+  </small>
                               <br />
                               {car.description || "Description not available."}
                             </Card.Text>
@@ -3141,30 +3017,29 @@ const RealEstateComp = () => {
                 </Button>
               </div>
             
-             
+            
             </Col>
           </Row>
         </Container>
-      </div>
-      <div
-  className="container-parent"
-  style={{
-    color: 'black',
-    maxWidth: '100%',  // Ensure content fits screen width
-    margin: '0 auto',
-    backgroundColor: '#E9EEFF',
-    height: 'auto',  // Allow height to adjust dynamically
-    paddingLeft: '13%',  // Adjusted padding for responsiveness
-    paddingRight: '14%',
-    paddingTop: '20px',
-    paddingBottom: '30px',
-  }}
->
-      <div
+        <div
+               className="container-parent"
+               style={{
+                 color: 'black',
+                 maxWidth: '100%',  // Ensure content fits screen width
+                 margin: '0 auto',
+                 backgroundColor: '#E9EEFF',
+                 height: 'auto',  // Allow height to adjust dynamically
+                 paddingLeft: '13%',  // Adjusted padding for responsiveness
+                 paddingRight: '14%',
+                 paddingTop: '20px',
+                 paddingBottom: '30px',
+               }}
+              >
+        <div
                 className="cars data"
                 style={{ paddingLeft: "20px", paddingRight: "20px" }}
               >
-                <h2>Apartment for Sale in Newyork</h2>
+                <h2>Cars for Sale in Dubai</h2>
                 <p>
                   Lorem ipsum dolor sit amet consectetur. Lacus lacus est
                   praesent gravida quam urna arcu integer. Semper vitae velit
@@ -3183,7 +3058,7 @@ const RealEstateComp = () => {
                   potenti. Quisque nullam velit sem semper ultrices odio.
                   Egestas feugiat nec id aenean.
                 </p>
-                <h2>Used Apartment for Sale in Newyork</h2>
+                <h2>Used Cars for Sale in Dubai</h2>
                 <p>
                   Lorem ipsum dolor sit amet consectetur. Lacus lacus est
                   praesent gravida quam urna arcu integer. Semper vitae velit
@@ -3202,41 +3077,43 @@ const RealEstateComp = () => {
                   potenti. Quisque nullam velit sem semper ultrices odio.
                   Egestas feugiat nec id aenean.
                 </p>
-                <h2>Browse More Used Apartment</h2>
-                <p style={{ color: "#2d4fad" }}>View Apartment by Cities</p>
+                <h2>Browse More Used Cars</h2>
+                <p style={{ color: "#2d4fad" }}>View Cars by Cities</p>
                 <Row style={{ color: "#2d4fad" }}>
                   <Col sm={3}>
-                    <div>Newyork (123456)</div>
-                    <div>Newyork (123456)</div>
-                    <div>Newyork (123456)</div>
-                    <div>Newyork (123456)</div>
+                    <div>Downtown Dubai (123456)</div>
+                    <div>Downtown Dubai (123456)</div>
+                    <div>Downtown Dubai (123456)</div>
+                    <div>Downtown Dubai (123456)</div>
                   </Col>
                   <Col sm={3}>
-                    <div>Newyork (123456)</div>
-                    <div>Newyork (123456)</div>
-                    <div>Newyork (123456)</div>
-                    <div>Newyork (123456)</div>
+                    <div>Downtown Dubai (123456)</div>
+                    <div>Downtown Dubai (123456)</div>
+                    <div>Downtown Dubai (123456)</div>
+                    <div>Downtown Dubai (123456)</div>
                   </Col>
                   <Col sm={3}>
-                    <div>Newyork (123456)</div>
-                    <div>Newyork (123456)</div>
-                    <div>Newyork (123456)</div>
-                    <div>Newyork (123456)</div>
+                    <div>Downtown Dubai (123456)</div>
+                    <div>Downtown Dubai (123456)</div>
+                    <div>Downtown Dubai (123456)</div>
+                    <div>Downtown Dubai (123456)</div>
                   </Col>
                   <Col sm={3}>
-                    <div>Newyork (123456)</div>
-                    <div>Newyork (123456)</div>
-                    <div>Newyork (123456)</div>
-                    <div>Newyork (123456)</div>
+                    <div>Downtown Dubai (123456)</div>
+                    <div>Downtown Dubai (123456)</div>
+                    <div>Downtown Dubai (123456)</div>
+                    <div>Downtown Dubai (123456)</div>
                   </Col>
                 </Row>
               </div>
               </div>
-      <ComercialsAds />
-      <LatestBlog />
+        <ComercialsAds />
+        <LatestBlog />
+      </div>
+
       <Footer />
     </>
   );
 };
 
-export default RealEstateComp;
+export default MAGAZINESCOMP;

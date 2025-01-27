@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom"; // Import Lin
 import Header from "../../home/header"; // Ensure Header is correctly implemented and imported
 import Footer from "../../home/footer/Footer";
 // import { ChevronLeft, ChevronRight } from "lucide-react";
-
+import { MdKeyboardArrowRight } from "react-icons/md";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 import automative from "../../home/automative.png";
@@ -1805,17 +1805,234 @@ const JobBoard = () => {
           {/* Footer */}
           {/* Footer */}
         </div>
+<Container className="parent-main" 
+ style={{
+  paddingLeft: "2px", // Padding on the left side
+  paddingRight: "2px", // Padding on the right side
+  color: 'black', // Text color
+  maxWidth: '1530px', // Optional: Add max-width to ensure padding is visible
+  margin: '0 auto', // Optional: Center the container if desired
+ 
+ 
+}}>
+        <div
+          className="adsCategory_head"
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "10px",
+            marginLeft: "4%",
+            marginTop: "40px",
+            alignItems: "center",
+          }}
+        >
+          <button
+            className="btn"
+            style={{
+              background: "#E9EEFF",
+              fontWeight: "500",
+             pointerEvents: "none",
+              padding: "10px 15px",
+            }}
+          >
+            Home
+          </button>
+          <span>
+          <MdKeyboardArrowRight />
+          </span>
 
-        <Container fluid>
+          <button
+            className="btn"
+            style={{
+              background: "#E9EEFF",
+              fontWeight: "500",
+             pointerEvents: "none",
+              padding: "10px 15px",
+            }}
+          >
+            Jobboards
+          </button>
+          <span>
+          <MdKeyboardArrowRight />
+          </span>
+
+          <button
+            className="btn"
+            style={{
+              background: "#E9EEFF",
+              fontWeight: "500",
+            pointerEvents: "none",
+              padding: "10px 15px",
+            }}
+          >
+            All Cities
+          </button>
+          <span>
+          <MdKeyboardArrowRight />
+          </span>
+
+          <button
+            className="btn"
+            style={{
+              background: "#E9EEFF",
+              fontWeight: "500",
+            pointerEvents: "none",
+              padding: "10px 15px",
+            }}
+          >
+           Software Engineer Jobs
+          </button>
+         
+        
+          
+        </div>
+
+        <div>
+          <h1 style={{ marginLeft: "4%", marginTop: "20px", fontSize: "24px" }}>
+          Software Engineer Jobs
+          </h1>
+        </div>
+
+        <div
+          className="CategoryInfodiv_btn2container"
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "10px",
+            marginLeft: "4%",
+            marginBottom: "40px",
+            marginTop: "20px",
+          }}
+        >
+          <button
+            className="head2btn"
+            style={{
+              backgroundColor: "white",
+              border: "1px solid #2D4495",
+              padding: "10px 15px",
+              textAlign: "center",
+            }}
+          >
+            Cars
+          </button>
+          <button
+            className="head2btn"
+            style={{
+              backgroundColor: "white",
+              border: "1px solid #2D4495",
+              padding: "10px 15px",
+              textAlign: "center",
+            }}
+          >
+            Jobs
+          </button>
+          <button
+            className="head2btn"
+            style={{
+              backgroundColor: "white",
+              border: "1px solid #2D4495",
+              padding: "10px 15px",
+              textAlign: "center",
+            }}
+          >
+            Real Estate for Rent
+          </button>
+          <button
+            className="head2btn"
+            style={{
+              backgroundColor: "white",
+              border: "1px solid #2D4495",
+              padding: "10px 15px",
+              textAlign: "center",
+            }}
+          >
+            Home & Garden
+          </button>
+          <button
+            className="head2btn"
+            style={{
+              backgroundColor: "white",
+              border: "1px solid #2D4495",
+              padding: "10px 15px",
+              textAlign: "center",
+            }}
+          >
+            Electronics
+          </button>
+          <button
+            className="head2btn"
+            style={{
+              backgroundColor: "white",
+              border: "1px solid #2D4495",
+              padding: "10px 15px",
+              textAlign: "center",
+            }}
+          >
+            Electronics
+          </button>
+          <button
+            className="head2btn"
+            style={{
+              backgroundColor: "white",
+              border: "1px solid #2D4495",
+              padding: "10px 15px",
+              textAlign: "center",
+            }}
+          >
+            Electronics
+          </button>
+          <button
+            className="head2btn"
+            style={{
+              backgroundColor: "white",
+              border: "1px solid #2D4495",
+              padding: "10px 15px",
+              textAlign: "center",
+            }}
+          >
+            Electronics
+          </button>
+          <button
+            className="head2btn"
+            style={{
+              backgroundColor: "white",
+              border: "1px solid #2D4495",
+              padding: "10px 15px",
+              textAlign: "center",
+            }}
+          >
+            Electronics
+          </button>
+        </div>
+       </Container>
+        <Container fluid  style={{
+                   paddingLeft: "1px", // Padding on the left side
+                   paddingRight: "1px", // Padding on the right side
+                   color: 'black', // Text color
+                   maxWidth: '1420px', // Optional: Add max-width to ensure padding is visible
+                   margin: '0 auto', // Optional: Center the container if desired
+                 }}>
           <Row>
             {/* Sidebar */}
             <Col md={3} className="bg-light p-3 style={{ height: '200px' }}">
-              <h5 style={headingStyle}>Show Results by:</h5>
+            <h5
+                style={{
+                  borderTopLeftRadius: "5px",
+                  borderTopRightRadius: "5px",
+                  backgroundColor: "#2D4495",
+                  color: "white",
+                  width: "auto",
+                  height: "49.66px",
+                  paddingLeft: "6px",
+                  paddingTop: "6px",
+                }}
+              >
+              Show Results by:</h5>
 
               <Form>
                 <Row className="my-3">
                   <Col>
-                    <Form.Label style={{ fontWeight: "bold" }}>
+                      <Form.Label style={{ fontWeight: "bold",color:'black',paddingLeft:"8px"}}>
                       Search by Keywords
                     </Form.Label>
                     <div className="position-relative">
@@ -1835,6 +2052,12 @@ const JobBoard = () => {
                   </Col>
                 </Row>
                 {/*  -------------                          */}
+                <style>{`
+    .form-check-input:checked {
+      background-color: #2D4495 !important; 
+      border-color: black !important; 
+    }
+  `}</style>   
                 <Accordion>
                   <Accordion.Item eventKey="0">
                     <Accordion.Header>Select City</Accordion.Header>
@@ -2502,7 +2725,7 @@ const JobBoard = () => {
                               {car.title || "Car"}
                             </Card.Title>
                             <Card.Text>
-                              <small
+                            <small
                                 className="text-muted"
                                 style={{ color: "black" }}
                               >
@@ -2513,14 +2736,14 @@ const JobBoard = () => {
                                     color: "#6c757d",
                                   }}
                                 ></i>
-                                {car.City || "Location"}
+                               <span style={{ color: "black" }}>{car.City || "Location"}</span>
                               </small>
                               <br />
-                              <small className="text-muted">
-                                {car.Features || "Features"} |{" "}
-                                {car.StorageCapacity || "0"} |{" "}
-                                {car.MeasurementRange || "MeasurementRange"} |{" "}
-                                {car.Type || "Type"}
+                              <small style={{ color: "black" }}>
+                                {car.ManufactureYear || "Year"} |{" "}
+                                {car.Season || "0"} |{" "}
+                                {car.WashType || "WashType"} |{" "}
+                                {car.Size || "Size"}
                               </small>
                               <br />
                               {car.description || "Description not available."}
@@ -2541,6 +2764,7 @@ const JobBoard = () => {
                                   zIndex: 2, // Ensure the price text stays above the image
                                 }}
                               >
+                                
                                 {car.price
                                   ? `$${car.price}`
                                   : "Price not available"}
@@ -2570,8 +2794,8 @@ const JobBoard = () => {
                                   position: "absolute",
                                   right: "5px",
                                   // fontSize: '12px',
-                                  color: "#6c757d",
                                   marginTop: "54px",
+                                  color:'black',
                                 }}
                               >
                                 Updated about 1 hour ago
@@ -2587,16 +2811,22 @@ const JobBoard = () => {
                               >
                                 {/* Price for small screens */}
                                 <p
-                                  style={{
-                                    fontWeight: "bold",
-                                    fontSize: "16px",
-                                    marginBottom: "5px",
-                                  }}
-                                >
-                                  {car.price
-                                    ? `$${car.price}`
-                                    : "Price not available"}
-                                </p>
+                                style={{
+                                  position: "absolute",
+                                  top: "-140px", // Adjust the top margin to place the price higher
+                                  left: "547px",
+                                  fontWeight: "bold",
+                                  fontSize: "20px",
+                                  zIndex: 2, // Ensure the price text stays above the image
+                                  color: "#2D4495",
+                                }}
+                              >
+                                {car.price
+                                  ? `$${car.price}`
+                                  : "Price not available"}
+                              </p>
+
+
 
                                 {/* Small Image for small screens */}
                                 <Card.Img
@@ -2789,7 +3019,7 @@ const JobBoard = () => {
     backgroundColor: '#E9EEFF',
     height: 'auto',  // Allow height to adjust dynamically
     paddingLeft: '13%',  // Adjusted padding for responsiveness
-    paddingRight: '5%',
+    paddingRight: '14%',
     paddingTop: '20px',
     paddingBottom: '30px',
   }}
@@ -2798,7 +3028,7 @@ const JobBoard = () => {
                 className="cars data"
                 style={{ paddingLeft: "20px", paddingRight: "20px" }}
               >
-                <h2>Cars for Sale in Dubai</h2>
+                <h2>Software Engineer Jobs in Newyork</h2>
                 <p>
                   Lorem ipsum dolor sit amet consectetur. Lacus lacus est
                   praesent gravida quam urna arcu integer. Semper vitae velit
@@ -2817,7 +3047,7 @@ const JobBoard = () => {
                   potenti. Quisque nullam velit sem semper ultrices odio.
                   Egestas feugiat nec id aenean.
                 </p>
-                <h2>Used Cars for Sale in Dubai</h2>
+                <h2>Software Engineer / Full Stack Jobs in Newyork</h2>
                 <p>
                   Lorem ipsum dolor sit amet consectetur. Lacus lacus est
                   praesent gravida quam urna arcu integer. Semper vitae velit
@@ -2836,32 +3066,32 @@ const JobBoard = () => {
                   potenti. Quisque nullam velit sem semper ultrices odio.
                   Egestas feugiat nec id aenean.
                 </p>
-                <h2>Browse More Used Cars</h2>
-                <p style={{ color: "#2d4fad" }}>View Cars by Cities</p>
+                <h2>Browse More Jobs in USA</h2>
+                <p style={{ color: "#2d4fad" }}>View more jobs by Cities</p>
                 <Row style={{ color: "#2d4fad" }}>
                   <Col sm={3}>
-                    <div>Downtown Dubai (123456)</div>
-                    <div>Downtown Dubai (123456)</div>
-                    <div>Downtown Dubai (123456)</div>
-                    <div>Downtown Dubai (123456)</div>
+                    <div>Newyork (123456)</div>
+                    <div>Newyork (123456)</div>
+                    <div>Newyork (123456)</div>
+                    <div>Newyork (123456)</div>
                   </Col>
                   <Col sm={3}>
-                    <div>Downtown Dubai (123456)</div>
-                    <div>Downtown Dubai (123456)</div>
-                    <div>Downtown Dubai (123456)</div>
-                    <div>Downtown Dubai (123456)</div>
+                    <div>Newyork (123456)</div>
+                    <div>Newyork (123456)</div>
+                    <div>Newyork (123456)</div>
+                    <div>Newyork (123456)</div>
                   </Col>
                   <Col sm={3}>
-                    <div>Downtown Dubai (123456)</div>
-                    <div>Downtown Dubai (123456)</div>
-                    <div>Downtown Dubai (123456)</div>
-                    <div>Downtown Dubai (123456)</div>
+                    <div>Newyork (123456)</div>
+                    <div>Newyork (123456)</div>
+                    <div>Newyork (123456)</div>
+                    <div>Newyork (123456)</div>
                   </Col>
                   <Col sm={3}>
-                    <div>Downtown Dubai (123456)</div>
-                    <div>Downtown Dubai (123456)</div>
-                    <div>Downtown Dubai (123456)</div>
-                    <div>Downtown Dubai (123456)</div>
+                    <div>Newyork (123456)</div>
+                    <div>Newyork (123456)</div>
+                    <div>Newyork (123456)</div>
+                    <div>Newyork (123456)</div>
                   </Col>
                 </Row>
               </div>

@@ -1385,7 +1385,8 @@ const ElectronicComp = () => {
                   height: "49.66px",
                   paddingLeft: "6px",
                   paddingTop: "6px",
-                }}>Show Results by:</h5>
+                }}>
+                  Show Results by:</h5>
 
               <Form>
                 <Row className="my-3">

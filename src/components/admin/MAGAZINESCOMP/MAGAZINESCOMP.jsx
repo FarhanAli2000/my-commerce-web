@@ -146,6 +146,19 @@ const MAGAZINESCOMP = () => {
   const [HealthStatus, setHealthStatus] = useState(""); // Search query for title and city
   const [TrainingLevel, setTrainingLevel] = useState(""); // Search query for title and city
   const [DietaryPreferences, setDietaryPreferences] = useState(""); // Search query for title and city
+  function timeAgo(dateString) {
+    const date = new Date(dateString);
+    const now = new Date();
+    const difference = Math.abs(now - date); // Difference in milliseconds
+    const seconds = Math.floor(difference / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+    if (days > 0) return `${days} day${days > 1 ? "s" : ""} ago`;
+    if (hours > 0) return `${hours} hour${hours > 1 ? "s" : ""} ago`;
+    if (minutes > 0) return `${minutes} minute${minutes > 1 ? "s" : ""} ago`;
+    return "Just now";
+  }
   const handleCheckboxChangeOrganicFood = (event) => {
     const carLabel = event.target.name; // Use the name attribute to identify the checkbox
     if (event.target.checked) {
@@ -2814,8 +2827,9 @@ const MAGAZINESCOMP = () => {
                                   color:'black',
                                 }}
                               >
-                                Updated about 1 hour ago
-                              </p>
+Updated about {timeAgo(car.timeAgo)}
+
+</p>
 
                               {/* Responsive layout for small screens */}
                               <div

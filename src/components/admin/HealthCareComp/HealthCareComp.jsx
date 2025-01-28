@@ -66,7 +66,7 @@ const HealthCareComp = () => {
   const [filteredCars, setFilteredCars] = useState([]); // Filtered cars based on search & city
   const [searchQuery, setSearchQuery] = useState(""); // Search query for title and city
   const [currentPageCars, setCurrentPageCars] = useState([]); // Cars to display on the current page
-  console.log(filteredCars, "filteredCars_________");
+  console.log(filteredCars, "HealthCareComp---");
   const itemsPerPage = 3; // Number of items per page
 
   const [selectedCities, setSelectedCities] = useState([]); // Selected cities for filtering
@@ -149,7 +149,31 @@ const HealthCareComp = () => {
   const [MeasurementUnits, setMeasurementUnits] = useState("");
   const [SpeedofMeasurement, setSpeedofMeasurement] = useState("");
   const [SellerType, setSellerType] = useState("");
-
+  function timeAgo(dateString) {
+    const date = new Date(dateString);
+    const now = new Date();
+    const difference = Math.abs(now - date); // Difference in milliseconds
+    const seconds = Math.floor(difference / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+    if (days > 0) return `${days} day${days > 1 ? "s" : ""} ago`;
+    if (hours > 0) return `${hours} hour${hours > 1 ? "s" : ""} ago`;
+    if (minutes > 0) return `${minutes} minute${minutes > 1 ? "s" : ""} ago`;
+    return "Just now";
+  }
+  const getRelativeTime = (date) => {
+    const now = new Date();
+    const updated = new Date(date);
+    const diffInSeconds = Math.floor((now - updated) / 1000);
+  
+    if (diffInSeconds < 60) return `${diffInSeconds} seconds ago`;
+    if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)} minutes ago`;
+    if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)} hours ago`;
+    if (diffInSeconds < 7 * 86400) return `${Math.floor(diffInSeconds / 86400)} days ago`;
+  
+    return updated.toLocaleDateString(); // Fallback to full date
+  };
 
   const handleCheckboxChangeSellerType = (label) => {
     setSellerType((prevSelected) => {
@@ -842,6 +866,7 @@ const HealthCareComp = () => {
           id: doc.id,
           ...doc.data(),
         }));
+        console.log(carsData,'Healthcare_________')
         setCars(carsData);
         setFilteredCars(carsData); // Initially, show all cars
       } catch (error) {
@@ -1479,7 +1504,7 @@ const HealthCareComp = () => {
         return manufactureYear >= minDate && manufactureYear <= maxDate;
       });
     }
-    console.log(filtered, "filtered________");
+    console.log(filtered, "data.........");
     setFilteredCars(filtered);
     setActivePage(1);
   };
@@ -2895,10 +2920,10 @@ const HealthCareComp = () => {
                               </small>
                               <br />
                               <small style={{ color: "black" }}>
-                                {car.ManufactureYear || "Year"} |{" "}
-                                {car.Season || "0"} |{" "}
-                                {car.WashType || "WashType"} |{" "}
-                                {car.Size || "Size"}
+                                {car.MeasurementRange || "MeasurementRange"} |{" "}
+                                {car.Type || "Type" } |{" "}
+                              
+                                {car.CuffSize || "CuffSize"}
                               </small>
                               <br />
                               {car.description || "Description not available."}
@@ -2953,8 +2978,9 @@ const HealthCareComp = () => {
                                   color:'black',
                                 }}
                               >
-                                Updated about 1 hour ago
-                              </p>
+Updated about {timeAgo(car.timeAgo)}
+
+</p>
 
                               {/* Responsive layout for small screens */}
                               <div

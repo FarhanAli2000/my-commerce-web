@@ -111,7 +111,19 @@ const Bikes = () => {
   const [fromValueMileage, setFromCCMileage] = useState("");
   const [toValueMileage, setToCCMileage] = useState("");
   const [SortBy, setSortBy] = useState(""); // Search query for title and city
-
+  function timeAgo(dateString) {
+    const date = new Date(dateString);
+    const now = new Date();
+    const difference = Math.abs(now - date); // Difference in milliseconds
+    const seconds = Math.floor(difference / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+    if (days > 0) return `${days} day${days > 1 ? "s" : ""} ago`;
+    if (hours > 0) return `${hours} hour${hours > 1 ? "s" : ""} ago`;
+    if (minutes > 0) return `${minutes} minute${minutes > 1 ? "s" : ""} ago`;
+    return "Just now";
+  }
   const handleFromChangeMileage = (e) => {
     setFromCCMileage(e.target.value);
     console.log("From Date:__", e.target.value);
@@ -1163,7 +1175,7 @@ const Bikes = () => {
                     <div className="position-relative">
                       <input
                         type="search"
-                        placeholder="E.g. Mercedez in Dubai"
+                        placeholder="E.g. Citi Bike in America"
                         className="form-control rounded-pill pe-5"
                         id="example-search-input"
                         value={searchQuery} // Bind value to searchQuery state
@@ -1177,6 +1189,12 @@ const Bikes = () => {
                   </Col>
                 </Row>
                 {/*  -------------                          */}
+                <style>{`
+    .form-check-input:checked {
+      background-color: #2D4495 !important; 
+      border-color: black !important; 
+    }
+  `}</style>   
                 <Accordion>
                   <Accordion.Item eventKey="0">
                     <Accordion.Header>Select City</Accordion.Header>
@@ -2127,7 +2145,7 @@ const Bikes = () => {
                               {car.title || "Car"}
                             </Card.Title>
                             <Card.Text>
-                              <small
+                            <small
                                 className="text-muted"
                                 style={{ color: "black" }}
                               >
@@ -2138,15 +2156,14 @@ const Bikes = () => {
                                     color: "#6c757d",
                                   }}
                                 ></i>
-                                {car.City || "Location"}
+                               <span style={{ color: "black" }}>{car.City || "Location"}</span>
                               </small>
                               <br />
-                              <small className="text-muted">
+                              <small style={{ color: "black" }}>
                                 {car.ManufactureYear || "Year"} |{" "}
-                                {car.DrivenKm || "0"} Km |{" "}
-                                {car.EngineType || "Engine Type"} |{" "}
-                                {car.Transmission || "Transmission"}
-                              </small>
+                                {car.DrivenKm || "0"} Km|{" "}
+                                {car.FuelType || "FuelType"} {" "}
+                               </small>
                               <br />
                               {car.description || "Description not available."}
                             </Card.Text>
@@ -2200,8 +2217,9 @@ const Bikes = () => {
                                   marginTop: "54px",
                                 }}
                               >
-                                Updated about 1 hour ago
-                              </p>
+Updated about {timeAgo(car.timeAgo)}
+
+</p>
 
                               {/* Responsive layout for small screens */}
                               <div

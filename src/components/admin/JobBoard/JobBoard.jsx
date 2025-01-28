@@ -5,6 +5,7 @@ import Footer from "../../home/footer/Footer";
 // import { ChevronLeft, ChevronRight } from "lucide-react";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+// import { formatTimeAgo } from "@/utils/format-time-ago"
 
 import automative from "../../home/automative.png";
 import electronic from "../../home/electronic.png";
@@ -920,6 +921,7 @@ const JobBoard = () => {
           id: doc.id,
           ...doc.data(),
         }));
+        console.log(carsData,"carsData_____")
         setCars(carsData);
         setFilteredCars(carsData); // Initially, show all cars
       } catch (error) {
@@ -952,6 +954,19 @@ const JobBoard = () => {
       });
     }
   };
+  function timeAgo(dateString) {
+    const date = new Date(dateString);
+    const now = new Date();
+    const difference = Math.abs(now - date); // Difference in milliseconds
+    const seconds = Math.floor(difference / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+    if (days > 0) return `${days} day${days > 1 ? "s" : ""} ago`;
+    if (hours > 0) return `${hours} hour${hours > 1 ? "s" : ""} ago`;
+    if (minutes > 0) return `${minutes} minute${minutes > 1 ? "s" : ""} ago`;
+    return "Just now";
+  }
   useEffect(() => {
     console.log("Selected Cities: ", selectedCities);
   }, [selectedCities]);
@@ -2667,320 +2682,320 @@ const JobBoard = () => {
                     </Spinner>
                   </div>
                 ) : filteredCars.length > 0 ? (
-                  getPaginatedCars().map((car, index) => (
-                    <Card key={index} className="mt-3">
-                      <Row className="g-0">
-                        <Col md={4} style={{ position: "relative" }}>
-                          {/* Featured Label */}
-                          <div
-                            style={{
-                              position: "absolute",
-                              top: "10px",
-                              left: "10px",
-                              backgroundColor: "#36A680",
-                              color: "white",
-                              padding: "5px 10px",
-                              fontWeight: "bold",
-                              borderRadius: "5px",
-                              zIndex: 2, // Ensure it's above the image
-                            }}
-                          >
-                            Featured
-                          </div>
-
-                          {/* Heart Icon */}
-                          <div
-                            style={{
-                              position: "absolute",
-                              top: "11%",
-                              left: "90%", // Centering horizontally
-                              transform: "translate(-50%, -50%)", // Adjust to keep it centered
-                              borderRadius: "50%",
-                              padding: "10px",
-                              zIndex: 3, // Higher z-index to stay above everything
-                            }}
-                          >
-                            <i
-                              className="fas fa-heart"
-                              style={{ color: "white", fontSize: "30px" }}
-                            ></i>
-                          </div>
-
-                          {/* Image */}
-                          <Card.Img
-                            src={car.img || "https://via.placeholder.com/150"}
-                            alt={car.title || "Car"}
-                            style={{
-                              width: "100%", // Make the image responsive
-                              height: "250px",
-                              borderTopLeftRadius: "20px",
-                              borderBottomLeftRadius: "20px",
-                            }}
-                          />
-                        </Col>
-
-                        <Col md={8}>
-                          <Card.Body>
-                            <Card.Title style={{ color: "#2D4495" }}>
-                              {car.title || "Car"}
-                            </Card.Title>
-                            <Card.Text>
-                            <small
-                                className="text-muted"
-                                style={{ color: "black" }}
-                              >
-                                <i
-                                  className="fas fa-map-marker-alt"
-                                  style={{
-                                    marginRight: "5px",
-                                    color: "#6c757d",
-                                  }}
-                                ></i>
-                               <span style={{ color: "black" }}>{car.City || "Location"}</span>
-                              </small>
-                              <br />
-                              <small style={{ color: "black" }}>
-                                {car.ManufactureYear || "Year"} |{" "}
-                                {car.Season || "0"} |{" "}
-                                {car.WashType || "WashType"} |{" "}
-                                {car.Size || "Size"}
-                              </small>
-                              <br />
-                              {car.description || "Description not available."}
-                            </Card.Text>
-
-                            <Col
-                              className="align-items-center"
-                              style={{ position: "relative" }}
+                    getPaginatedCars().map((car, index) =>
+                       (
+                      <Card key={index} className="mt-3">
+                        <Row className="g-0">
+                          <Col md={4} style={{ position: "relative" }}>
+                            {/* Featured Label */}
+                            <div
+                              style={{
+                                position: "absolute",
+                                top: "10px",
+                                left: "10px",
+                                backgroundColor: "#36A680",
+                                color: "white",
+                                padding: "5px 10px",
+                                fontWeight: "bold",
+                                borderRadius: "5px",
+                                zIndex: 2, // Ensure it's above the image
+                              }}
                             >
-                              {/* Price displayed above the image */}
-                              <p
-                                style={{
-                                  position: "absolute",
-                                  top: "-140px", // Adjust the top margin to place the price higher
-                                  left: "550px",
-                                  fontWeight: "bold",
-                                  fontSize: "16px",
-                                  zIndex: 2, // Ensure the price text stays above the image
-                                }}
-                              >
-                                
-                                {car.price
-                                  ? `$${car.price}`
-                                  : "Price not available"}
-                              </p>
+                              Featured
+                            </div>
 
-                              {/* Small Image on the Right with Top Margin */}
-                              <Card.Img
-                                src={
-                                  car.img || "https://via.placeholder.com/150"
-                                }
-                                alt={car.title || "Car"}
-                                className="d-none d-sm-block" // Hide on small screens and show on sm and above
-                                style={{
-                                  position: "absolute", // Position image absolutely within the container
-                                  top: "-84px", // Adjust to ensure the image is placed after the price
-                                  right: "10px", // Adjust right margin
-                                  width: "160px", // Adjust size as needed
-                                  height: "80px",
-                                  objectFit: "fill",
-                                  borderRadius: "6px",
-                                }}
-                              />
+                            {/* Heart Icon */}
+                            <div
+                              style={{
+                                position: "absolute",
+                                top: "11%",
+                                left: "90%", // Centering horizontally
+                                transform: "translate(-50%, -50%)", // Adjust to keep it centered
+                                borderRadius: "50%",
+                                padding: "10px",
+                                zIndex: 3, // Higher z-index to stay above everything
+                              }}
+                            >
+                              <i
+                                className="fas fa-heart"
+                                style={{ color: "white", fontSize: "30px" }}
+                              ></i>
+                            </div>
 
-                              {/* Updated text at the bottom-right corner */}
-                              <p
-                                style={{
-                                  position: "absolute",
-                                  right: "5px",
-                                  // fontSize: '12px',
-                                  marginTop: "54px",
-                                  color:'black',
-                                }}
-                              >
-                                Updated about 1 hour ago
-                              </p>
+                            {/* Image */}
+                            <Card.Img
+                              src={car.img || "https://via.placeholder.com/150"}
+                              alt={car.title || "Car"}
+                              style={{
+                                width: "100%", // Make the image responsive
+                                height: "250px",
+                                borderTopLeftRadius: "20px",
+                                borderBottomLeftRadius: "20px",
+                              }}
+                            />
+                          </Col>
 
-                              {/* Responsive layout for small screens */}
-                              <div
-                                className="d-block d-sm-none"
-                                style={{
-                                  position: "relative",
-                                  marginTop: "10px",
-                                }}
+                          <Col md={8}>
+                            <Card.Body>
+                              <Card.Title style={{ color: "#2D4495" }}>
+                                {car.title || "Car"}
+                              </Card.Title>
+                              <Card.Text>
+                              <small
+                                  className="text-muted"
+                                  style={{ color: "black" }}
+                                >
+                                  <i
+                                    className="fas fa-map-marker-alt"
+                                    style={{
+                                      marginRight: "5px",
+                                      color: "#6c757d",
+                                    }}
+                                  ></i>
+                                <span style={{ color: "black" }}>{car.City || "Location"}</span>
+                                </small>
+                                <br />
+                                <small className="text-muted">
+                                  ${car.SallaryFromRange} to ${car.SallaryToRange}{" "}
+                                  annually
+                                </small>
+                                <br />
+                                {car.description || "Description not available."}
+                              </Card.Text>
+
+                              <Col
+                                className="align-items-center"
+                                style={{ position: "relative" }}
                               >
-                                {/* Price for small screens */}
+                                {/* Price displayed above the image */}
                                 <p
-                                style={{
-                                  position: "absolute",
-                                  top: "-140px", // Adjust the top margin to place the price higher
-                                  left: "547px",
-                                  fontWeight: "bold",
-                                  fontSize: "20px",
-                                  zIndex: 2, // Ensure the price text stays above the image
-                                  color: "#2D4495",
-                                }}
-                              >
-                                {car.price
-                                  ? `$${car.price}`
-                                  : "Price not available"}
-                              </p>
+                                  style={{
+                                    position: "absolute",
+                                    top: "-140px", // Adjust the top margin to place the price higher
+                                    left: "550px",
+                                    fontWeight: "bold",
+                                    fontSize: "16px",
+                                    zIndex: 2, // Ensure the price text stays above the image
+                                  }}
+                                >
+                                  
+                                  
+                                </p>
 
-
-
-                                {/* Small Image for small screens */}
+                                {/* Small Image on the Right with Top Margin */}
                                 <Card.Img
                                   src={
                                     car.img || "https://via.placeholder.com/150"
                                   }
                                   alt={car.title || "Car"}
+                                  className="d-none d-sm-block" // Hide on small screens and show on sm and above
                                   style={{
-                                    width: "120px", // Adjust size for small screens
-                                    height: "60px",
+                                    position: "absolute", // Position image absolutely within the container
+                                    top: "-84px", // Adjust to ensure the image is placed after the price
+                                    right: "10px", // Adjust right margin
+                                    width: "160px", // Adjust size as needed
+                                    height: "80px",
                                     objectFit: "fill",
                                     borderRadius: "6px",
                                   }}
                                 />
-                              </div>
-                            </Col>
 
-                            {/* Responsive Grid for Small Screens */}
-                            <div>
-                              <Row
-                                className="gx-2 gy-2 mt-4 mt-sm-5 text-center"
-                                style={{ margin: 0 }}
-                              >
-                                {/* Call Button */}
-                                <Col
-                                  xs={6}
-                                  sm={3}
-                                  lg={2}
-                                  className="p-0 d-flex align-items-center justify-content-center"
+                                {/* Updated text at the bottom-right corner */}
+                                <p
+                                  style={{
+                                    position: "absolute",
+                                    right: "5px",
+                                    // fontSize: '12px',
+                                    marginTop: "54px",
+                                    color:'black',
+                                  }}
                                 >
-                                  <button
-                                    style={{
-                                      display: "flex",
-                                      alignItems: "center",
-                                      justifyContent: "center",
-                                      gap: "5px",
-                                      padding: "12px 20px",
-                                      border: "none",
-                                      borderRadius: "20px",
-                                      backgroundColor: "#2d4fad",
-                                      color: "white",
-                                      fontSize: "13px",
-                                      cursor: "pointer",
-                                      width: "100%",
-                                      maxWidth: "150px",
-                                      margin: "5px",
-                                    }}
-                                  >
-                                    <i className="fas fa-phone"></i> Call
-                                  </button>
-                                </Col>
 
-                                {/* Message Button */}
-                                <Col
-                                  xs={6}
-                                  sm={3}
-                                  lg={2}
-                                  className="p-0 d-flex align-items-center justify-content-center"
-                                >
-                                  <button
-                                    style={{
-                                      display: "flex",
-                                      alignItems: "center",
-                                      justifyContent: "center",
-                                      gap: "5px",
-                                      padding: "12px 12px",
-                                      border: "1px solid #2d4fad",
-                                      borderRadius: "20px",
-                                      backgroundColor: "white",
-                                      color: "#2d4fad",
-                                      fontSize: "13px",
-                                      cursor: "pointer",
-                                      width: "100%",
-                                      maxWidth: "150px",
-                                      margin: "5px",
-                                    }}
-                                  >
-                                    <i className="fas fa-comment"></i> Message
-                                  </button>
-                                </Col>
+Updated about {timeAgo(car.timeAgo)}
 
-                                {/* WhatsApp Button */}
-                                <Col
-                                  xs={6}
-                                  sm={3}
-                                  lg={2}
-                                  className="p-0 d-flex align-items-center justify-content-center"
-                                >
-                                  <button
-                                    style={{
-                                      display: "flex",
-                                      alignItems: "center",
-                                      justifyContent: "center",
-                                      gap: "5px",
-                                      padding: "12px 10px",
-                                      border: "1px solid #2d4fad",
-                                      borderRadius: "20px",
-                                      backgroundColor: "white",
-                                      color: "#2d4fad",
-                                      fontSize: "13px",
-                                      cursor: "pointer",
-                                      width: "100%",
-                                      maxWidth: "150px",
-                                      margin: "5px",
-                                    }}
-                                  >
-                                    <i
-                                      className="fab fa-whatsapp"
-                                      style={{ color: "#2D4495" }}
-                                    ></i>{" "}
-                                    WhatsApp
-                                  </button>
-                                </Col>
+</p>
 
-                                {/* Favorite Button */}
-                                <Col
-                                  xs={6}
-                                  sm={3}
-                                  lg={2}
-                                  className="p-0 d-flex align-items-center justify-content-center position-relative"
+                                {/* Responsive layout for small screens */}
+                                <div
+                                  className="d-block d-sm-none"
+                                  style={{
+                                    position: "relative",
+                                    marginTop: "10px",
+                                  }}
                                 >
-                                  <button
+                                  {/* Price for small screens */}
+                                  <p
+                                  style={{
+                                    position: "absolute",
+                                    top: "-140px", // Adjust the top margin to place the price higher
+                                    left: "547px",
+                                    fontWeight: "bold",
+                                    fontSize: "20px",
+                                    zIndex: 2, // Ensure the price text stays above the image
+                                    color: "#2D4495",
+                                  }}
+                                >
+                                  {car.price
+                                    ? `$${car.price}`
+                                    : "Price not available"}
+                                </p>
+
+
+
+                                  {/* Small Image for small screens */}
+                                  <Card.Img
+                                    src={
+                                      car.img || "https://via.placeholder.com/150"
+                                    }
+                                    alt={car.title || "Car"}
                                     style={{
-                                      border: "1px solid #2D4495",
-                                      backgroundColor: "white",
-                                      borderRadius: "5px",
-                                      cursor: "pointer",
-                                      color: "#2D4495",
-                                      width: "fit-content",
-                                      height: "fit-content",
-                                      padding: "8px",
-                                      display: "flex",
-                                      alignItems: "center",
-                                      justifyContent: "center",
-                                      margin: "5px",
-                                      marginRight: "60px",
+                                      width: "120px", // Adjust size for small screens
+                                      height: "60px",
+                                      objectFit: "fill",
+                                      borderRadius: "6px",
                                     }}
+                                  />
+                                </div>
+                              </Col>
+
+                              {/* Responsive Grid for Small Screens */}
+                              <div>
+                                <Row
+                                  className="gx-2 gy-2 mt-4 mt-sm-5 text-center"
+                                  style={{ margin: 0 }}
+                                >
+                                  {/* Call Button */}
+                                  <Col
+                                    xs={6}
+                                    sm={3}
+                                    lg={2}
+                                    className="p-0 d-flex align-items-center justify-content-center"
                                   >
-                                    <i
-                                      className="far fa-heart"
+                                    <button
                                       style={{
-                                        color: "#2D4495",
-                                        fontSize: "20px",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        gap: "5px",
+                                        padding: "12px 20px",
+                                        border: "none",
+                                        borderRadius: "20px",
+                                        backgroundColor: "#2d4fad",
+                                        color: "white",
+                                        fontSize: "13px",
+                                        cursor: "pointer",
+                                        width: "100%",
+                                        maxWidth: "150px",
+                                        margin: "5px",
                                       }}
-                                    ></i>
-                                  </button>
-                                </Col>
-                              </Row>
-                            </div>
-                          </Card.Body>
-                        </Col>
-                      </Row>
-                    </Card>
-                  ))
+                                    >
+                                      <i className="fas fa-phone"></i> Call
+                                    </button>
+                                  </Col>
+
+                                  {/* Message Button */}
+                                  <Col
+                                    xs={6}
+                                    sm={3}
+                                    lg={2}
+                                    className="p-0 d-flex align-items-center justify-content-center"
+                                  >
+                                    <button
+                                      style={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        gap: "5px",
+                                        padding: "12px 12px",
+                                        border: "1px solid #2d4fad",
+                                        borderRadius: "20px",
+                                        backgroundColor: "white",
+                                        color: "#2d4fad",
+                                        fontSize: "13px",
+                                        cursor: "pointer",
+                                        width: "100%",
+                                        maxWidth: "150px",
+                                        margin: "5px",
+                                      }}
+                                    >
+                                      <i className="fas fa-comment"></i> Message
+                                    </button>
+                                  </Col>
+
+                                  {/* WhatsApp Button */}
+                                  <Col
+                                    xs={6}
+                                    sm={3}
+                                    lg={2}
+                                    className="p-0 d-flex align-items-center justify-content-center"
+                                  >
+                                    <button
+                                      style={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        gap: "5px",
+                                        padding: "12px 10px",
+                                        border: "1px solid #2d4fad",
+                                        borderRadius: "20px",
+                                        backgroundColor: "white",
+                                        color: "#2d4fad",
+                                        fontSize: "13px",
+                                        cursor: "pointer",
+                                        width: "100%",
+                                        maxWidth: "150px",
+                                        margin: "5px",
+                                      }}
+                                    >
+                                      <i
+                                        className="fab fa-whatsapp"
+                                        style={{ color: "#2D4495" }}
+                                      ></i>{" "}
+                                      WhatsApp
+                                    </button>
+                                  </Col>
+
+                                  {/* Favorite Button */}
+                                  <Col
+                                    xs={6}
+                                    sm={3}
+                                    lg={2}
+                                    className="p-0 d-flex align-items-center justify-content-center position-relative"
+                                  >
+                                    <button
+                                      style={{
+                                        border: "1px solid #2D4495",
+                                        backgroundColor: "white",
+                                        borderRadius: "5px",
+                                        cursor: "pointer",
+                                        color: "#2D4495",
+                                        width: "fit-content",
+                                        height: "fit-content",
+                                        padding: "8px",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        margin: "5px",
+                                        marginRight: "60px",
+                                      }}
+                                    >
+                                      <i
+                                        className="far fa-heart"
+                                        style={{
+                                          color: "#2D4495",
+                                          fontSize: "20px",
+                                        }}
+                                      ></i>
+                                    </button>
+                                  </Col>
+                                </Row>
+                              </div>
+                            </Card.Body>
+                          </Col>
+                        </Row>
+                      </Card>
+                    )
+                  )
                 ) : (
                   <p>No cars found for the selected criteria.</p>
                 )}

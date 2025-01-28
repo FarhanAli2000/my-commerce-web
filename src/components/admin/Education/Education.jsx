@@ -131,7 +131,19 @@ const Education = () => {
   const [ContentType, setContentType] = useState(""); // Search query for title and city
   const [Language, setLanguage] = useState(""); // Search query for title and city
   const [Duration, setDuration] = useState(""); // Search query for title and city
-
+  function timeAgo(dateString) {
+    const date = new Date(dateString);
+    const now = new Date();
+    const difference = Math.abs(now - date); // Difference in milliseconds
+    const seconds = Math.floor(difference / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+    if (days > 0) return `${days} day${days > 1 ? "s" : ""} ago`;
+    if (hours > 0) return `${hours} hour${hours > 1 ? "s" : ""} ago`;
+    if (minutes > 0) return `${minutes} minute${minutes > 1 ? "s" : ""} ago`;
+    return "Just now";
+  }
   const handleCheckboxChangeDuration = (event) => {
     const carLabel = event.target.name; // Use the name attribute to identify the checkbox
     if (event.target.checked) {
@@ -615,6 +627,7 @@ const Education = () => {
           id: doc.id,
           ...doc.data(),
         }));
+        console.log(carsData,'carsData___________')
         setCars(carsData);
         setFilteredCars(carsData); // Initially, show all cars
       } catch (error) {
@@ -2175,11 +2188,10 @@ const Education = () => {
                               </small>
                               <br />
                               <small style={{ color: "black" }}>
-                                {car.ManufactureYear || "Year"} |{" "}
-                                {car.Season || "0"} |{" "}
-                                {car.WashType || "WashType"} |{" "}
-                                {car.Size || "Size"}
-                              </small>
+                                {car.ContentType || "Year"} |{" "}
+                                {car.SubjectCategories || "0"} |{" "}
+                                {car.Language || "Language"} |{" "}
+                               </small>
                               <br />
                               {car.description || "Description not available."}
                             </Card.Text>
@@ -2233,8 +2245,9 @@ const Education = () => {
                                   color:'black',
                                 }}
                               >
-                                Updated about 1 hour ago
-                              </p>
+Updated about {timeAgo(car.timeAgo)}
+
+</p>
 
                               {/* Responsive layout for small screens */}
                               <div
